@@ -8,7 +8,7 @@ library(shiny)
 
 
 # Define UI
-fluidPage(
+ui <-fluidPage(
   
   h1("Digital Cell Sorter"), 
   p(style = "font-family:Impact"),
