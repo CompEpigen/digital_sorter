@@ -2,7 +2,7 @@
 library(shiny)
 
 #server.R
-function(input, output) {
+server <- function(input, output) {
   
   output$sample <- renderUI({
     if(input$cohort == "cohort1") myChoices <-  c("sample1","sample2","sample3","sample4")
@@ -39,5 +39,3 @@ function(input, output) {
   
 
 }
-
-shinyApp(ui = ui, server = server)
