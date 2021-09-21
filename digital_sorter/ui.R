@@ -39,13 +39,13 @@ ui <-fluidPage(
                        selectizeInput(inputId = "marker", 
                                       label= "master markers",
                                       multiple = TRUE, 
-                                      choices = c("CD45","EPCAM","PECAM1"),
-                                      selected = c("CD45","EPCAM","PECAM1"))
+                                      choices = c("CD45","EPCAM","PTPRC"),
+                                      selected = c("CD45","EPCAM","PTPRC"))
                        ),
                      
       
       selectizeInput(
-        inputId = "cohort", label= "Select dataset of interest", choices = c("cohort1","cohort2","cohort3"), 
+        inputId = "cohort", label= "Select dataset of interest", choices = c("song_2019","travaglini_2020","kim_2020"), 
         selected = NULL), 
       
       uiOutput("sample"),
