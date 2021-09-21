@@ -42,7 +42,7 @@ ui <-fluidPage(
                                       label= "master markers",
                                       multiple = TRUE, 
                                       choices = c("CD45","EPCAM","PTPRC"),
-                                      selected = c("CD45","EPCAM","PTPRC"))
+                                      selected = c("PTPRC"))
                        ),
                      
       
@@ -68,12 +68,10 @@ ui <-fluidPage(
                             tags$hr(),
                             print("You chose gene(s) "),
                             textOutput("result3")
-                          )
-                          
-                          
-                          
+                                  )
                           ),
                  tabPanel("Violin Plot",
+                          plotOutput("violin")
                           ),
                  tabPanel("Dot Plot",
                  ),
