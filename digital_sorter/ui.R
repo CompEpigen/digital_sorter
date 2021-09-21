@@ -1,5 +1,6 @@
 
 library(shiny)
+library(shinythemes)
 
 
 #Import Data
@@ -20,6 +21,7 @@ ui <-fluidPage(
     
     sidebarPanel(
       titlePanel("Input"),
+      
       
       #gene
       selectizeInput(inputId = "gene", label= "Select genes",
@@ -55,12 +57,32 @@ ui <-fluidPage(
     ),#side panel end
     
     mainPanel(
-      fluidRow(
-        textOutput("result1"),textOutput("result2"),
-        tags$hr(),
-        print("You chose gene(s) "),
-        textOutput("result3")
+      navbarPage(title = "Results",
+                 windowTitle = "Digital Cell Sorter",
+                 theme = shinytheme("cerulean"),
+                 collapsible = TRUE,
+                 tabPanel(icon("home"),
+                          
+                          fluidRow(
+                            textOutput("result1"),textOutput("result2"),
+                            tags$hr(),
+                            print("You chose gene(s) "),
+                            textOutput("result3")
+                          )
+                          
+                          
+                          
+                          ),
+                 tabPanel("Violin Plot",
+                          ),
+                 tabPanel("Dot Plot",
+                 ),
+                 tabPanel("tSNEs",
+                 ),
+                 tabPanel("Marker Dot Plot (FACS)",
+                 )
       )
+      
       
     )#main panel end
      
