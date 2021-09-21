@@ -5,8 +5,8 @@ library(shiny)
 server <- function(input, output) {
   
   output$sample <- renderUI({
-    if(input$cohort == "cohort1") myChoices <-  c("sample1","sample2","sample3","sample4")
-    else if(input$cohort == "cohort2") myChoices <-  c("sample1","sample2")
+    if(input$cohort == "song_2019") myChoices <-  c("sample1","sample2","sample3","sample4")
+    else if(input$cohort == "travaglini_2020") myChoices <-  c("sample1","sample2")
     else myChoices <- c("sample1","sample2","sample3")
     
     selectizeInput(inputId = "sample","Select sample of interest",
