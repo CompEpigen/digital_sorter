@@ -41,7 +41,7 @@ ui <-fluidPage(
       conditionalPanel('input.cancer == "Lung"', 
                        selectizeInput(inputId = "marker", 
                                       label= "master markers",
-                                      multiple = TRUE, 
+                                      multiple = F, 
                                       choices = c("CD45","EPCAM","PTPRC"),
                                       selected = c("PTPRC"))
                        ),
