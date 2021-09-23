@@ -21,6 +21,7 @@ ui <-fluidPage(
     
     sidebarPanel(
       titlePanel("Input"),
+      width = 3,
       
       
       #gene
@@ -71,7 +72,7 @@ ui <-fluidPage(
                                   )
                           ),
                  tabPanel("Violin Plot",
-                          plotOutput("violin")
+                          plotlyOutput("plotv")
                           ),
                  tabPanel("Dot Plot",
                  ),
