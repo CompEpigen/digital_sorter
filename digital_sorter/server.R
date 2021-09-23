@@ -53,14 +53,19 @@ server <- function(input, output) {
     genes()
   })
   
-  output$violin <- renderPlot(
-    if(input$cohort == "song_2019") ggplotly(VlnPlot(song_2019, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
+  violin_plot <- renderPlot({
+    if(input$cohort == "song_2019") VlnPlot(song_2019, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
                                             sort = TRUE,pt.size = 0, combine = FALSE)
-                                            )
-    else if(input$cohort == "travaglini_2020") ggplotly(VlnPlot(travaglini_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
-                                                       sort = TRUE,pt.size = 0, combine = FALSE))
-    else  ggplotly(VlnPlot(kim_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
-                 sort = TRUE,pt.size = 0, combine = FALSE))
-    
-  )
+    else if(input$cohort == "travaglini_2020") VlnPlot(travaglini_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
+                                                       sort = TRUE,pt.size = 0, combine = FALSE)
+    else  VlnPlot(kim_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
+                  sort = TRUE,pt.size = 0, combine = FALSE)
+  }) 
+  violin_plot
+  
+  
+  output$plotv <- renderPlotly({
+  ggplotly(ggplot2::last_plot())
+})
+  
 }
