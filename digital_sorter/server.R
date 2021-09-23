@@ -4,6 +4,7 @@ library(SeuratDisk)
 library(dplyr)
 library(reshape2)
 library(ggplot2)
+library(plotly)
 library(grid)
 library(gridExtra)
 #read data
@@ -12,7 +13,7 @@ song_2019 <- readRDS("D:/Uni Heidleberg/DKFZ/semester 5/thesis/digital_cell_sort
 table(song_2019@meta.data$disease)
 table(song_2019@meta.data$donor)
 # CD45 (PTPRC)
-features=c("PTPRC")  
+#features=c("PTPRC")  
 cols = c("steelblue","darkred","gold","coral2")
 
 #server.R
@@ -53,12 +54,13 @@ server <- function(input, output) {
   })
   
   output$violin <- renderPlot(
-    if(input$cohort == "song_2019") VlnPlot(song_2019, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
+    if(input$cohort == "song_2019") ggplotly(VlnPlot(song_2019, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
                                             sort = TRUE,pt.size = 0, combine = FALSE)
-    else if(input$cohort == "travaglini_2020") VlnPlot(travaglini_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
-                                                       sort = TRUE,pt.size = 0, combine = FALSE)
-    else VlnPlot(kim_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
-                 sort = TRUE,pt.size = 0, combine = FALSE)
+                                            )
+    else if(input$cohort == "travaglini_2020") ggplotly(VlnPlot(travaglini_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
+                                                       sort = TRUE,pt.size = 0, combine = FALSE))
+    else  ggplotly(VlnPlot(kim_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
+                 sort = TRUE,pt.size = 0, combine = FALSE))
     
   )
 }
