@@ -8,12 +8,20 @@ library(plotly)
 library(grid)
 library(gridExtra)
 #read data
-song_2019 <- readRDS("D:/Uni Heidleberg/DKFZ/semester 5/thesis/digital_cell_sorter/rawdata/song_2019.rds")
+song_2019 <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019.rds")
+nsclc <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/nsclc_primary.rds")
+kim_2020 <- subset(x = nsclc, subset = dataset_origin == "kim_2020")
 
-table(song_2019@meta.data$disease)
-table(song_2019@meta.data$donor)
+#print(table(song_2019@meta.data$dataset_origin))
+#print(table(song_2019@meta.data$disease))
+#print(table(nsclc@meta.data$dataset_origin))
+#print(table(nsclc@meta.data$disease))
+#print(table(kim_2020@meta.data$dataset_origin))
+#print(table(kim_2020@meta.data$disease))
+
+
 # CD45 (PTPRC)
-#features=c("PTPRC")  
+# CD31 (PECAM1)
 cols = c("steelblue","darkred","gold","coral2")
 
 #server.R
@@ -21,7 +29,7 @@ server <- function(input, output) {
   
   output$sample <- renderUI({
     if(input$cohort == "song_2019") myChoices <-  c("adjacent normal","nsclc") 
-    else if(input$cohort == "travaglini_2020") myChoices <-  c("sample1","sample2")
+    else if(input$cohort == "kim_2020") myChoices <-  c("nsclc")
     else myChoices <- c("sample1","sample2","sample3")
     
     selectizeInput(inputId = "sample","Select disease",
@@ -30,7 +38,7 @@ server <- function(input, output) {
   })
   
   features <- eventReactive(input$go, {input$marker})
- 
+  datasets <- eventReactive(input$go, {input$cohort})
   
   data <- eventReactive(input$go, { 
     paste("You chose", input$cancer,"-", input$cohort,"-")
@@ -54,20 +62,20 @@ server <- function(input, output) {
   })
   
   output$plotv <- renderPlotly({
-    if(input$cohort == "song_2019"){
+    if(datasets() == "song_2019"){
       VlnPlot(song_2019, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
                                             sort = TRUE,pt.size = 0, combine = FALSE)
      
       ggplotly(ggplot2::last_plot())
     } 
     
-    else if(input$cohort == "travaglini_2020") {
-      VlnPlot(travaglini_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
+    else if(datasets() == "travaglini_2020") {
+      VlnPlot(nsclc, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
                                                        sort = TRUE,pt.size = 0, combine = FALSE)
       ggplotly(ggplot2::last_plot())
     }
     
-    else{
+    else if(datasets() == "kim_2020"){
       VlnPlot(kim_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
                              sort = TRUE,pt.size = 0, combine = FALSE)
       ggplotly(ggplot2::last_plot())        

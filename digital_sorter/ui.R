@@ -42,7 +42,7 @@ ui <-fluidPage(
                        selectizeInput(inputId = "marker", 
                                       label= "master markers",
                                       multiple = F, 
-                                      choices = c("CD45","EPCAM","PTPRC"),
+                                      choices = c("PECAM1","EPCAM","PTPRC"),
                                       selected = c("PTPRC"))
                        ),
                      
