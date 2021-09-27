@@ -1,6 +1,6 @@
 library(shiny)
 library(Seurat)
-library(SeuratDisk)
+#library(SeuratDisk) #for saving file
 library(dplyr)
 library(reshape2)
 library(ggplot2)
@@ -53,19 +53,28 @@ server <- function(input, output) {
     genes()
   })
   
-  violin_plot <- renderPlot({
-    if(input$cohort == "song_2019") VlnPlot(song_2019, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
-                                            sort = TRUE,pt.size = 0, combine = FALSE)
-    else if(input$cohort == "travaglini_2020") VlnPlot(travaglini_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
-                                                       sort = TRUE,pt.size = 0, combine = FALSE)
-    else  VlnPlot(kim_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
-                  sort = TRUE,pt.size = 0, combine = FALSE)
-  }) 
-  violin_plot
-  
-  
   output$plotv <- renderPlotly({
-  ggplotly(ggplot2::last_plot())
-})
+    if(input$cohort == "song_2019"){
+      VlnPlot(song_2019, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
+                                            sort = TRUE,pt.size = 0, combine = FALSE)
+     
+      ggplotly(ggplot2::last_plot())
+    } 
+    
+    else if(input$cohort == "travaglini_2020") {
+      VlnPlot(travaglini_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
+                                                       sort = TRUE,pt.size = 0, combine = FALSE)
+      ggplotly(ggplot2::last_plot())
+    }
+    
+    else{
+      VlnPlot(kim_2020, features(), split.by = "disease", group.by = "annotation.l2", cols=cols,
+                             sort = TRUE,pt.size = 0, combine = FALSE)
+      ggplotly(ggplot2::last_plot())        
+      
+    } 
+    
+  }) 
+  
   
 }
