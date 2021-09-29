@@ -42,7 +42,7 @@ ui <-fluidPage(
                        selectizeInput(inputId = "marker", 
                                       label= "master markers",
                                       multiple = F, 
-                                      choices = c("PECAM1","EPCAM","PTPRC"),
+                                      choices = c("PTPRC","EPCAM","PECAM1"),
                                       selected = c("PTPRC"))
                        ),
                      
@@ -75,6 +75,8 @@ ui <-fluidPage(
                           plotlyOutput("plotv")
                           ),
                  tabPanel("Dot Plot",
+                          plotlyOutput("plotd1"),
+                          plotlyOutput("plotd2")
                  ),
                  tabPanel("tSNEs",
                  ),
