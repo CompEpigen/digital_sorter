@@ -48,7 +48,7 @@ ui <-fluidPage(
                      
       
       selectizeInput(
-        inputId = "cohort", label= "Select dataset of interest", choices = c("song_2019","travaglini_2020","kim_2020"), 
+        inputId = "cohort", label= "Select dataset of interest", choices = c("song_2019","nsclc_primary"), 
         selected = NULL), 
       
       uiOutput("sample"),
