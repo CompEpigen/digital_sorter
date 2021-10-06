@@ -4,11 +4,6 @@ library(shinythemes)
 
 
 
-#Import Data
-genelist <- c('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
-              'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
-
-
 # Define UI
 ui <-fluidPage(
   useShinyjs(),
@@ -132,7 +127,7 @@ ui <-fluidPage(
                  ),
                  tabPanel("Level 4",
                  )
-      )
+      )#navbarPage end
       
       
     )#main panel end
