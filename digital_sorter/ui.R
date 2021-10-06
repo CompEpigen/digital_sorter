@@ -3,13 +3,15 @@ library(shiny)
 library(shinythemes)
 
 
+
 #Import Data
- genelist <- c('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
-               'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
+genelist <- c('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
+              'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
 
 
 # Define UI
 ui <-fluidPage(
+  useShinyjs(),
   
   h1("Digital Cell Sorter"), 
   p(style = "font-family:Impact"),
@@ -24,36 +26,31 @@ ui <-fluidPage(
       #width = 3,
       
       
+  
+      #cancer
+      selectizeInput(inputId ="cancer", label= "Select cancer types:", choices = c("Lung","t.b.c."), selected = "Lung"),
+      
+      #show master markers after selecting cancer type
+      p(strong("Masters markers :")) ,                
+      verbatimTextOutput("master_markers"),
+      
+      
+      #select dataset (choices depends on cancer)                 
+      uiOutput("cohort"),
+      
+      
+      actionButton("go", "Draw main violin plots!"),
+      
+      tags$hr(),
+      
       #gene
-      selectizeInput(inputId = "gene", label= "Select genes",
-                     choices = genelist,
-                     selected = NULL,
-                     multiple = TRUE,
-                     options = list(
-                       placeholder = 'Type to search for gene',
-                       onInitialize = I('function() { this.setValue(""); }')
-                     )
-      ),
-     
-      #cancer-lung
-      checkboxGroupInput(inputId ="cancer", label= "Select cancer types", choices = "Lung", selected = "Lung"),
-      #markers
-      conditionalPanel('input.cancer == "Lung"', 
-                       selectizeInput(inputId = "marker", 
-                                      label= "master markers",
-                                      multiple = F, 
-                                      choices = c("PTPRC","EPCAM","PECAM1"),
-                                      selected = c("PTPRC"))
-                       ),
-                     
+      uiOutput("sample_se"),
       
-      selectizeInput(
-        inputId = "cohort", label= "Select dataset of interest", choices = c("song_2019","nsclc_primary"), 
-        selected = NULL), 
+      uiOutput("gene"),
       
-      uiOutput("sample"),
-                       
-      actionButton("go", "Go")
+      
+      checkboxInput(inputId= "testDGE", label="Automatically select differentially expressed genes", value = FALSE, width = NULL),
+      actionButton("levelplot", "Draw plots for each level!")
       
     ),#side panel end
     
@@ -65,28 +62,81 @@ ui <-fluidPage(
                  tabPanel(icon("home"),
                           
                           fluidRow(
-                            textOutput("result1"),textOutput("result2"),
+                            column(width=8, offset=3, #Tree plot
+                                   conditionalPanel(
+                                     condition = "input.cancer == 'Lung'",
+                                     img(src = "tree.PNG", width=680, height=500)  
+                                   ),
+                                   conditionalPanel(
+                                     condition = "input.cancer == 't.b.c.'",
+                                     h4("Tree plot t.b.c.")
+                                   )
+                            ) ),
+                          fluidRow(
+                            column(width=12,#violin plots
+                                   h4("Level 1: CD45 (PTPRC)"),
+                                   plotlyOutput("plotv_h1"),
+                                   h4("Level 2: EPCAM"),
+                                   plotlyOutput("plotv_h2"),
+                                   h4("Level 3: PECAM1 (CD31)"),
+                                   plotlyOutput("plotv_h3")
+                            )
+                          )
+                          
+                 ), #home end
+                 tabPanel("Level 1",
+                           fluidRow( #violin plot
+                            column(width=12, plotlyOutput("plotv1"))
+                            
+                          ),
+                          
+                          fluidRow(#dot plot
                             tags$hr(),
-                            print("You chose gene(s) "),
-                            textOutput("result3")
+                            h4(textOutput("dotplot_title1")),
+                            column(width=8, style = "height:500px",
+                                   plotOutput("plotd1_1")),
+                            column(width=4,
+                                  # dataTableOutput("table1_1")
                                   )
+                            
                           ),
-                 tabPanel("Violin Plot",
-                          plotlyOutput("plotv")
+                         
+                          fluidRow(#dot plot
+                            h4(textOutput("dotplot_title2")),
+                            column(width=8, style = "height:500px",
+                                  plotOutput("plotd1_2")
+                                  ),
+                            column(width=4,
+                                   #dataTableOutput("table1_2")
+                                   )
+                            
+                          )
+                 ),
+                 tabPanel("Level 2",
+                          fluidRow( #violin plot
+                            plotlyOutput("plotv2")
                           ),
-                 tabPanel("Dot Plot",
-                          plotlyOutput("plotd1"),
-                          plotlyOutput("plotd2")
+                          
+                          fluidRow( #dot plot
+                            # plotlyOutput("plotd1")
+                          )
                  ),
-                 tabPanel("tSNEs",
+                 tabPanel("Level 3",
+                          fluidRow( #violin plot
+                            plotlyOutput("plotv3")
+                          ),
+                          
+                          fluidRow( #dot plot
+                            # plotlyOutput("plotd1")
+                          )
                  ),
-                 tabPanel("Marker Dot Plot (FACS)",
+                 tabPanel("Level 4",
                  )
       )
       
       
     )#main panel end
-     
+    
   )#side bar layout end
-      
+  
 ) #page end

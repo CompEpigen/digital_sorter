@@ -8,6 +8,7 @@ library(ggplot2)
 library(plotly)
 library(grid)
 library(gridExtra)
+library(shinyjs)
 
 library(profvis)
 
