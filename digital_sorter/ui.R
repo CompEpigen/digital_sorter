@@ -7,8 +7,7 @@ library(dashboardthemes)
 
 # Define UI
 ui <- dashboardPage(skin = "blue",
-                   
-                  
+                    
                     #1. header
                     dashboardHeader(
                       title = HTML("Digital Cell Sorter"), 
@@ -25,14 +24,13 @@ ui <- dashboardPage(skin = "blue",
                     
                     #2. side bar
                     dashboardSidebar(
+                      useShinyjs(),  # Set up shinyjs
                       width = 300,
                       sidebarMenu(
                         id = 'sidebar',
+                        
                         ## 1st tab show the Main dashboard -----------
                         menuItem( "Main Dashboard", tabName = 'dashboard', icon = icon('tachometer-alt')),
-                        
-                        useShinyjs(),
-                        
                         
                                          
                         ## 2nd tab shows results ----------
@@ -59,6 +57,7 @@ ui <- dashboardPage(skin = "blue",
                     dashboardBody(
                       
                       mainPanel(
+                        useShinyjs(),  # Set up shinyjs
                         ## 3.1 Dashboard body --------------
                         tabItems(
                           ## 3.1.1 Main dashboard ----------------------------------------------------------
@@ -140,7 +139,7 @@ ui <- dashboardPage(skin = "blue",
                                    ),#fluid row end
                                    fluidRow(#dot plot
                                      
-                                   )#fluid flow end
+                                   )#fluid row end
                           ), #tab3 end
                           
                           ## 3.1.4 Result3 ----------------------------------------------------------
