@@ -9,6 +9,8 @@ library(plotly)
 library(grid)
 library(gridExtra)
 library(shinyjs)
+library(shinydashboard)
+library(shinyWidgets)
 
 library(profvis)
 
