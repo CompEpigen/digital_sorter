@@ -15,15 +15,15 @@ ui <-dashboardPage(
     disable = FALSE, 
     titleWidth  = 300,
     dropdownMenu( type = "notifications", badgeStatus = NULL, icon = icon('comment'), headerText = NULL,
-                  messageItem("Feedback and suggestions",
-                              "",
-                              time = NULL,
-                              icon = icon("envelope"),
-                              href = "mailto:c.lee@dkfz-heidelberg.de")
-    )
+              messageItem("Feedback and suggestions",
+                          "",
+                          time = NULL,
+                          icon = icon("envelope"),
+                          href = "mailto:c.lee@dkfz-heidelberg.de")
+            )
   ), #header end
   
-  
+
   
   #2. side bar
   dashboardSidebar(
@@ -49,7 +49,7 @@ ui <-dashboardPage(
                 menuSubItem('Level 4', tabName = "result4")
                 
       ),
-      
+     
       
       
       ## 3rd tab Data source, definition , i.e., help ---------------
@@ -67,65 +67,69 @@ ui <-dashboardPage(
                
                fluidRow(
                  box(title = "Inputs", status= "success", solidHeader = TRUE, width=3,
-                     #cancer
-                     selectizeInput(inputId ="cancer", label= "Select cancer types:", choices = c("Lung","t.b.c."), selected = "Lung"),
-                     
-                     #show master markers after selecting cancer type
-                     p(strong("Masters markers :")) ,                
-                     verbatimTextOutput("master_markers"),
-                     
-                     
-                     #select dataset (choices depends on cancer)                 
-                     uiOutput("cohort"),
-                     
-                     
-                     actionBttn("go", "Draw main violin plots!", style = "jelly", color = "success",size = "sm")
-                 ),
+                        #cancer
+                        selectizeInput(inputId ="cancer", label= "Select cancer types:", choices = c("Lung","t.b.c."), selected = "Lung"),
+                        
+                        #show master markers after selecting cancer type
+                        p(strong("Masters markers :")) ,                
+                        verbatimTextOutput("master_markers"),
+                        
+                        
+                        #select dataset (choices depends on cancer)                 
+                        uiOutput("cohort"),
+                        
+                        
+                        actionBttn("go", "Draw main violin plots!", style = "jelly", color = "success",size = "sm")
+                  ),
                  box(title = "Tree plot", status="warning", solidHeader = TRUE, width=9,
-                     
-                     #Tree plot
-                     conditionalPanel(
-                       condition = "input.cancer == 'Lung'",
-                       img(src = "tree.PNG", width=680, height=500)  
-                     ),
-                     conditionalPanel(
-                       condition = "input.cancer == 't.b.c.'",
-                       h4("Tree plot t.b.c.")
-                     )
-                 )
-               ), #fluid row end
+                        
+                        #Tree plot
+                        conditionalPanel(
+                          condition = "input.cancer == 'Lung'",
+                          img(src = "tree.PNG", width=680, height=500)  
+                        ),
+                        conditionalPanel(
+                          condition = "input.cancer == 't.b.c.'",
+                          h4("Tree plot t.b.c.")
+                        )
+                  )
+                 ), #fluid row end
                fluidRow(
                  tabBox(title = "Violin plots", 
                         id="vplots", 
                         width=12, side= "left",
                         tabPanel("Level 1: CD45 (PTPRC)", 
-                                 plotlyOutput("plotv_h1")),
+                                 plotOutput("plotv_h1")),
                         tabPanel("Level 2: EPCAM", 
-                                 plotlyOutput("plotv_h2")),
+                                 plotOutput("plotv_h2")),
                         tabPanel("Level 3: PECAM1 (CD31)", 
-                                 plotlyOutput("plotv_h3"))
+                                 plotOutput("plotv_h3"))
                  )
                )#fluid row end
       ), #tab1 end
       
       ## 3.1.2 Result1 ----------------------------------------------------------
-      
+ 
       tabItem( tabName = 'result1',
-               
+      
                fluidRow(#violin plot
-                 plotlyOutput("plotv1")
-               ),#fluid row end
+                 h3("Level 1 Violin plot"),
+                 tags$hr(),
+                        plotlyOutput("plotv1")
+                 ),#fluid row end
                fluidRow(#dot plot
                  tags$hr(),
+                 h3("Level 1 Dot plot"),
                  h4(textOutput("dotplot_title1")),
-                 column(width=8, style = "height:500px",
-                        plotOutput("plotd1")),
-                 column(width=4,
+                 column(width=7, style = "height:200px;",
+                        plotOutput("plotd1")
+                 ),
+                 column(width=5,
                         dataTableOutput("table1")
                  )
                  
                )#fluid row end
-      ), #tab2 end
+            ), #tab2 end
       
       ## 3.1.3 Result2 ----------------------------------------------------------
       
@@ -133,7 +137,8 @@ ui <-dashboardPage(
                
                
                fluidRow(
-                 plotlyOutput("plotv2")
+                 h3("Level 2 Violin plot"),
+                  plotlyOutput("plotv2")
                  
                ),#fluid row end
                fluidRow(#dot plot
@@ -146,14 +151,15 @@ ui <-dashboardPage(
       
       tabItem( tabName = 'result3',
                fluidRow(
-                 plotlyOutput("plotv3")
+                 h3("Level 3 Violin plot"),
+                  plotlyOutput("plotv3")
                  
                ),#fluid row end
                
                fluidRow(#dot plot
                  
-                 
-               )#fluid row end
+                        
+                 )#fluid row end
       ), #tab4 end
       
       ## 3.1.5 Result4 ----------------------------------------------------------
@@ -161,20 +167,20 @@ ui <-dashboardPage(
       tabItem( tabName = 'result4',
                
                fluidRow(
-                 
-                 
+                 h3("Level 4 Violin plot is the same as Level 3"),
+          
                ),#fluid row end
                fluidRow(#dot plot
-                 
-                 
-               )#fluid row end
+                
+                        
+                 )#fluid row end
       ), #tab5 end
       ## 3.1.6 FAQs ----------------------------------------------------------
       
       tabItem( tabName = 'help',
                
                fluidRow(
-                 h4("Tutorial")
+                h3("Tutorial and FAQs")
                  
                )
       ) #tab6 end

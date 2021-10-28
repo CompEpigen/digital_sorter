@@ -72,31 +72,36 @@ server <- function(input, output) {
     else shinyjs::enable(id="gene") 
   })
   
+
+  
   
   ## Event reactive objects #### 
   datasets <- eventReactive(input$go, {input$cohort})
   
   marker_list <- eventReactive(input$cancer == "Lung", c("PTPRC","EPCAM","PECAM1"))
-  plot_marker <- eventReactive(input$cancer == "Lung", c("PTPRC+","EPCAM+","PECAM1+","PECAM1-"))
+  plot_marker <- eventReactive(input$cancer == "Lung", c("PTPRC+","PTPRC-","EPCAM+","EPCAM-","PECAM1+","PECAM1-"))
   
   
   sample_types <- eventReactive(input$levelplot, {input$sample})
   
-  genes <- eventReactive(input$dotplot, { 
-    paste(input$gene[1:length(input$gene)])
+  genes <- eventReactive(input$levelplot, { 
+    if (input$testDGE) return(genelist)
+    else    paste(input$gene[1:length(input$gene)])
   })
+  
+ 
   
   output$dotplot_title1 <- renderText({
     if(input$cancer == "Lung"){plot_marker()[1]}else {"to be continued"}
   })
   output$dotplot_title2 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[2]}else {"to be continued"}
-  })
-  output$dotplot_title3 <- renderText({
     if(input$cancer == "Lung"){plot_marker()[3]}else {"to be continued"}
   })
+  output$dotplot_title3 <- renderText({
+    if(input$cancer == "Lung"){plot_marker()[5]}else {"to be continued"}
+  })
   output$dotplot_title4 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[4]}else {"to be continued"}
+    if(input$cancer == "Lung"){plot_marker()[6]}else {"to be continued"}
   })
   
   ## Violin Plot #### 
@@ -109,12 +114,11 @@ server <- function(input, output) {
       VlnPlot(song_2019,marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols,
               sort = TRUE,pt.size = 0, combine = FALSE)
       
-      ggplotly(ggplot2::last_plot())
       
     }else if(datasets() == "nsclc_primary") {#not yet finished
       VlnPlot(nsclc, marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols,
               sort = TRUE,pt.size = 0, combine = FALSE)
-      ggplotly(ggplot2::last_plot())
+     
     }
   })
   
@@ -126,14 +130,13 @@ server <- function(input, output) {
       VlnPlot(song_2019,marker_list()[2], split.by = "disease", group.by = "annotation.l2", cols=cols,
               sort = TRUE,pt.size = 0, combine = FALSE)
       
-      ggplotly(ggplot2::last_plot())
-      
+     
     }else if(datasets() == "nsclc_primary") {#not yet finished
       VlnPlot(nsclc, marker_list()[2], split.by = "disease", group.by = "annotation.l2", cols=cols,
               sort = TRUE,pt.size = 0, combine = FALSE)+ theme(legend.text=element_text(size=10), 
                                                                axis.text=element_text(size=10), 
                                                                legend.title=element_text(size=10))
-      ggplotly(ggplot2::last_plot())
+     
     }
   })
   v_h3 <-eventReactive(input$go,{
@@ -142,19 +145,17 @@ server <- function(input, output) {
       VlnPlot(song_2019,marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols,
               sort = TRUE,pt.size = 0, combine = FALSE)
       
-      ggplotly(ggplot2::last_plot())
       
     }else if(datasets() == "nsclc_primary") {#not yet finished
       VlnPlot(nsclc, marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols,
               sort = TRUE,pt.size = 0, combine = FALSE)+ theme(legend.text=element_text(size=10), 
                                                                axis.text=element_text(size=10), 
                                                                legend.title=element_text(size=10))
-      ggplotly(ggplot2::last_plot())
     } 
   })
-  output$plotv_h1 <- renderPlotly(v_h1())  
-  output$plotv_h2 <- renderPlotly(v_h2()) 
-  output$plotv_h3 <- renderPlotly(v_h3()) 
+  output$plotv_h1 <- renderPlot(v_h1())  
+  output$plotv_h2 <- renderPlot(v_h2()) 
+  output$plotv_h3 <- renderPlot(v_h3()) 
   
   #Level1: CD45 (PTPRC) 
   output$plotv1 <- renderPlotly({
@@ -229,29 +230,30 @@ server <- function(input, output) {
   
   ## Dot plot ####
   
-  #Level1
+  ## draw dot plot and save as png
   d1 <- eventReactive(input$levelplot,{
     if(datasets() == "song_2019"){
       
-      song_2019_selected <- song_split[[sample_types()]]
-      ob1_1 <- subset(x = song_2019_selected, subset = split1 == plot_marker()[1])
-      DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=10),
-                                                                                            axis.text=element_text(size=10),
-                                                                                            axis.title=element_text(size=12),
-                                                                                            legend.title=element_text(size=10))
+        song_2019_selected <- song_split[[sample_types()]]
+        ob1_1 <- subset(x = song_2019_selected, subset = split1 == plot_marker()[1])
+        DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                              axis.text=element_text(size=12),
+                                                                                              axis.title=element_text(size=14),
+                                                                                              legend.title=element_text(size=12))
+       
     }else if(datasets() == "nsclc_primary") {#not yet finished
-      DotPlot(nsclc$`PTPRC+`, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(axis.text=element_text(size=10))
-    }
+      
+      DotPlot(nsclc$`PTPRC+`, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(axis.text=element_text(size=12))
+      
+      }
   })
   
   output$plotd1 <- renderPlot(d1())
   
   
-  
-  
   ## table next to the dot plot #### 
   output$table1 <- renderDataTable(d1()[["data"]], 
-                                   options = list(pageLength = 5)
+                                     options = list(pageLength = 5)
   )
   
   
