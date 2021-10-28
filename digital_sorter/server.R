@@ -233,25 +233,25 @@ server <- function(input, output) {
   d1 <- eventReactive(input$levelplot,{
     if(datasets() == "song_2019"){
       
-        song_2019_selected <- song_split[[sample_types()]]
-        ob1_1 <- subset(x = song_2019_selected, subset = split1 == plot_marker()[1])
-        DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=10),
-                                                                                              axis.text=element_text(size=10),
-                                                                                              axis.title=element_text(size=12),
-                                                                                              legend.title=element_text(size=10))
+      song_2019_selected <- song_split[[sample_types()]]
+      ob1_1 <- subset(x = song_2019_selected, subset = split1 == plot_marker()[1])
+      DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=10),
+                                                                                            axis.text=element_text(size=10),
+                                                                                            axis.title=element_text(size=12),
+                                                                                            legend.title=element_text(size=10))
     }else if(datasets() == "nsclc_primary") {#not yet finished
       DotPlot(nsclc$`PTPRC+`, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(axis.text=element_text(size=10))
     }
   })
   
   output$plotd1 <- renderPlot(d1())
- 
+  
   
   
   
   ## table next to the dot plot #### 
   output$table1 <- renderDataTable(d1()[["data"]], 
-                                     options = list(pageLength = 5)
+                                   options = list(pageLength = 5)
   )
   
   
