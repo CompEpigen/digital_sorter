@@ -103,7 +103,9 @@ ui <-dashboardPage(
                         tabPanel("Level 2: EPCAM", 
                                  plotOutput("plotv_h2")),
                         tabPanel("Level 3: PECAM1 (CD31)", 
-                                 plotOutput("plotv_h3"))
+                                 plotOutput("plotv_h3")),
+                        tabPanel("MME (CD10)", 
+                                 plotOutput("plotv_h4"))
                  )
                )#fluid row end
       ), #tab1 end
@@ -121,10 +123,11 @@ ui <-dashboardPage(
                  tags$hr(),
                  h3("Level 1 Dot plot"),
                  h4(textOutput("dotplot_title1")),
-                 column(width=7, style = "height:200px;",
+                 column(width=6, style = "height:200px;",
                         plotOutput("plotd1")
+              
                  ),
-                 column(width=5,
+                 column(width=4,
                         dataTableOutput("table1")
                  )
                  
@@ -142,7 +145,15 @@ ui <-dashboardPage(
                  
                ),#fluid row end
                fluidRow(#dot plot
-                 
+                 tags$hr(),
+                 h3("Level 2 Dot plot"),
+                 h4(textOutput("dotplot_title2")),
+                 column(width=6, style = "height:200px;",
+                        plotOutput("plotd2")
+                   ),
+                 column(width=4,
+                        dataTableOutput("table2")
+                 )
                  
                )#fluid row end
       ), #tab3 end
@@ -157,7 +168,15 @@ ui <-dashboardPage(
                ),#fluid row end
                
                fluidRow(#dot plot
-                 
+                 tags$hr(),
+                 h3("Level 3 Dot plot"),
+                 h4(textOutput("dotplot_title3")),
+                 column(width=6, style = "height:200px;",
+                        plotOutput("plotd3")
+                 ),
+                 column(width=4,
+                        dataTableOutput("table3")
+                 )
                         
                  )#fluid row end
       ), #tab4 end
@@ -166,13 +185,21 @@ ui <-dashboardPage(
       
       tabItem( tabName = 'result4',
                
-               fluidRow(
-                 h3("Level 4 Violin plot is the same as Level 3"),
+               fluidRow(style = "height:300px;",
+                 h3("Level 4 Violin plot is the same as Level 3")
           
                ),#fluid row end
                fluidRow(#dot plot
+                 tags$hr(),
+                 h3("Level 4 Dot plot"),
+                 h4(textOutput("dotplot_title4")),
+                 column(width=6, style = "height:200px;",
+                        plotOutput("plotd4")
+                 ),
+                 column(width=4,
+                        dataTableOutput("table4")
                 
-                        
+                 )      
                  )#fluid row end
       ), #tab5 end
       ## 3.1.6 FAQs ----------------------------------------------------------

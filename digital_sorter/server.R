@@ -10,11 +10,11 @@ library(gridExtra)
 library(shinyjs)
 
 #To-do: loading a data automatically (for loop?)
-song_2019 <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019.rds")
+song_2019 <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019_addsplits.rds")
 #nsclc <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/nsclc_primary.rds")
 
 song_split <- SplitObject(song_2019, split.by = "disease")
-genelist <- c("CD8A","CD8B","CD4", "MRC1","CD14","SIGLEC1") #to be changed by cell-surface marker list
+genelist <-readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/cell.surface.marker.rds") #to be changed by cell-surface marker list
 
 # CD45 (PTPRC)
 # CD31 (PECAM1)
@@ -27,7 +27,7 @@ server <- function(input, output) {
   output$master_markers <- renderText({
     if(input$cancer == "Lung"){
       
-      paste("You selected lung.","Level 1: PTPRC (CD45) +","Level 2: EPCAM +","Level 3: PECAM1 (CD31) +","Level 4: PECAM1 (CD31) -", sep="\n")
+      paste("You selected lung.","Level 1: PTPRC (CD45) +","Level 2: EPCAM +","Level 3: PECAM1 (CD31) +","Level 4: PECAM1 (CD31) -, MME (CD10)+", sep="\n")
       
     }
     else {"to be continued"}
@@ -78,7 +78,7 @@ server <- function(input, output) {
   ## Event reactive objects #### 
   datasets <- eventReactive(input$go, {input$cohort})
   
-  marker_list <- eventReactive(input$cancer == "Lung", c("PTPRC","EPCAM","PECAM1"))
+  marker_list <- eventReactive(input$cancer == "Lung", c("PTPRC","EPCAM","PECAM1","MME"))
   plot_marker <- eventReactive(input$cancer == "Lung", c("PTPRC+","PTPRC-","EPCAM+","EPCAM-","PECAM1+","PECAM1-"))
   
   
@@ -153,9 +153,24 @@ server <- function(input, output) {
                                                                legend.title=element_text(size=10))
     } 
   })
+  v_h4 <-eventReactive(input$go,{
+    if(datasets() == "song_2019"){
+      
+      VlnPlot(song_2019,marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols,
+              sort = TRUE,pt.size = 0, combine = FALSE)
+      
+      
+    }else if(datasets() == "nsclc_primary") {#not yet finished
+      VlnPlot(nsclc, marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols,
+              sort = TRUE,pt.size = 0, combine = FALSE)+ theme(legend.text=element_text(size=10), 
+                                                               axis.text=element_text(size=10), 
+                                                               legend.title=element_text(size=10))
+    } 
+  })
   output$plotv_h1 <- renderPlot(v_h1())  
   output$plotv_h2 <- renderPlot(v_h2()) 
-  output$plotv_h3 <- renderPlot(v_h3()) 
+  output$plotv_h3 <- renderPlot(v_h3())
+  output$plotv_h4 <- renderPlot(v_h4()) 
   
   #Level1: CD45 (PTPRC) 
   output$plotv1 <- renderPlotly({
@@ -211,7 +226,7 @@ server <- function(input, output) {
         song_2019_selected <- song_split[["adjacent normal"]]
       }
       
-      song_2019_selected_1 <- subset(x = song_2019_selected, subset = split1 == plot_marker()[2])
+      song_2019_selected_1 <- subset(x = song_2019_selected, subset = split2 == plot_marker()[4])
       
       VlnPlot(song_2019_selected_1,marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols,
               sort = TRUE,pt.size = 0, combine = FALSE)
@@ -247,13 +262,73 @@ server <- function(input, output) {
       
       }
   })
+  d2 <- eventReactive(input$levelplot,{
+    if(datasets() == "song_2019"){
+      
+      song_2019_selected <- song_split[[sample_types()]]
+      ob1_1 <- subset(x = song_2019_selected, subset = split1 == plot_marker()[2])
+      DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                            axis.text=element_text(size=12),
+                                                                                            axis.title=element_text(size=14),
+                                                                                            legend.title=element_text(size=12))
+      
+    }else if(datasets() == "nsclc_primary") {#not yet finished
+      
+      DotPlot(nsclc$`PTPRC+`, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(axis.text=element_text(size=12))
+      
+    }
+  })
+  d3 <- eventReactive(input$levelplot,{
+    if(datasets() == "song_2019"){
+      
+      song_2019_selected <- song_split[[sample_types()]]
+      ob1_1 <- subset(x = song_2019_selected, subset = split2 == plot_marker()[4])
+      DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                            axis.text=element_text(size=12),
+                                                                                            axis.title=element_text(size=14),
+                                                                                            legend.title=element_text(size=12))
+      
+    }else if(datasets() == "nsclc_primary") {#not yet finished
+      
+      DotPlot(nsclc$`PTPRC+`, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(axis.text=element_text(size=12))
+      
+    }
+  })
+  d4 <- eventReactive(input$levelplot,{
+    if(datasets() == "song_2019"){
+      
+      song_2019_selected <- song_split[[sample_types()]]
+      ob1_1 <- subset(x = song_2019_selected, subset = split3 == plot_marker()[6])
+      DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                            axis.text=element_text(size=12),
+                                                                                            axis.title=element_text(size=14),
+                                                                                            legend.title=element_text(size=12))
+      
+    }else if(datasets() == "nsclc_primary") {#not yet finished
+      
+      DotPlot(nsclc$`PTPRC+`, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(axis.text=element_text(size=12))
+      
+    }
+  })
   
   output$plotd1 <- renderPlot(d1())
+  output$plotd2 <- renderPlot(d2())
+  output$plotd3 <- renderPlot(d3())
+  output$plotd4 <- renderPlot(d4())
   
   
   ## table next to the dot plot #### 
   output$table1 <- renderDataTable(d1()[["data"]], 
                                      options = list(pageLength = 5)
+  )
+  output$table2 <- renderDataTable(d2()[["data"]], 
+                                   options = list(pageLength = 5)
+  )
+  output$table3 <- renderDataTable(d3()[["data"]], 
+                                   options = list(pageLength = 5)
+  )
+  output$table4 <- renderDataTable(d4()[["data"]], 
+                                   options = list(pageLength = 5)
   )
   
   
