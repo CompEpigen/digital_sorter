@@ -72,7 +72,6 @@ ui <-dashboardPage(
                         selectizeInput(inputId ="cancer", label= "Select cancer types:", choices = c("Lung","t.b.c."), selected = "Lung"),
                         
                         #show master markers after selecting cancer type
-                        p(strong("Masters markers :")) ,                
                         uiOutput("master_markers"),
                         
                         
@@ -99,13 +98,13 @@ ui <-dashboardPage(
                  tabBox(title = "Violin plots of all cell types", 
                         id="vplots", 
                         width=12, side= "left",
-                        tabPanel("CD45 (PTPRC)", 
+                        tabPanel("Marker 1", 
                                  plotOutput("plotv_h1")),
-                        tabPanel("EPCAM", 
+                        tabPanel("Marker 2", 
                                  plotOutput("plotv_h2")),
-                        tabPanel("PECAM1 (CD31)", 
+                        tabPanel("Marker 3", 
                                  plotOutput("plotv_h3")),
-                        tabPanel("MME (CD10)", 
+                        tabPanel("Marker 4", 
                                  plotOutput("plotv_h4"))
                  )
                )#fluid row end

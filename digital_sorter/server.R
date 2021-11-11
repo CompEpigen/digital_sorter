@@ -81,52 +81,49 @@ server <- function(input, output, update_gene_list=F) {
     else shinyjs::enable(id="gene") 
   })
   
-  marker_gene_table <- eventReactive(input$testDGE,{
-    
-      seurat <- getMarkerGenes(
-        song_2019,
-        assay = 'RNA',
-        organism = 'hg',
-        groups = c('annotation.l2'),
-        name = 'cerebro_seurat',
-        only_pos = TRUE,
-        min_pct = 0.7,
-        thresh_logFC = 0.25,
-        thresh_p_val = 0.01,
-        test = 'wilcox',
-        verbose = TRUE
-      )
-      marker_gene <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]][["gene"]]
-      marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]]
-      marker_gene_table <- marker_gene_table %>% filter(marker_gene_table$on_cell_surface =="TRUE")%>%
-        arrange(desc(avg_log2FC))
-      return(marker_gene_table)
-  })
-  
-
-  
+ 
   
   ## Event reactive objects #### 
   datasets <- eventReactive(input$go, {input$cohort})
   
   #should also be reactive (by create a text file and the following vectors could be extracted from the file)
   #or should be user defined (haven't work on it)
-  marker_list <- eventReactive(input$cancer == "Lung", c("PTPRC","EPCAM","PECAM1","MME"))
+  #marker_list <- eventReactive(input$cancer == "Lung", c("PTPRC","EPCAM","PECAM1","MME"))
+  marker_list <- eventReactive(input$go, { 
+      paste(input$marker[1:length(input$marker)])
+  })
   plot_marker <- eventReactive(input$cancer == "Lung", c("PTPRC+","PTPRC-","EPCAM+","EPCAM-","PECAM1+","PECAM1-","MME+","MME-"))
   
   
   sample_types <- eventReactive(input$levelplot, {input$sample})
   
   genes <- eventReactive(input$levelplot, { 
-    if (input$testDGE){
-      #marker_gene_table <- marker_gene_table()
-      #gene_dge <- unique(marker_gene_table$gene)[1:10]
-      gene_dge <- c("SPARC","LY6D","CLU","TFPI","AREG","EGFL7","HYAL2","VAMP5", "C3","HLA-E") 
-      return(gene_dge)
-    }else    paste(input$gene[1:length(input$gene)])
+    paste(input$gene[1:length(input$gene)])
   })
   
- 
+
+  marker_gene_table <- eventReactive(input$testDGE,{
+    
+    seurat <- getMarkerGenes(
+      song_2019,
+      assay = 'RNA',
+      organism = 'hg',
+      groups = c('annotation.l2'),
+      name = 'cerebro_seurat',
+      only_pos = TRUE,
+      min_pct = 0.7,
+      thresh_logFC = 0.25,
+      thresh_p_val = 0.01,
+      test = 'wilcox',
+      verbose = TRUE
+    )
+    #marker_gene <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]][["gene"]]
+    marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]]
+    marker_gene_table <- marker_gene_table %>% filter(marker_gene_table$on_cell_surface =="TRUE")%>%
+      arrange(desc(avg_log2FC))
+    return(marker_gene_table)
+  })
+  
   
   output$dotplot_title1 <- renderText({
     if(input$cancer == "Lung"){plot_marker()[1]}else {"to be continued"}
@@ -310,46 +307,80 @@ server <- function(input, output, update_gene_list=F) {
   ## draw dot plot and save as png
   d1 <- eventReactive(input$levelplot,{
     if(datasets() == "song_2019"){
-      
-        song_2019_selected <- song_split[[sample_types()]]
-        ob1_1 <- subset(x = song_2019_selected, subset = split1 == plot_marker()[1])
+      song_2019_selected <- song_split[[sample_types()]]
+      ob1_1 <- subset(x = song_2019_selected, subset = split1 == plot_marker()[1])
+      if (input$testDGE){
+        cell_types1 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
+        marker_gene_table <- marker_gene_table()
+        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types1,]
+        gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+        #gene_dge <- c("AREG","HLA-DPB1","HLA-DRB1","HLA-DPA1","HLA-DRA","CD74","PLAUR","MRC1", "TYROBP","FCER1G-E") 
+        DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                                 axis.text=element_text(size=12),
+                                                                                                 axis.title=element_text(size=14),
+                                                                                                 legend.title=element_text(size=12))
+        
+      }else{
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
                                                                                               axis.text=element_text(size=12),
                                                                                               axis.title=element_text(size=14),
                                                                                               legend.title=element_text(size=12))
-       
+        }
     }else if(datasets() == "nsclc_primary") {#not yet finished
       
       DotPlot(nsclc$`PTPRC+`, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(axis.text=element_text(size=12))
       
       }
   })
+  
   d2 <- eventReactive(input$levelplot,{
     if(datasets() == "song_2019"){
-      
       song_2019_selected <- song_split[[sample_types()]]
       ob1_1 <- subset(x = song_2019_selected, subset = split1 == plot_marker()[2])
-      DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
-                                                                                            axis.text=element_text(size=12),
-                                                                                            axis.title=element_text(size=14),
-                                                                                            legend.title=element_text(size=12))
-      
+      if(input$testDGE){ 
+      cell_types2 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
+      marker_gene_table <- marker_gene_table()
+      marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types2,]
+      gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+      #gene_dge <- c("SPARC","CLU","TFPI","EGFL7","HYAL2","VAMP5","C3","HLA-E", "BST2","CD24")  
+      DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                             axis.text=element_text(size=12),
+                                                                                             axis.title=element_text(size=14),
+                                                                                             legend.title=element_text(size=12))
+      }else{
+        DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                              axis.text=element_text(size=12),
+                                                                                              axis.title=element_text(size=14),
+                                                                                              legend.title=element_text(size=12))
+        }
     }else if(datasets() == "nsclc_primary") {#not yet finished
       
       DotPlot(nsclc$`PTPRC+`, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(axis.text=element_text(size=12))
       
     }
   })
+  
   d3 <- eventReactive(input$levelplot,{
     if(datasets() == "song_2019"){
-      
       song_2019_selected <- song_split[[sample_types()]]
       ob1_1 <- subset(x = song_2019_selected, subset = split2 == plot_marker()[4])
-      DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
-                                                                                            axis.text=element_text(size=12),
-                                                                                            axis.title=element_text(size=14),
-                                                                                            legend.title=element_text(size=12))
-      
+      if(input$testDGE){
+        cell_types3 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
+        marker_gene_table <- marker_gene_table()
+        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types3,]
+        gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+        #gene_dge <- c("SPARC","CLU","TFPI","CD59","SDC2","HYAL2","TGFBR2","APP", "ENG","LGALS1") 
+        DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                               axis.text=element_text(size=12),
+                                                                                               axis.title=element_text(size=14),
+                                                                                               legend.title=element_text(size=12))
+        
+      }else{
+        DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                                 axis.text=element_text(size=12),
+                                                                                                 axis.title=element_text(size=14),
+                                                                                                 legend.title=element_text(size=12))
+        }
     }else if(datasets() == "nsclc_primary") {#not yet finished
       
       DotPlot(nsclc$`PTPRC+`, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(axis.text=element_text(size=12))
@@ -358,14 +389,25 @@ server <- function(input, output, update_gene_list=F) {
   })
   d4 <- eventReactive(input$levelplot,{
     if(datasets() == "song_2019"){
-      
       song_2019_selected <- song_split[[sample_types()]]
       ob1_1 <- subset(x = song_2019_selected, subset = split3 == plot_marker()[6])
-      DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
-                                                                                            axis.text=element_text(size=12),
-                                                                                            axis.title=element_text(size=14),
-                                                                                            legend.title=element_text(size=12))
-      
+      if(input$testDGE){
+        cell_types4 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
+        marker_gene_table <- marker_gene_table()
+        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types4,]
+        gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+        #gene_dge <- c("SPARC","SDC2","CD59","LGALS1","TFPI","ITGB1","CD63","CALR", "BST2","TIMP2") 
+        DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                               axis.text=element_text(size=12),
+                                                                                               axis.title=element_text(size=14),
+                                                                                               legend.title=element_text(size=12))
+        
+      }else{
+        DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                              axis.text=element_text(size=12),
+                                                                                              axis.title=element_text(size=14),
+                                                                                              legend.title=element_text(size=12))
+      }
     }else if(datasets() == "nsclc_primary") {#not yet finished
       
       DotPlot(nsclc$`PTPRC+`, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(axis.text=element_text(size=12))
