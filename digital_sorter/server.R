@@ -8,29 +8,38 @@ library(plotly)
 library(grid)
 library(gridExtra)
 library(shinyjs)
+library(cerebroApp)
 
+
+source("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/util.R")
 #To-do: loading a data automatically (for loop?)
 song_2019 <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019_addsplits.rds")
 #nsclc <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/nsclc_primary.rds")
 
 song_split <- SplitObject(song_2019, split.by = "disease")
-genelist <-readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/cell.surface.marker.rds") #to be changed by cell-surface marker list
+
+genelist <-readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/cell.surface.marker.rds") 
+#cell-surface marker list #different from cerebroApp????????????????????
 
 # CD45 (PTPRC)
 # CD31 (PECAM1)
 cols = c("steelblue","darkred","gold","coral2")
 
 #server.R
-server <- function(input, output) {
-  
+server <- function(input, output, update_gene_list=F) {
+  if(update_gene_list){
+    genelist <- get_cell_markers()
+  }
   ##interactive markers####  
-  output$master_markers <- renderText({
-    if(input$cancer == "Lung"){
-      
-      paste("You selected lung.","Level 1: PTPRC (CD45) +","Level 2: EPCAM +","Level 3: PECAM1 (CD31) +","Level 4: PECAM1 (CD31) -, MME (CD10)+", sep="\n")
-      
-    }
-    else {"to be continued"}
+  output$master_markers <- renderUI({
+    if(input$cancer == "Lung") myMarkers <-  c("PTPRC","EPCAM","PECAM1","MME")
+    
+    else myMarkers <- c("t.b.c.")
+    selectizeInput(inputId = "marker", label= "Select master markers (default selected):",
+                   choices = myMarkers,
+                   selected = myMarkers,
+                   multiple = TRUE
+    )
   })
   
   ## select cohort #### 
@@ -56,7 +65,7 @@ server <- function(input, output) {
   
   ## Select Section-genes ####  
   output$gene <- renderUI({
-    selectizeInput(inputId = "gene", label= "Select genes of interest for the dot plot:",
+    selectizeInput(inputId = "gene", label= "Select cell surface marker genes for the dot plots:",
                    choices = genelist,
                    selected = NULL,
                    multiple = TRUE,
@@ -72,21 +81,49 @@ server <- function(input, output) {
     else shinyjs::enable(id="gene") 
   })
   
+  marker_gene_table <- eventReactive(input$testDGE,{
+    
+      seurat <- getMarkerGenes(
+        song_2019,
+        assay = 'RNA',
+        organism = 'hg',
+        groups = c('annotation.l2'),
+        name = 'cerebro_seurat',
+        only_pos = TRUE,
+        min_pct = 0.7,
+        thresh_logFC = 0.25,
+        thresh_p_val = 0.01,
+        test = 'wilcox',
+        verbose = TRUE
+      )
+      marker_gene <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]][["gene"]]
+      marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]]
+      marker_gene_table <- marker_gene_table %>% filter(marker_gene_table$on_cell_surface =="TRUE")%>%
+        arrange(desc(avg_log2FC))
+      return(marker_gene_table)
+  })
+  
 
   
   
   ## Event reactive objects #### 
   datasets <- eventReactive(input$go, {input$cohort})
   
+  #should also be reactive (by create a text file and the following vectors could be extracted from the file)
+  #or should be user defined (haven't work on it)
   marker_list <- eventReactive(input$cancer == "Lung", c("PTPRC","EPCAM","PECAM1","MME"))
-  plot_marker <- eventReactive(input$cancer == "Lung", c("PTPRC+","PTPRC-","EPCAM+","EPCAM-","PECAM1+","PECAM1-"))
+  plot_marker <- eventReactive(input$cancer == "Lung", c("PTPRC+","PTPRC-","EPCAM+","EPCAM-","PECAM1+","PECAM1-","MME+","MME-"))
   
   
   sample_types <- eventReactive(input$levelplot, {input$sample})
   
   genes <- eventReactive(input$levelplot, { 
-    if (input$testDGE) return(genelist)
-    else    paste(input$gene[1:length(input$gene)])
+    if (input$testDGE){
+      #marker_gene_table <- marker_gene_table()
+      #gene_dge <- unique(marker_gene_table$gene)[1:10]
+      gene_dge <- c("SPARC","LY6D","CLU","TFPI","AREG","EGFL7","HYAL2","VAMP5", "C3","HLA-E") 
+      return(gene_dge)
+    }else    paste(input$gene[1:length(input$gene)])
   })
   
  
@@ -95,13 +132,16 @@ server <- function(input, output) {
     if(input$cancer == "Lung"){plot_marker()[1]}else {"to be continued"}
   })
   output$dotplot_title2 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[3]}else {"to be continued"}
+    if(input$cancer == "Lung"){plot_marker()[2]}else {"to be continued"}
   })
   output$dotplot_title3 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[5]}else {"to be continued"}
+    if(input$cancer == "Lung"){plot_marker()[c(2,4)]}else {"to be continued"}
   })
   output$dotplot_title4 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[6]}else {"to be continued"}
+    if(input$cancer == "Lung"){plot_marker()[c(2,4,6)]}else {"to be continued"}
+  })
+  output$dotplot_title5 <- renderText({
+    if(input$cancer == "Lung"){plot_marker()[c(2,4,6,8)]}else {"to be continued"}
   })
   
   ## Violin Plot #### 
@@ -217,7 +257,7 @@ server <- function(input, output) {
   }) 
   
   
-  #Level3&4: PECAM1 (CD31)
+  #Level3: PECAM1 (CD31)
   output$plotv3 <- renderPlotly({
     if(datasets() == "song_2019"){
       if(sample_types()[1] =="nsclc"){
@@ -241,7 +281,29 @@ server <- function(input, output) {
     }
   }) 
   
-  
+  #Level4: MME (CD10)
+  output$plotv4 <- renderPlotly({
+    if(datasets() == "song_2019"){
+      if(sample_types()[1] =="nsclc"){
+        song_2019_selected <- song_split[["nsclc"]]
+      }else if(sample_types()[1] =="adjacent normal"){
+        song_2019_selected <- song_split[["adjacent normal"]]
+      }
+      
+      song_2019_selected_1 <- subset(x = song_2019_selected, subset = split3 == plot_marker()[6])
+      
+      VlnPlot(song_2019_selected_1,marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols,
+              sort = TRUE,pt.size = 0, combine = FALSE)
+      
+      ggplotly(ggplot2::last_plot()) 
+    } 
+    
+    else if(datasets() == "nsclc_primary") {#not yet finished
+      VlnPlot(nsclc, marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols,
+              sort = TRUE,pt.size = 0, combine = FALSE)
+      ggplotly(ggplot2::last_plot()) 
+    }
+  }) 
   
   ## Dot plot ####
   
