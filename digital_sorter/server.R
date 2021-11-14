@@ -11,14 +11,14 @@ library(shinyjs)
 library(cerebroApp)
 
 
-source("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/util.R")
+source("R/util.R")
 #To-do: loading a data automatically (for loop?)
 song_2019 <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019_addsplits.rds")
 #nsclc <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/nsclc_primary.rds")
 
 song_split <- SplitObject(song_2019, split.by = "disease")
 
-genelist <-readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/cell.surface.marker.rds") 
+genelist <-readRDS("R/cell.surface.marker.rds") 
 #cell-surface marker list #different from cerebroApp????????????????????
 
 # CD45 (PTPRC)
@@ -129,13 +129,13 @@ server <- function(input, output, update_gene_list=F) {
     if(input$cancer == "Lung"){plot_marker()[1]}else {"to be continued"}
   })
   output$dotplot_title2 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[2]}else {"to be continued"}
+    if(input$cancer == "Lung"){plot_marker()[c(2,3)]}else {"to be continued"}
   })
   output$dotplot_title3 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[c(2,4)]}else {"to be continued"}
+    if(input$cancer == "Lung"){plot_marker()[c(2,4,5)]}else {"to be continued"}
   })
   output$dotplot_title4 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[c(2,4,6)]}else {"to be continued"}
+    if(input$cancer == "Lung"){plot_marker()[c(2,4,6,7)]}else {"to be continued"}
   })
   output$dotplot_title5 <- renderText({
     if(input$cancer == "Lung"){plot_marker()[c(2,4,6,8)]}else {"to be continued"}
@@ -336,13 +336,13 @@ server <- function(input, output, update_gene_list=F) {
   d2 <- eventReactive(input$levelplot,{
     if(datasets() == "song_2019"){
       song_2019_selected <- song_split[[sample_types()]]
-      ob1_1 <- subset(x = song_2019_selected, subset = split1 == plot_marker()[2])
+      ob1_1 <- subset(x = song_2019_selected, subset = split2 == plot_marker()[3])
       if(input$testDGE){ 
       cell_types2 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
       marker_gene_table <- marker_gene_table()
       marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types2,]
       gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
-      #gene_dge <- c("SPARC","CLU","TFPI","EGFL7","HYAL2","VAMP5","C3","HLA-E", "BST2","CD24")  
+      #gene_dge <- c("SPARC","EGFL7","HYAL2","VAMP5","CLU","C3","HLA-E", "BST2","CD24","TFPI")  
       DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
                                                                                              axis.text=element_text(size=12),
                                                                                              axis.title=element_text(size=14),
@@ -363,13 +363,13 @@ server <- function(input, output, update_gene_list=F) {
   d3 <- eventReactive(input$levelplot,{
     if(datasets() == "song_2019"){
       song_2019_selected <- song_split[[sample_types()]]
-      ob1_1 <- subset(x = song_2019_selected, subset = split2 == plot_marker()[4])
+      ob1_1 <- subset(x = song_2019_selected, subset = split3 == plot_marker()[5])
       if(input$testDGE){
         cell_types3 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
         marker_gene_table <- marker_gene_table()
         marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types3,]
         gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
-        #gene_dge <- c("SPARC","CLU","TFPI","CD59","SDC2","HYAL2","TGFBR2","APP", "ENG","LGALS1") 
+        #gene_dge <- c("SPARC","CLU","TFPI","CD59","HYAL2","TGFBR2", "APP", "ENG","LGALS1" ,"CD9") 
         DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
                                                                                                axis.text=element_text(size=12),
                                                                                                axis.title=element_text(size=14),
