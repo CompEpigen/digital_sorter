@@ -1,0 +1,2541 @@
+"","Cell ontology","annotation.l1","annotation.l2"
+"1","abnormal cell","Alveolar Epithelial Type 1","Adventitial Fibroblast"
+"2","absorptive cell","Alveolar Epithelial Type 2","Airway Smooth Muscle"
+"3","acceleration receptive cell","Artery","Alveolar Epithelial Type 1"
+"4","acid secreting cell","B","Alveolar Epithelial Type 2"
+"5","acidophil cell of pars distalis of adenohypophysis","Basal","Alveolar Fibroblast"
+"6","acinar cell","Basophil/Mast","Artery"
+"7","acinar cell of salivary gland","Bronchial Vessel","B"
+"8","acinar cell of sebaceous gland","Capillary","Basal"
+"9","actinomycete-type spore","Capillary Aerocyte","Basophil/Mast 2"
+"10","activated CD4-negative, CD8-negative type I NK T cell","Capillary Intermediate","Bronchial Vessel 1"
+"11","activated CD4-positive type I NK T cell","CD14+ Monocyte","Bronchial Vessel 2"
+"12","activated CD4-positive, alpha-beta T cell","CD16+ Monocyte","Capillary"
+"13","activated CD4-positive, alpha-beta T cell, human","CD4 T","Capillary Aerocyte"
+"14","activated CD4-positive, CD25-positive, CCR4-positive, alpha-beta regulatory T cell, human","CD8 T","Capillary Intermediate 2"
+"15","activated CD8-positive, alpha-beta T cell","Ciliated","CD4+ Memory/Effector T"
+"16","activated CD8-positive, alpha-beta T cell, human","Club","CD4+ Naive T"
+"17","activated skeletal muscle satellite cell","Dendritic","CD8+ Memory/Effector T"
+"18","activated type II NK T cell","Fibroblast","CD8+ Naive T"
+"19","active chief cell of parathyroid gland","Fibromyocyte","Ciliated"
+"20","adaxial cell","Goblet","Classical Monocyte"
+"21","adepithelial cell","Ionocyte","Club"
+"22","adipocyte of breast","Lymphatic","Differentiating Basal"
+"23","adipocyte of epicardial fat of left ventricle","Macrophage","EREG+ Dendritic"
+"24","adipocyte of epicardial fat of right ventricle","Mucous","Fibromyocyte"
+"25","adipocyte of omentum tissue","Natural Killer","Goblet"
+"26","adipose dendritic cell","Natural Killer T","IGSF21+ Dendritic"
+"27","adipose macrophage","Plasma","Intermediate Monocyte"
+"28","adipose microvascular endothelial cell","Plasmacytoid Dendritic","Ionocyte"
+"29","adrenal cortex chromaffin cell","Proliferating NK/T","Lymphatic"
+"30","adrenal gland glandular cell","Serous","Macrophage"
+"31","adrenal medulla chromaffin cell","Smooth Muscle","Mucous"
+"32","adrenergic neuron","Vein","Myeloid Dendritic Type 1"
+"33","adrenocorticotropic hormone secreting cell",NA,"Myeloid Dendritic Type 2"
+"34","adult endothelial progenitor cell",NA,"Natural Killer"
+"35","adult skeletal muscle myoblast",NA,"Natural Killer T"
+"36","adventitial cell",NA,"Nonclassical Monocyte"
+"37","afferent neuron",NA,"OLR1+ Classical Monocyte"
+"38","AGM hematopoietic stem cell",NA,"Plasma"
+"39","alarm substance cell",NA,"Plasmacytoid Dendritic"
+"40","alkali secreting cell",NA,"Proliferating Basal"
+"41","alpha motor neuron",NA,"Proliferating NK/T"
+"42","alpha-beta intraepithelial T cell",NA,"Proximal Basal"
+"43","alpha-beta T cell",NA,"Serous"
+"44","alpha7 GABAergic cortical interneuron (Mus musculus)",NA,"Signaling Alveolar Epithelial Type 2"
+"45","alternatively activated macrophage",NA,"TREM2+ Dendritic"
+"46","alveolar macrophage",NA,"Vascular Smooth Muscle"
+"47","amacrine cell",NA,"Vein"
+"48","ameloblast",NA,NA
+"49","amine precursor uptake and decarboxylation cell",NA,NA
+"50","Ammon's horn basket cell",NA,NA
+"51","amniocyte",NA,NA
+"52","amnion mesenchymal stem cell",NA,NA
+"53","amnioserosal cell",NA,NA
+"54","amniotic epithelial stem cell",NA,NA
+"55","amniotic stem cell",NA,NA
+"56","amoeboid cell",NA,NA
+"57","amoeboid sperm cell",NA,NA
+"58","anchoring trophoblast",NA,NA
+"59","androgen binding protein secreting cell",NA,NA
+"60","androgen secreting cell",NA,NA
+"61","angioblastic mesenchymal cell",NA,NA
+"62","animal cell",NA,NA
+"63","animal zygote",NA,NA
+"64","annulus pulposus cell",NA,NA
+"65","anorectum goblet cell",NA,NA
+"66","anorectum macrophage",NA,NA
+"67","anterior cone cell (sensu Endopterygota)",NA,NA
+"68","anterior horn motor neuron",NA,NA
+"69","anterior lateral line ganglion neuron",NA,NA
+"70","anterior lateral line nerve glial cell",NA,NA
+"71","anterior lateral line neuromast hair cell",NA,NA
+"72","anterior lateral line neuromast mantle cell",NA,NA
+"73","anterior lateral line neuromast support cell",NA,NA
+"74","anterior lens cell",NA,NA
+"75","anterior visceral endoderm cell",NA,NA
+"76","antibody secreting cell",NA,NA
+"77","anucleate cell",NA,NA
+"78","aortic endothelial cell",NA,NA
+"79","aortic smooth muscle cell",NA,NA
+"80","apocrine cell",NA,NA
+"81","apoptosis fated cell",NA,NA
+"82","appendix glandular cell",NA,NA
+"83","appendix goblet cell",NA,NA
+"84","appendix macrophage",NA,NA
+"85","arachnoid barrier cell",NA,NA
+"86","arcade cell",NA,NA
+"87","arcuate artery cell",NA,NA
+"88","arcuate artery endothelial cell",NA,NA
+"89","arcuate artery smooth muscle cell",NA,NA
+"90","arcuate vein cell",NA,NA
+"91","arcuate vein endothelial cell",NA,NA
+"92","arcuate vein smooth muscle cell",NA,NA
+"93","arthroconidium",NA,NA
+"94","articular chondrocyte",NA,NA
+"95","articular chondrocyte of knee joint",NA,NA
+"96","ascospore",NA,NA
+"97","astrocyte",NA,NA
+"98","astrocyte of the cerebellum",NA,NA
+"99","astrocyte of the cerebral cortex",NA,NA
+"100","astrocyte of the forebrain",NA,NA
+"101","astrocyte of the hippocampus",NA,NA
+"102","astrocyte of the spinal cord",NA,NA
+"103","atrioventricular bundle cell",NA,NA
+"104","attachment cell",NA,NA
+"105","auditory epithelial cell",NA,NA
+"106","auditory epithelial support cell",NA,NA
+"107","auditory hair cell",NA,NA
+"108","autonomic neuron",NA,NA
+"109","B cell",NA,NA
+"110","B cell of anorectum",NA,NA
+"111","B cell of appendix",NA,NA
+"112","B cell of medullary sinus of lymph node",NA,NA
+"113","B cell, CD19-positive",NA,NA
+"114","B-1 B cell",NA,NA
+"115","B-1a B cell",NA,NA
+"116","B-1b B cell",NA,NA
+"117","B-2 B cell",NA,NA
+"118","B220-low CD38-negative unswitched memory B cell",NA,NA
+"119","B220-low CD38-positive IgG-negative class switched memory B cell",NA,NA
+"120","B220-low CD38-positive naive B cell",NA,NA
+"121","B220-low CD38-positive unswitched memory B cell",NA,NA
+"122","B220-positive CD38-negative unswitched memory B cell",NA,NA
+"123","B220-positive CD38-positive IgG-negative class switched memory B cell",NA,NA
+"124","B220-positive CD38-positive naive B cell",NA,NA
+"125","B220-positive CD38-positive unswitched memory B cell",NA,NA
+"126","band form basophil",NA,NA
+"127","band form eosinophil",NA,NA
+"128","band form neutrophil",NA,NA
+"129","barrier cell",NA,NA
+"130","barrier epithelial cell",NA,NA
+"131","basal cell",NA,NA
+"132","basal cell of epidermis",NA,NA
+"133","basal cell of epithelium of bronchus",NA,NA
+"134","basal cell of epithelium of lobular bronchiole",NA,NA
+"135","basal cell of epithelium of respiratory bronchiole",NA,NA
+"136","basal cell of epithelium of terminal bronchiole",NA,NA
+"137","basal cell of epithelium of trachea",NA,NA
+"138","basal cell of olfactory epithelium",NA,NA
+"139","basal cell of prostate epithelium",NA,NA
+"140","basal cell of prostatic acinus",NA,NA
+"141","basal cell of urothelium",NA,NA
+"142","basal epithelial cell of prostatic duct",NA,NA
+"143","basal epithelial cell of tracheobronchial tree",NA,NA
+"144","basal external epithelial cell of tympanic membrane",NA,NA
+"145","basal proper cell of olfactory epithelium",NA,NA
+"146","basidiospore",NA,NA
+"147","basket cell",NA,NA
+"148","basket morphology L2/3 Pvalb-like Sst GABAergic cortical interneuron (Mus musculus)",NA,NA
+"149","basophil",NA,NA
+"150","basophil cell of pars distalis of adenohypophysis",NA,NA
+"151","basophil mast progenitor cell",NA,NA
+"152","basophil progenitor cell",NA,NA
+"153","basophilic erythroblast",NA,NA
+"154","basophilic metamyelocyte",NA,NA
+"155","basophilic myeloblast",NA,NA
+"156","basophilic myelocyte",NA,NA
+"157","basophilic promyelocyte",NA,NA
+"158","Be cell",NA,NA
+"159","Be1 Cell",NA,NA
+"160","Be2 cell",NA,NA
+"161","beige adipocyte",NA,NA
+"162","Bergmann glial cell",NA,NA
+"163","beta motor neuron",NA,NA
+"164","Betz cell",NA,NA
+"165","Betz upper motor neuron",NA,NA
+"166","binucleate cell",NA,NA
+"167","biogenic amine secreting cell",NA,NA
+"168","bipolar neuron",NA,NA
+"169","bitufted neuron",NA,NA
+"170","bladder cell",NA,NA
+"171","bladder microvascular endothelial cell",NA,NA
+"172","bladder urothelial cell",NA,NA
+"173","blastemal cell",NA,NA
+"174","blastoconidium",NA,NA
+"175","blastoderm cell",NA,NA
+"176","blood cell",NA,NA
+"177","blood cell (sensu Nematoda and Protostomia)",NA,NA
+"178","blood vessel endothelial cell",NA,NA
+"179","blood vessel smooth muscle cell",NA,NA
+"180","blue sensitive photoreceptor cell",NA,NA
+"181","Bm1 B cell",NA,NA
+"182","Bm2 B cell",NA,NA
+"183","Bm2' B cell",NA,NA
+"184","Bm3 B cell",NA,NA
+"185","Bm3-delta B cell",NA,NA
+"186","Bm4 B cell",NA,NA
+"187","Bm5 B cell",NA,NA
+"188","Boettcher cell",NA,NA
+"189","bombesin stimulating hormone secreting cell",NA,NA
+"190","bone cell",NA,NA
+"191","bone marrow cell",NA,NA
+"192","bone marrow hematopoietic cell",NA,NA
+"193","bone marrow macrophage",NA,NA
+"194","bone matrix secreting cell",NA,NA
+"195","border cell of cochlea",NA,NA
+"196","border follicle cell",NA,NA
+"197","bottle cell",NA,NA
+"198","brain macroglial cell",NA,NA
+"199","brain microvascular endothelial cell",NA,NA
+"200","brain pericyte",NA,NA
+"201","brainstem motor neuron",NA,NA
+"202","branched duct epithelial cell",NA,NA
+"203","branchiomotor neuron",NA,NA
+"204","bronchial epithelial cell",NA,NA
+"205","bronchial goblet cell",NA,NA
+"206","bronchial smooth muscle cell",NA,NA
+"207","bronchioalveolar stem cell",NA,NA
+"208","bronchioalveolar stem cells",NA,NA
+"209","bronchus fibroblast of lung",NA,NA
+"210","brown fat cell",NA,NA
+"211","brown preadipocyte",NA,NA
+"212","brush border cell of the proximal tubule",NA,NA
+"213","brush border epithelial cell",NA,NA
+"214","brush cell",NA,NA
+"215","brush cell of bronchus",NA,NA
+"216","brush cell of epithelium proper of large intestine",NA,NA
+"217","brush cell of lobular bronchiole",NA,NA
+"218","brush cell of terminal bronchiole",NA,NA
+"219","brush cell of trachea",NA,NA
+"220","brush cell of trachebronchial tree",NA,NA
+"221","buccal mucosa cell",NA,NA
+"222","Caenorhabditis hypodermal cell",NA,NA
+"223","Cajal-Retzius cell",NA,NA
+"224","calcitonin secreting cell",NA,NA
+"225","calvarial osteoblast",NA,NA
+"226","camera-type eye photoreceptor cell",NA,NA
+"227","canopy Lamp5 GABAergic cortical interneuron (Mus musculus)",NA,NA
+"228","cap cell",NA,NA
+"229","CAP motoneuron",NA,NA
+"230","capillary endothelial cell",NA,NA
+"231","carbohydrate secreting cell",NA,NA
+"232","cardiac atrium fibroblast",NA,NA
+"233","cardiac blood vessel endothelial cell",NA,NA
+"234","cardiac endothelial cell",NA,NA
+"235","cardiac glial cell",NA,NA
+"236","cardiac mesenchymal cell",NA,NA
+"237","cardiac muscle cell",NA,NA
+"238","cardiac muscle cell (sensu Arthopoda)",NA,NA
+"239","cardiac muscle myoblast",NA,NA
+"240","cardiac myoblast",NA,NA
+"241","cardiac neuron",NA,NA
+"242","cardiac pacemaker cell of sinoatrial node",NA,NA
+"243","cardiac septum cell",NA,NA
+"244","cardiac ventricle fibroblast",NA,NA
+"245","cardioblast",NA,NA
+"246","cardioblast (sensu Arthropoda)",NA,NA
+"247","cardiocyte",NA,NA
+"248","caudal ganglionic eminence derived GABAergic cortical interneuron",NA,NA
+"249","CD103-negative, langerin-positive lymph node dendritic cell",NA,NA
+"250","CD103-positive dendritic cell",NA,NA
+"251","CD103-positive, langerin-positive lymph node dendritic cell",NA,NA
+"252","CD115-positive monocyte",NA,NA
+"253","CD115-positive monocyte OR common dendritic progenitor",NA,NA
+"254","CD117-positive common myeloid progenitor OR CD217-positive common lymphoid progenitor",NA,NA
+"255","CD11b-high, CD103-negative, langerin-negative lymph node dendritic cell",NA,NA
+"256","CD11b-low, CD103-negative, langerin-negative lymph node dendritic cell",NA,NA
+"257","CD11b-positive dendritic cell",NA,NA
+"258","CD11b-positive, CD27-positive natural killer cell, mouse",NA,NA
+"259","CD11c-low plasmacytoid dendritic cell",NA,NA
+"260","CD11c-negative plasmacytoid dendritic cell",NA,NA
+"261","CD14-low, CD16-positive monocyte",NA,NA
+"262","CD14-positive dermal dendritic cell",NA,NA
+"263","CD14-positive monocyte",NA,NA
+"264","CD14-positive, CD16-low monocyte",NA,NA
+"265","CD14-positive, CD16-negative classical monocyte",NA,NA
+"266","CD14-positive, CD16-positive monocyte",NA,NA
+"267","CD141-positive myeloid dendritic cell",NA,NA
+"268","CD16-negative, CD56-bright natural killer cell, human",NA,NA
+"269","CD16-positive myeloid dendritic cell",NA,NA
+"270","CD16-positive, CD56-dim natural killer cell, human",NA,NA
+"271","CD1a-positive dermal dendritic cell",NA,NA
+"272","CD1a-positive Langerhans cell",NA,NA
+"273","CD1c-positive myeloid dendritic cell",NA,NA
+"274","CD2-positive, CD5-positive, CD44-positive alpha-beta intraepithelial T cell",NA,NA
+"275","CD22-positive, CD38-low small pre-B cell",NA,NA
+"276","CD24-negative CD38-negative IgG-negative class switched memory B cell",NA,NA
+"277","CD24-positive CD38-negative IgG-negative class switched memory B cell",NA,NA
+"278","CD24-positive, CD4 single-positive thymocyte",NA,NA
+"279","CD24-positive, CD8 single-positive thymocyte",NA,NA
+"280","CD25-positive, CD27-positive immature gamma-delta T cell",NA,NA
+"281","CD25+ mast cell",NA,NA
+"282","CD27-high, CD11b-high natural killer cell, mouse",NA,NA
+"283","CD27-high, CD11b-low natural killer cell, mouse",NA,NA
+"284","CD27-low, CD11b-high natural killer cell, mouse",NA,NA
+"285","CD27-low, CD11b-low immature natural killer cell, mouse",NA,NA
+"286","CD27-negative gamma-delta T cell",NA,NA
+"287","CD27-positive gamma-delta T cell",NA,NA
+"288","CD34-negative, CD117-positive innate lymphoid cell, human",NA,NA
+"289","CD34-negative, CD41-positive, CD42-positive megakaryocyte cell",NA,NA
+"290","CD34-negative, CD56-positive, CD117-positive innate lymphoid cell, human",NA,NA
+"291","CD34-negative, GlyA-negative proerythroblast",NA,NA
+"292","CD34-positive, CD38-negative hematopoietic stem cell",NA,NA
+"293","CD34-positive, CD38-negative multipotent progenitor cell",NA,NA
+"294","CD34-positive, CD38-positive common lymphoid progenitor",NA,NA
+"295","CD34-positive, CD38-positive common myeloid progenitor",NA,NA
+"296","CD34-positive, CD38-positive common myeloid progenitor OR CD34-positive, CD38-positive common lymphoid progenitor",NA,NA
+"297","CD34-positive, CD38-positive eosinophil progenitor cell",NA,NA
+"298","CD34-positive, CD38-positive granulocyte monocyte progenitor",NA,NA
+"299","CD34-positive, CD38-positive megakaryocyte erythroid progenitor cell",NA,NA
+"300","CD34-positive, CD41-positive, CD42-negative megakaryocyte progenitor cell",NA,NA
+"301","CD34-positive, CD41-positive, CD42-positive megakaryocyte progenitor cell",NA,NA
+"302","CD34-positive, CD56-positive, CD117-positive common innate lymphoid precursor, human",NA,NA
+"303","CD34-positive, GlyA-negative erythroid progenitor cell",NA,NA
+"304","CD38-high pre-BCR positive cell",NA,NA
+"305","CD38-negative IgG memory B cell",NA,NA
+"306","CD38-negative IgG-negative class switched memory B cell",NA,NA
+"307","CD38-negative immature B cell",NA,NA
+"308","CD38-negative naive B cell",NA,NA
+"309","CD38-negative unswitched memory B cell",NA,NA
+"310","CD38-positive IgG memory B cell",NA,NA
+"311","CD38-positive IgG-negative class switched memory B cell",NA,NA
+"312","CD38-positive naive B cell",NA,NA
+"313","CD38-positive unswitched memory B cell",NA,NA
+"314","CD4-intermediate, CD8-positive double-positive thymocyte",NA,NA
+"315","CD4-negative CD8-negative gamma-delta intraepithelial T cell",NA,NA
+"316","Cd4-negative, CD8_alpha-negative, CD11b-positive dendritic cell",NA,NA
+"317","CD4-negative, CD8-negative type I NK T cell",NA,NA
+"318","CD4-negative, CD8-negative type I NK T cell secreting interferon-gamma",NA,NA
+"319","CD4-negative, CD8-negative type I NK T cell secreting interleukin-4",NA,NA
+"320","CD4-negative, CD8-negative, alpha-beta intraepithelial T cell",NA,NA
+"321","CD4-positive CD11b-positive dendritic cell",NA,NA
+"322","CD4-positive helper T cell",NA,NA
+"323","CD4-positive type I NK T cell",NA,NA
+"324","CD4-positive type I NK T cell secreting interferon-gamma",NA,NA
+"325","CD4-positive type I NK T cell secreting interleukin-4",NA,NA
+"326","CD4-positive, alpha-beta cytotoxic T cell",NA,NA
+"327","CD4-positive, alpha-beta intraepithelial T cell",NA,NA
+"328","CD4-positive, alpha-beta memory T cell",NA,NA
+"329","CD4-positive, alpha-beta memory T cell, CD45RO-positive",NA,NA
+"330","CD4-positive, alpha-beta T cell",NA,NA
+"331","CD4-positive, alpha-beta thymocyte",NA,NA
+"332","CD4-positive, CD25-positive, alpha-beta regulatory T cell",NA,NA
+"333","CD4-positive, CD25-positive, CCR4-positive, alpha-beta regulatory T cell",NA,NA
+"334","CD4-positive, CD8-intermediate double-positive thymocyte",NA,NA
+"335","CD4-positive, CXCR3-negative, CCR6-negative, alpha-beta T cell",NA,NA
+"336","CD56-negative, CD161-positive immature natural killer cell, human",NA,NA
+"337","CD56-positive, CD161-positive immature natural killer cell, human",NA,NA
+"338","CD69-positive double-positive thymocyte",NA,NA
+"339","CD69-positive, CD4-positive single-positive thymocyte",NA,NA
+"340","CD69-positive, CD8-positive single-positive thymocyte",NA,NA
+"341","CD7-negative lymphoid progenitor cell",NA,NA
+"342","CD7-negative lymphoid progenitor OR granulocyte monocyte progenitor",NA,NA
+"343","CD7-positive lymphoid progenitor cell",NA,NA
+"344","CD71-low, GlyA-positive polychromatic erythroblast",NA,NA
+"345","CD71-negative, GlyA-positive orthochromatic erythroblast",NA,NA
+"346","CD8_alpha-low Langerhans cell",NA,NA
+"347","CD8_alpha-negative CD11b-negative dendritic cell",NA,NA
+"348","CD8_alpha-negative plasmactyoid dendritic cell",NA,NA
+"349","CD8_alpha-positive CD11b-negative dendritic cell",NA,NA
+"350","CD8_alpha-positive plasmactyoid dendritic cell",NA,NA
+"351","CD8-alpha alpha positive, gamma-delta intraepithelial T cell",NA,NA
+"352","CD8-alpha-alpha-positive, alpha-beta intraepithelial T cell",NA,NA
+"353","CD8-alpha-beta-positive, alpha-beta intraepithelial T cell",NA,NA
+"354","CD8-positive, alpha-beta cytokine secreting effector T cell",NA,NA
+"355","CD8-positive, alpha-beta cytotoxic T cell",NA,NA
+"356","CD8-positive, alpha-beta memory T cell",NA,NA
+"357","CD8-positive, alpha-beta memory T cell, CD45RO-positive",NA,NA
+"358","CD8-positive, alpha-beta regulatory T cell",NA,NA
+"359","CD8-positive, alpha-beta T cell",NA,NA
+"360","CD8-positive, alpha-beta thymocyte",NA,NA
+"361","CD8-positive, CD25-positive, alpha-beta regulatory T cell",NA,NA
+"362","CD8-positive, CD28-negative, alpha-beta regulatory T cell",NA,NA
+"363","CD8-positive, CXCR3-negative, CCR6-negative, alpha-beta T cell",NA,NA
+"364","CD8-positive, CXCR3-positive, alpha-beta regulatory T cell",NA,NA
+"365","CD86-positive plasmablast",NA,NA
+"366","CD8alpha-negative thymic conventional dendritic cell",NA,NA
+"367","CD8alpha-positive thymic conventional dendritic cell",NA,NA
+"368","CD9-positive, CD41-positive megakaryocyte cell",NA,NA
+"369","CD94-negative natural killer cell, mouse",NA,NA
+"370","CD94-negative, Ly49CI-negative natural killer cell, mouse",NA,NA
+"371","CD94-positive Ly49CI-positive natural killer cell, mouse",NA,NA
+"372","CD94-positive natural killer cell, mouse",NA,NA
+"373","cell",NA,NA
+"374","cell in vitro",NA,NA
+"375","cell of skeletal muscle",NA,NA
+"376","cementoblast",NA,NA
+"377","cementocyte",NA,NA
+"378","central memory CD4-positive, alpha-beta T cell",NA,NA
+"379","central memory CD8-positive, alpha-beta T cell",NA,NA
+"380","central nervous system macrophage",NA,NA
+"381","central nervous system neuron",NA,NA
+"382","central nervous system pericyte",NA,NA
+"383","centrilobular region hepatocyte",NA,NA
+"384","centripetally migrating follicle cell",NA,NA
+"385","cerebellar Golgi cell",NA,NA
+"386","cerebellar granule cell",NA,NA
+"387","cerebellar neuron",NA,NA
+"388","cerebellar stellate cell",NA,NA
+"389","cerebellum basket cell",NA,NA
+"390","cerebellum glutamatergic neuron",NA,NA
+"391","cerebral cortex endothelial cell",NA,NA
+"392","cerebral cortex GABAergic interneuron",NA,NA
+"393","cerebral cortex glial cell",NA,NA
+"394","cerebral cortex neuron",NA,NA
+"395","cerebrospinal fluid secreting cell",NA,NA
+"396","chandelier cell",NA,NA
+"397","Chandelier Pvalb GABAergic cortical interneuron (Mus musculus)",NA,NA
+"398","chemoreceptor cell",NA,NA
+"399","chief cell of parathyroid gland",NA,NA
+"400","chlamydospore",NA,NA
+"401","cholangiocyte",NA,NA
+"402","cholecystokin stimulating hormone secreting cell",NA,NA
+"403","cholinergic neuron",NA,NA
+"404","chondroblast",NA,NA
+"405","chondrocyte",NA,NA
+"406","chordamesodermal cell",NA,NA
+"407","chorionic membrane mesenchymal stem cell",NA,NA
+"408","chorionic trophoblast cell",NA,NA
+"409","choroid plexus epithelial cell",NA,NA
+"410","choroid-plexus macrophage",NA,NA
+"411","choroidal cell of the eye",NA,NA
+"412","chromaffin cell",NA,NA
+"413","chromaffin cell of adrenal gland",NA,NA
+"414","chromaffin cell of left ovary",NA,NA
+"415","chromaffin cell of ovary",NA,NA
+"416","chromaffin cell of paraaortic body",NA,NA
+"417","chromaffin cell of paraganglion",NA,NA
+"418","chromaffin cell of right ovary",NA,NA
+"419","chromophil cell of anterior pituitary gland",NA,NA
+"420","chromophobe cell",NA,NA
+"421","ciliary muscle cell",NA,NA
+"422","ciliated cell",NA,NA
+"423","ciliated cell of the bronchus",NA,NA
+"424","ciliated columnar cell of tracheobronchial tree",NA,NA
+"425","ciliated epithelial cell",NA,NA
+"426","ciliated epithelial cell of esophagus",NA,NA
+"427","ciliated olfactory receptor neuron",NA,NA
+"428","circulating cell",NA,NA
+"429","circulating endothelial cell",NA,NA
+"430","class switched memory B cell",NA,NA
+"431","classical monocyte",NA,NA
+"432","Claudius cell",NA,NA
+"433","clear cell of eccrine sweat gland",NA,NA
+"434","clear chief cell of parathyroid gland",NA,NA
+"435","closable valve cell",NA,NA
+"436","club cell",NA,NA
+"437","CNS interneuron",NA,NA
+"438","CNS long range interneuron",NA,NA
+"439","CNS neuron (sensu Nematoda and Protostomia)",NA,NA
+"440","CNS neuron (sensu Vertebrata)",NA,NA
+"441","CNS short range interneuron",NA,NA
+"442","cochlear inner hair cell",NA,NA
+"443","coelomocyte",NA,NA
+"444","cold sensing thermoreceptor cell",NA,NA
+"445","collagen secreting cell",NA,NA
+"446","collar cell",NA,NA
+"447","colon endothelial cell",NA,NA
+"448","colon epithelial cell",NA,NA
+"449","colon glandular cell",NA,NA
+"450","colon goblet cell",NA,NA
+"451","colon macrophage",NA,NA
+"452","columnar cell of endocervix",NA,NA
+"453","columnar chondrocyte",NA,NA
+"454","columnar neuron",NA,NA
+"455","columnar/cuboidal epithelial cell",NA,NA
+"456","commissural neuron",NA,NA
+"457","common dendritic progenitor",NA,NA
+"458","common lymphoid progenitor",NA,NA
+"459","common myeloid progenitor",NA,NA
+"460","common myeloid progenitor, CD34-positive",NA,NA
+"461","compound eye cone cell",NA,NA
+"462","compound eye photoreceptor cell",NA,NA
+"463","compound eye retinal cell",NA,NA
+"464","cone retinal bipolar cell",NA,NA
+"465","conidium",NA,NA
+"466","conidium of conidiophore head",NA,NA
+"467","conjunctiva goblet cell",NA,NA
+"468","conjunctival epithelial cell",NA,NA
+"469","connective tissue cell",NA,NA
+"470","connective tissue type mast cell",NA,NA
+"471","contractile cell",NA,NA
+"472","conventional dendritic cell",NA,NA
+"473","copper accumulating cell",NA,NA
+"474","cord blood hematopoietic stem cell",NA,NA
+"475","corneal endothelial cell",NA,NA
+"476","corneal epithelial cell",NA,NA
+"477","corneocyte",NA,NA
+"478","corona radiata cell",NA,NA
+"479","coronet cell",NA,NA
+"480","cortical cell of adrenal gland",NA,NA
+"481","cortical granule cell",NA,NA
+"482","cortical interneuron",NA,NA
+"483","cortical thymic epithelial cell",NA,NA
+"484","corticothalamic VAL/VM projecting glutamatergic neuron of the primary motor cortex (Mus musculus)",NA,NA
+"485","corticothalamic-projecting glutamatergic cortical neuron",NA,NA
+"486","corticotroph",NA,NA
+"487","cranial motor neuron",NA,NA
+"488","cranial somatomotor neuron",NA,NA
+"489","cranial visceromotor neuron",NA,NA
+"490","crypt olfactory receptor neuron",NA,NA
+"491","crystal cell",NA,NA
+"492","crystallin accumulating cell",NA,NA
+"493","cultured cell",NA,NA
+"494","cumulus cell",NA,NA
+"495","cutaneous/subcutaneous mechanoreceptor cell",NA,NA
+"496","cuticle secreting cell",NA,NA
+"497","cyanoblast",NA,NA
+"498","cyanophore",NA,NA
+"499","cystoblast",NA,NA
+"500","cytotoxic T cell",NA,NA
+"501","dark cell of eccrine sweat gland",NA,NA
+"502","dark chief cell of parathyroid gland",NA,NA
+"503","dark melanocyte",NA,NA
+"504","decidual cell",NA,NA
+"505","decidual natural killer cell, human",NA,NA
+"506","decidual pericyte",NA,NA
+"507","defensive cell",NA,NA
+"508","Deiter's cell",NA,NA
+"509","dendritic cell",NA,NA
+"510","dendritic cell of appendix",NA,NA
+"511","dendritic cell, human",NA,NA
+"512","dendritic epidermal T cell",NA,NA
+"513","dense-core granulated cell of epithelium of trachea",NA,NA
+"514","dental papilla cell",NA,NA
+"515","dental pulp cell",NA,NA
+"516","dentate gyrus of hippocampal formation basket cell",NA,NA
+"517","dentate gyrus of hippocampal formation granule cell",NA,NA
+"518","dentate gyrus of hippocampal formation stellate cell",NA,NA
+"519","dermal dendritic cell",NA,NA
+"520","dermal melanocyte",NA,NA
+"521","dermis blood vessel endothelial cell",NA,NA
+"522","dermis lymphatic vessel endothelial cell",NA,NA
+"523","dermis microvascular lymphatic vessel endothelial cell",NA,NA
+"524","digestive enzyme secreting cell",NA,NA
+"525","dikaryon",NA,NA
+"526","diploid cell",NA,NA
+"527","disseminated nephrocyte",NA,NA
+"528","distal tip cell (sensu Nematoda)",NA,NA
+"529","DN1 thymic pro-T cell",NA,NA
+"530","DN2 thymocyte",NA,NA
+"531","DN2a thymocyte",NA,NA
+"532","DN2b thymocyte",NA,NA
+"533","DN3 thymocyte",NA,NA
+"534","DN4 thymocyte",NA,NA
+"535","dopamanergic interplexiform cell",NA,NA
+"536","dopaminergic neuron",NA,NA
+"537","dorsal horn interneuron",NA,NA
+"538","double negative memory B cell",NA,NA
+"539","double negative T regulatory cell",NA,NA
+"540","double negative thymocyte",NA,NA
+"541","double-positive blast",NA,NA
+"542","double-positive, alpha-beta thymocyte",NA,NA
+"543","duct epithelial cell",NA,NA
+"544","duodenal goblet cell",NA,NA
+"545","duodenum glandular cell",NA,NA
+"546","Dx5-negative, NK1.1-positive immature natural killer cell, mouse",NA,NA
+"547","dynamic beta motor neuron",NA,NA
+"548","dynamic gamma motor neuron",NA,NA
+"549","dynamic nuclear bag fiber",NA,NA
+"550","ear hair cell",NA,NA
+"551","early embryonic cell (metazoa)",NA,NA
+"552","early lymphoid progenitor",NA,NA
+"553","early pro-B cell",NA,NA
+"554","early promyelocyte",NA,NA
+"555","early T lineage precursor",NA,NA
+"556","eccrine cell",NA,NA
+"557","ecdysteroid secreting cell",NA,NA
+"558","echinocyte",NA,NA
+"559","ecto-epithelial cell",NA,NA
+"560","ecto-epithelial cell of viscerocranial mucosa",NA,NA
+"561","ectodermal cell",NA,NA
+"562","effector CD4-positive, alpha-beta T cell",NA,NA
+"563","effector CD8-positive, alpha-beta T cell",NA,NA
+"564","effector memory CD4-positive, alpha-beta T cell",NA,NA
+"565","effector memory CD4-positive, alpha-beta T cell, terminally differentiated",NA,NA
+"566","effector memory CD8-positive, alpha-beta T cell",NA,NA
+"567","effector memory CD8-positive, alpha-beta T cell, terminally differentiated",NA,NA
+"568","effector T cell",NA,NA
+"569","efferent neuron",NA,NA
+"570","egg cell",NA,NA
+"571","eggshell secreting cell",NA,NA
+"572","electrically active cell",NA,NA
+"573","electrically responsive cell",NA,NA
+"574","electrically signaling cell",NA,NA
+"575","elicited macrophage",NA,NA
+"576","embryonic blood vessel endothelial progenitor cell",NA,NA
+"577","embryonic cell (metazoa)",NA,NA
+"578","embryonic crystal cell",NA,NA
+"579","embryonic fibroblast",NA,NA
+"580","embryonic gland hemocyte",NA,NA
+"581","embryonic gland plasmatocyte",NA,NA
+"582","embryonic hemocyte",NA,NA
+"583","embryonic plasmatocyte",NA,NA
+"584","embryonic stem cell",NA,NA
+"585","endo-epithelial cell",NA,NA
+"586","endo-epithelial cell of pharyngotympanic part of viscerocranial mucosa",NA,NA
+"587","endo-epithelial cell of tympanic part of viscerocranial mucosa",NA,NA
+"588","endocardial cell",NA,NA
+"589","endocardial cushion cell",NA,NA
+"590","endocrine cell",NA,NA
+"591","endocrine-paracrine cell of prostate gland",NA,NA
+"592","endodermal cell",NA,NA
+"593","endometrial microvascular endothelial cells",NA,NA
+"594","endopolyploid cell",NA,NA
+"595","endorphin secreting cell",NA,NA
+"596","endospore",NA,NA
+"597","endosteal cell",NA,NA
+"598","endothelial cell",NA,NA
+"599","endothelial cell of arteriole",NA,NA
+"600","endothelial cell of artery",NA,NA
+"601","endothelial cell of coronary artery",NA,NA
+"602","endothelial cell of hepatic sinusoid",NA,NA
+"603","endothelial cell of high endothelial venule",NA,NA
+"604","endothelial cell of lymphatic vessel",NA,NA
+"605","endothelial cell of pericentral hepatic sinusoid",NA,NA
+"606","endothelial cell of periportal hepatic sinusoid",NA,NA
+"607","endothelial cell of Peyer's patch",NA,NA
+"608","endothelial cell of sinusoid",NA,NA
+"609","endothelial cell of umbilical vein",NA,NA
+"610","endothelial cell of vascular tree",NA,NA
+"611","endothelial cell of venous sinus of red pulp of spleen",NA,NA
+"612","endothelial cell of venous sinus of spleen",NA,NA
+"613","endothelial cell of venule",NA,NA
+"614","endothelial cell of viscerocranial mucosa",NA,NA
+"615","endothelial stalk cell",NA,NA
+"616","endothelial tip cell",NA,NA
+"617","enkephalin secreting cell",NA,NA
+"618","enteric neuron",NA,NA
+"619","enteric smooth muscle cell",NA,NA
+"620","enterochromaffin-like cell",NA,NA
+"621","enterocyte",NA,NA
+"622","enterocyte of anorectum",NA,NA
+"623","enterocyte of appendix",NA,NA
+"624","enterocyte of epithelium of crypt of Lieberkuhn of small intestine",NA,NA
+"625","enterocyte of epithelium of duodenal gland",NA,NA
+"626","enterocyte of epithelium of intestinal villus",NA,NA
+"627","enterocyte of epithelium of large intestine",NA,NA
+"628","enterocyte of epithelium of small intestine",NA,NA
+"629","enterocyte of epithelium proper of duodenum",NA,NA
+"630","enterocyte of epithelium proper of ileum",NA,NA
+"631","enterocyte of epithelium proper of jejunum",NA,NA
+"632","enterocyte of epithelium proper of small intestine",NA,NA
+"633","enteroendocrine cell",NA,NA
+"634","enteroendocrine cell of anorectum",NA,NA
+"635","enteroendocrine cell of appendix",NA,NA
+"636","enteroendocrine cell of colon",NA,NA
+"637","enteroendocrine cell of small intestine",NA,NA
+"638","enucleate erythrocyte",NA,NA
+"639","enucleated reticulocyte",NA,NA
+"640","eosinophil",NA,NA
+"641","eosinophil progenitor cell",NA,NA
+"642","eosinophilic metamyelocyte",NA,NA
+"643","eosinophilic myeloblast",NA,NA
+"644","eosinophilic myelocyte",NA,NA
+"645","eosinophilic promyelocyte",NA,NA
+"646","ependymal cell",NA,NA
+"647","ependymoglial cell",NA,NA
+"648","epiblast cell",NA,NA
+"649","epicardial adipocyte",NA,NA
+"650","epidermal cell",NA,NA
+"651","epidermal cell (sensu arthropoda)",NA,NA
+"652","epidermal ciliary cell",NA,NA
+"653","epidermal Langerhans cell",NA,NA
+"654","epidermal melanocyte",NA,NA
+"655","epidermal mucus secreting cell",NA,NA
+"656","epidermoblast",NA,NA
+"657","epididymis glandular cell",NA,NA
+"658","epinephrine secreting cell",NA,NA
+"659","epithelial cell",NA,NA
+"660","epithelial cell of alimentary canal",NA,NA
+"661","epithelial cell of alveolus of lung",NA,NA
+"662","epithelial cell of amnion",NA,NA
+"663","epithelial cell of anal column",NA,NA
+"664","epithelial cell of appendix",NA,NA
+"665","epithelial cell of cervix",NA,NA
+"666","epithelial cell of distal tubule",NA,NA
+"667","epithelial cell of esophageal cardiac gland",NA,NA
+"668","epithelial cell of esophageal gland proper",NA,NA
+"669","epithelial cell of esophagus",NA,NA
+"670","epithelial cell of exocrine pancreas",NA,NA
+"671","epithelial cell of external acoustic meatus",NA,NA
+"672","epithelial cell of gall bladder",NA,NA
+"673","epithelial cell of glomerular capsule",NA,NA
+"674","epithelial cell of intermediate tubule",NA,NA
+"675","epithelial cell of lacrimal canaliculus",NA,NA
+"676","epithelial cell of lacrimal duct",NA,NA
+"677","epithelial cell of lacrimal sac",NA,NA
+"678","epithelial cell of large intestine",NA,NA
+"679","epithelial cell of lower respiratory tract",NA,NA
+"680","epithelial cell of lung",NA,NA
+"681","epithelial cell of Malassez",NA,NA
+"682","epithelial cell of nasolacrimal duct",NA,NA
+"683","epithelial cell of nephron",NA,NA
+"684","epithelial cell of pancreas",NA,NA
+"685","epithelial cell of parathyroid gland",NA,NA
+"686","epithelial cell of prostate",NA,NA
+"687","epithelial cell of prostatic acinus",NA,NA
+"688","epithelial cell of prostatic duct",NA,NA
+"689","epithelial cell of proximal tubule",NA,NA
+"690","epithelial cell of skin gland",NA,NA
+"691","epithelial cell of small intestine",NA,NA
+"692","epithelial cell of stomach",NA,NA
+"693","epithelial cell of stratum corneum of esophageal epithelium",NA,NA
+"694","epithelial cell of stratum germinativum of esophagus",NA,NA
+"695","epithelial cell of stratum spinosum of esophageal epithelium",NA,NA
+"696","epithelial cell of sweat gland",NA,NA
+"697","epithelial cell of thymus",NA,NA
+"698","epithelial cell of thyroid gland",NA,NA
+"699","epithelial cell of tracheobronchial tree",NA,NA
+"700","epithelial cell of umbilical artery",NA,NA
+"701","epithelial cell of upper respiratory tract",NA,NA
+"702","epithelial cell of urethra",NA,NA
+"703","epithelial cell of uterus",NA,NA
+"704","epithelial cell of viscerocranial mucosa",NA,NA
+"705","epithelial cell of wall of inferior part of anal canal",NA,NA
+"706","epithelial fate stem cell",NA,NA
+"707","epithelial melanocyte",NA,NA
+"708","epithelioid macrophage",NA,NA
+"709","equatorial cone cell (sensu Endopterygota)",NA,NA
+"710","erythroblast",NA,NA
+"711","erythrocyte",NA,NA
+"712","erythroid lineage cell",NA,NA
+"713","erythroid progenitor cell",NA,NA
+"714","erythroid progenitor cell, mammalian",NA,NA
+"715","erythrophore",NA,NA
+"716","estradiol secreting cell",NA,NA
+"717","eukaryotic cell",NA,NA
+"718","Eumycetozoan cell",NA,NA
+"719","eurydendroid cell",NA,NA
+"720","excitatory neuron",NA,NA
+"721","excretory cell",NA,NA
+"722","exhausted T cell",NA,NA
+"723","exocrine cell",NA,NA
+"724","experimentally modified cell in vitro",NA,NA
+"725","external epithelial cell of tympanic membrane",NA,NA
+"726","external limiting cell of vestibular epithelium",NA,NA
+"727","external pillar cell of cochlea",NA,NA
+"728","external supporting cell of vestibular epithelium",NA,NA
+"729","extracellular matrix secreting cell",NA,NA
+"730","extraembryonic cell",NA,NA
+"731","extrafusal muscle fiber",NA,NA
+"732","extraglomerular mesangial cell",NA,NA
+"733","extrahepatic cholangiocyte",NA,NA
+"734","extramedullary cell",NA,NA
+"735","extratelencephalic-projecting glutamatergic cortical neuron",NA,NA
+"736","extravillous trophoblast",NA,NA
+"737","eye photoreceptor cell",NA,NA
+"738","F4/80-negative adipose macrophage",NA,NA
+"739","F4/80-positive adipose macrophage",NA,NA
+"740","fan Martinotti neuron",NA,NA
+"741","fast muscle cell",NA,NA
+"742","fast muscle myoblast",NA,NA
+"743","fat body cell",NA,NA
+"744","fat cell",NA,NA
+"745","Fc-epsilon RIalpha-high basophil progenitor cell",NA,NA
+"746","Fc-epsilon RIalpha-low mast cell progenitor",NA,NA
+"747","female gamete",NA,NA
+"748","female germ cell",NA,NA
+"749","female germ line stem cell",NA,NA
+"750","female germ line stem cell (sensu Nematoda and Protostomia)",NA,NA
+"751","female germ line stem cell (sensu Vertebrata)",NA,NA
+"752","femural osteoblast",NA,NA
+"753","fenestrated cell",NA,NA
+"754","fetal cardiomyocyte",NA,NA
+"755","fetal derived definitive erythrocyte",NA,NA
+"756","fetal hepatobiliary progenitor cell",NA,NA
+"757","fetal liver hematopoietic progenitor cell",NA,NA
+"758","fetal thymocyte",NA,NA
+"759","Feyrter cell",NA,NA
+"760","fibroblast",NA,NA
+"761","fibroblast neural crest derived",NA,NA
+"762","fibroblast of areolar connective tissue",NA,NA
+"763","fibroblast of arm",NA,NA
+"764","fibroblast of breast",NA,NA
+"765","fibroblast of cardiac tissue",NA,NA
+"766","fibroblast of choroid plexus",NA,NA
+"767","fibroblast of connective tissue of glandular part of prostate",NA,NA
+"768","fibroblast of connective tissue of nonglandular part of prostate",NA,NA
+"769","fibroblast of connective tissue of prostate",NA,NA
+"770","fibroblast of dense regular elastic tissue",NA,NA
+"771","fibroblast of dermis",NA,NA
+"772","fibroblast of gingiva",NA,NA
+"773","fibroblast of lung",NA,NA
+"774","fibroblast of lymphatic vessel",NA,NA
+"775","fibroblast of mammary gland",NA,NA
+"776","fibroblast of outer membrane of prostatic capsule",NA,NA
+"777","fibroblast of papillary layer of dermis",NA,NA
+"778","fibroblast of pedal digit skin",NA,NA
+"779","fibroblast of peridontal ligament",NA,NA
+"780","fibroblast of periodontium",NA,NA
+"781","fibroblast of pulmonary artery",NA,NA
+"782","fibroblast of skin of abdomen",NA,NA
+"783","fibroblast of skin of back",NA,NA
+"784","fibroblast of skin of scalp",NA,NA
+"785","fibroblast of subepithelial connective tissue of prostatic gland",NA,NA
+"786","fibroblast of the aortic adventitia",NA,NA
+"787","fibroblast of the conjunctiva",NA,NA
+"788","fibroblast of the reticular layer of dermis",NA,NA
+"789","fibroblast of tunica adventitia of artery",NA,NA
+"790","fibroblast of upper back skin",NA,NA
+"791","fibroblast of upper leg skin",NA,NA
+"792","fibroblast of villous mesenchyme",NA,NA
+"793","fibrocyte",NA,NA
+"794","fibrocyte of adventitia of ureter",NA,NA
+"795","flagellated sperm cell",NA,NA
+"796","flask cell",NA,NA
+"797","flight muscle cell",NA,NA
+"798","foam cell",NA,NA
+"799","follicle stem cell",NA,NA
+"800","follicular B cell",NA,NA
+"801","follicular cell of ovary",NA,NA
+"802","follicular dendritic cell",NA,NA
+"803","follicular epithelial cell",NA,NA
+"804","folliculostellate cell",NA,NA
+"805","folliculostellate cell of pars distalis of adenohypophysis",NA,NA
+"806","forebrain neuroblast",NA,NA
+"807","forebrain radial glial cell",NA,NA
+"808","foreskin fibroblast",NA,NA
+"809","foreskin keratinocyte",NA,NA
+"810","foreskin melanocyte",NA,NA
+"811","foveolar cell of stomach",NA,NA
+"812","Fraction A pre-pro B cell",NA,NA
+"813","Fraction B precursor B cell",NA,NA
+"814","Fraction B/C precursor B cell",NA,NA
+"815","Fraction C precursor B cell",NA,NA
+"816","Fraction C' precursor B cell",NA,NA
+"817","Fraction D precursor B cell",NA,NA
+"818","Fraction E immature B cell",NA,NA
+"819","Fraction F mature B cell",NA,NA
+"820","fungal asexual spore",NA,NA
+"821","fungal cell",NA,NA
+"822","fungal spore",NA,NA
+"823","fusimotor neuron",NA,NA
+"824","fusion competent myoblast",NA,NA
+"825","GABAergic interneuron",NA,NA
+"826","GABAergic neuron",NA,NA
+"827","GABAnergic interplexiform cell",NA,NA
+"828","galanergic neuron",NA,NA
+"829","gall bladder glandular cell",NA,NA
+"830","gallbladder fibroblast",NA,NA
+"831","gamete",NA,NA
+"832","gamma motor neuron",NA,NA
+"833","gamma-delta intraepithelial T cell",NA,NA
+"834","gamma-delta T cell",NA,NA
+"835","gamma-delta thymocyte",NA,NA
+"836","ganglion interneuron",NA,NA
+"837","ganglion mother cell",NA,NA
+"838","garland cell",NA,NA
+"839","gastric cardiac gland goblet cell",NA,NA
+"840","gastric goblet cell",NA,NA
+"841","gastrin secreting cell",NA,NA
+"842","gastrin stimulating hormone secreting cell",NA,NA
+"843","gastrointestinal tract (lamina propria) macrophage",NA,NA
+"844","gastrointestinal tract (lamina propria) macrophage of large intestine",NA,NA
+"845","gastrointestinal tract (lamina propria) macrophage of small intestine",NA,NA
+"846","gastrula cell",NA,NA
+"847","general ecto-epithelial cell",NA,NA
+"848","germ cell",NA,NA
+"849","germ line cell",NA,NA
+"850","germ line stem cell",NA,NA
+"851","germ line stem cell (sensu Nematoda and Protostomia)",NA,NA
+"852","germ line stem cell (sensu Vertebrata)",NA,NA
+"853","germinal center B cell",NA,NA
+"854","germinal center T cell",NA,NA
+"855","gestational hematopoietic stem cell",NA,NA
+"856","ghrelin secreting cell",NA,NA
+"857","gingival epithelial cell",NA,NA
+"858","GIP cell",NA,NA
+"859","glandular cell of endometrium",NA,NA
+"860","glandular cell of esophagus",NA,NA
+"861","glandular cell of stomach",NA,NA
+"862","glandular cell of the large intestine",NA,NA
+"863","glandular epithelial cell",NA,NA
+"864","glial cell",NA,NA
+"865","glioblast",NA,NA
+"866","glioblast (sensu Nematoda and Protostomia)",NA,NA
+"867","glioblast (sensu Vertebrata)",NA,NA
+"868","globose cell of olfactory epithelium",NA,NA
+"869","glomerular capillary endothelial cell",NA,NA
+"870","glomerular cell",NA,NA
+"871","glomerular endothelial cell",NA,NA
+"872","glomerular mesangial cell",NA,NA
+"873","glomerular visceral epithelial cell",NA,NA
+"874","GLR cell",NA,NA
+"875","glucagon secreting cell",NA,NA
+"876","glucocorticoid secreting cell",NA,NA
+"877","glutamatergic neuron",NA,NA
+"878","GlyA-positive basophillic erythroblast",NA,NA
+"879","GlyA-positive erythrocyte",NA,NA
+"880","GlyA-positive reticulocytes",NA,NA
+"881","glycinergic neuron",NA,NA
+"882","glycocalyx secreting cell",NA,NA
+"883","glycogen accumulating cell",NA,NA
+"884","glycosaminoglycan secreting cell",NA,NA
+"885","goblet cell",NA,NA
+"886","gonadotropin releasing neuron",NA,NA
+"887","gonadtroph",NA,NA
+"888","Gr1-high classical monocyte",NA,NA
+"889","Gr1-high myeloid suppressor cell",NA,NA
+"890","Gr1-low myeloid suppressor cell",NA,NA
+"891","Gr1-low non-classical monocyte",NA,NA
+"892","Gr1-positive, CD43-positive monocyte",NA,NA
+"893","granular cell of epidermis",NA,NA
+"894","granule cell",NA,NA
+"895","granule cell precursor",NA,NA
+"896","granulocyte",NA,NA
+"897","granulocyte monocyte progenitor cell",NA,NA
+"898","granulocytopoietic cell",NA,NA
+"899","granulosa cell",NA,NA
+"900","gravity sensitive cell",NA,NA
+"901","green sensitive photoreceptor cell",NA,NA
+"902","group 1 innate lymphoid cell",NA,NA
+"903","group 2 innate lymphoid cell",NA,NA
+"904","group 2 innate lymphoid cell, human",NA,NA
+"905","group 2 innate lymphoid cell, mouse",NA,NA
+"906","group 3 innate lymphoid cell",NA,NA
+"907","group 3 innate lymphoid cell, human",NA,NA
+"908","growth hormone releasing hormone secreting cell",NA,NA
+"909","growth plate cartilage chondrocyte",NA,NA
+"910","guidepost cell",NA,NA
+"911","gut absorptive cell",NA,NA
+"912","gut endothelial cell",NA,NA
+"913","gut-associated lymphoid tissue macrophage",NA,NA
+"914","H minus",NA,NA
+"915","H plus",NA,NA
+"916","hair follicle cell",NA,NA
+"917","hair follicle dermal papilla cell",NA,NA
+"918","hair follicle dermal papilla cell of scalp",NA,NA
+"919","hair follicle melanocyte",NA,NA
+"920","hair follicular keratinocyte",NA,NA
+"921","hair germinal matrix cell",NA,NA
+"922","hair matrix stem cell",NA,NA
+"923","hair-down neuron",NA,NA
+"924","hair-tylotrich neuron",NA,NA
+"925","haploid cell",NA,NA
+"926","hatching gland cell",NA,NA
+"927","heart valve cell",NA,NA
+"928","helper T cell",NA,NA
+"929","hemangioblast",NA,NA
+"930","hematopoietic cell",NA,NA
+"931","hematopoietic lineage restricted progenitor cell",NA,NA
+"932","hematopoietic multipotent progenitor cell",NA,NA
+"933","hematopoietic oligopotent progenitor cell",NA,NA
+"934","hematopoietic oligopotent progenitor cell, lineage-negative",NA,NA
+"935","hematopoietic precursor cell",NA,NA
+"936","hematopoietic stem cell",NA,NA
+"937","hemocyte (sensu Arthropoda)",NA,NA
+"938","Hensen cell",NA,NA
+"939","hepatic mesenchymal stem cell",NA,NA
+"940","hepatic oval stem cell",NA,NA
+"941","hepatic pit cell",NA,NA
+"942","hepatic stellate cell",NA,NA
+"943","hepatic stem cell",NA,NA
+"944","hepatoblast",NA,NA
+"945","hepatocyte",NA,NA
+"946","heterocyst",NA,NA
+"947","heterokaryon",NA,NA
+"948","hilus cell of ovary",NA,NA
+"949","hindlimb stylopod vein endothelial cell",NA,NA
+"950","hippocampal granule cell",NA,NA
+"951","hippocampal interneuron",NA,NA
+"952","hippocampal neuron",NA,NA
+"953","hippocampal pyramidal neuron",NA,NA
+"954","hippocampus glial cell",NA,NA
+"955","His-Purkinje system cell",NA,NA
+"956","histamine secreting cell",NA,NA
+"957","histaminergic neuron",NA,NA
+"958","histoblast",NA,NA
+"959","Hofbauer cell",NA,NA
+"960","horizontal pyramidal neuron",NA,NA
+"961","humidity receptor cell",NA,NA
+"962","hyalocyte",NA,NA
+"963","hypertrophic chondrocyte",NA,NA
+"964","hyphal cell",NA,NA
+"965","hypocretin-secreting neuron",NA,NA
+"966","hypothalamus cell",NA,NA
+"967","IgA memory B cell",NA,NA
+"968","IgA plasma cell",NA,NA
+"969","IgA plasmablast",NA,NA
+"970","IgA short lived plasma cell",NA,NA
+"971","IgD plasmablast",NA,NA
+"972","IgD-negative CD38-positive IgG memory B cell",NA,NA
+"973","IgD-negative memory B cell",NA,NA
+"974","IgD-positive CD38-positive IgG memory B cell",NA,NA
+"975","IgE memory B cell",NA,NA
+"976","IgE plasma cell",NA,NA
+"977","IgE plasmablast",NA,NA
+"978","IgE short lived plasma cell",NA,NA
+"979","IgG memory B cell",NA,NA
+"980","IgG plasma cell",NA,NA
+"981","IgG plasmablast",NA,NA
+"982","IgG short lived plasma cell",NA,NA
+"983","IgG-negative class switched memory B cell",NA,NA
+"984","IgG-negative double negative memory B cell",NA,NA
+"985","IgG-positive double negative memory B cell",NA,NA
+"986","IgM memory B cell",NA,NA
+"987","IgM plasma cell",NA,NA
+"988","IgM plasmablast",NA,NA
+"989","IgM short lived plasma cell",NA,NA
+"990","ILC1",NA,NA
+"991","ILC1, human",NA,NA
+"992","ileal goblet cell",NA,NA
+"993","imaginal disc cell",NA,NA
+"994","immature alpha-beta T cell",NA,NA
+"995","immature astrocyte",NA,NA
+"996","immature B cell",NA,NA
+"997","immature basophil",NA,NA
+"998","immature CD11c-low plasmacytoid dendritic cell",NA,NA
+"999","immature CD11c-negative plasmacytoid dendritic cell",NA,NA
+"1000","immature CD14-positive dermal dendritic cell",NA,NA
+"1001","immature CD16-positive myeloid dendritic cell",NA,NA
+"1002","immature CD1a-positive dermal dendritic cell",NA,NA
+"1003","immature CD1a-positive Langerhans cell",NA,NA
+"1004","immature CD8_alpha-low Langerhans cell",NA,NA
+"1005","immature CD8_alpha-negative CD11b-negative dendritic cell",NA,NA
+"1006","immature CD8_alpha-negative CD11b-positive dendritic cell",NA,NA
+"1007","immature CD8_alpha-positive CD11b-negative dendritic cell",NA,NA
+"1008","immature conventional dendritic cell",NA,NA
+"1009","immature dendritic epithelial T cell precursor",NA,NA
+"1010","immature dermal dendritic cell",NA,NA
+"1011","immature eosinophil",NA,NA
+"1012","immature gamma-delta T cell",NA,NA
+"1013","immature innate lymphoid cell",NA,NA
+"1014","immature interstitial dendritic cell",NA,NA
+"1015","immature microglial cell",NA,NA
+"1016","immature natural killer cell",NA,NA
+"1017","immature neutrophil",NA,NA
+"1018","immature NK T cell",NA,NA
+"1019","immature NK T cell stage I",NA,NA
+"1020","immature NK T cell stage II",NA,NA
+"1021","immature NK T cell stage III",NA,NA
+"1022","immature NK T cell stage IV",NA,NA
+"1023","immature Schwann cell",NA,NA
+"1024","immature single positive thymocyte",NA,NA
+"1025","immature T cell",NA,NA
+"1026","immature Vgamma1.1-positive, Vdelta6.3-negative thymocyte",NA,NA
+"1027","immature Vgamma1.1-positive, Vdelta6.3-positive thymocyte",NA,NA
+"1028","immature Vgamma2-negative thymocyte",NA,NA
+"1029","immature Vgamma2-positive fetal thymocyte",NA,NA
+"1030","immature Vgamma2-positive thymocyte",NA,NA
+"1031","inactive chief cell of parathyoid gland",NA,NA
+"1032","induced T-regulatory cell",NA,NA
+"1033","inflammatory cell",NA,NA
+"1034","inflammatory macrophage",NA,NA
+"1035","inhibitory interneuron",NA,NA
+"1036","inhibitory motor neuron",NA,NA
+"1037","inhibitory neuron",NA,NA
+"1038","innate effector T cell",NA,NA
+"1039","innate lymphoid cell",NA,NA
+"1040","inner cell mass cell",NA,NA
+"1041","inner medulla vasa recta ascending limb cell",NA,NA
+"1042","inner medulla vasa recta descending limb cell",NA,NA
+"1043","inner phalangeal cell",NA,NA
+"1044","inner renal cortex cell",NA,NA
+"1045","inner renal medulla vasa recta cell",NA,NA
+"1046","inner root sheath cell",NA,NA
+"1047","insulating cell",NA,NA
+"1048","insulin secreting cell",NA,NA
+"1049","interdental cell of cochlea",NA,NA
+"1050","interfollicle cell",NA,NA
+"1051","interlobular artery cell",NA,NA
+"1052","interlobular vein cell",NA,NA
+"1053","interlobulary artery endothelial cell",NA,NA
+"1054","interlobulary artery smooth muscle cell",NA,NA
+"1055","interlobulary vein endothelial cell",NA,NA
+"1056","interlobulary vein smooth muscle cell",NA,NA
+"1057","intermediate epitheliocyte",NA,NA
+"1058","intermediate mesodermal cell",NA,NA
+"1059","intermediate monocyte",NA,NA
+"1060","intermediate muscle cell",NA,NA
+"1061","intermediate trophoblast cell",NA,NA
+"1062","internal epithelial cell of tympanic membrane",NA,NA
+"1063","internal pillar cell of cochlea",NA,NA
+"1064","interneuromast cell",NA,NA
+"1065","interneuron",NA,NA
+"1066","internodal tract myocyte",NA,NA
+"1067","interplexiform cell",NA,NA
+"1068","interrenal chromaffin cell",NA,NA
+"1069","interrenal epinephrin secreting cell",NA,NA
+"1070","interrenal epithelial cell",NA,NA
+"1071","interrenal norepinephrine type cell",NA,NA
+"1072","interstitial cell of Cajal",NA,NA
+"1073","interstitial cell of ovary",NA,NA
+"1074","interstitial cell of pineal gland",NA,NA
+"1075","interstitial dendritic cell",NA,NA
+"1076","intestinal crypt stem cell",NA,NA
+"1077","intestinal crypt stem cell of anorectum",NA,NA
+"1078","intestinal crypt stem cell of appendix",NA,NA
+"1079","intestinal crypt stem cell of colon",NA,NA
+"1080","intestinal crypt stem cell of large intestine",NA,NA
+"1081","intestinal crypt stem cell of small intestine",NA,NA
+"1082","intestinal enteroendocrine cell",NA,NA
+"1083","intestinal epithelial cell",NA,NA
+"1084","intestinal tuft cell",NA,NA
+"1085","intestinal villus goblet cell",NA,NA
+"1086","intestine goblet cell",NA,NA
+"1087","intraepithelial lymphocyte",NA,NA
+"1088","intrafusal muscle fiber",NA,NA
+"1089","intrahepatic cholangiocyte",NA,NA
+"1090","intratelencephalic-projecting glutamatergic cortical neuron",NA,NA
+"1091","invertebrate nurse cell",NA,NA
+"1092","inverted L6 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Mus musculus)",NA,NA
+"1093","inverted pyramidal neuron",NA,NA
+"1094","ionocyte",NA,NA
+"1095","iridoblast",NA,NA
+"1096","iridophore",NA,NA
+"1097","iris pigment epithelial cell",NA,NA
+"1098","iron accumulating cell",NA,NA
+"1099","jejunal goblet cell",NA,NA
+"1100","juvenile hormone secreting cell",NA,NA
+"1101","juxtaglomerular complex cell",NA,NA
+"1102","Kenyon cell",NA,NA
+"1103","keratin accumulating cell",NA,NA
+"1104","keratinized cell of hair follicle",NA,NA
+"1105","keratinized cell of the oral mucosa",NA,NA
+"1106","keratinized epithelial cell of the anal canal",NA,NA
+"1107","keratinized squamous cell of esophagus",NA,NA
+"1108","keratinizing barrier epithelial cell",NA,NA
+"1109","keratinocyte",NA,NA
+"1110","keratinocyte stem cell",NA,NA
+"1111","keratocyte",NA,NA
+"1112","kidney afferent arteriole cell",NA,NA
+"1113","kidney afferent arteriole endothelial cell",NA,NA
+"1114","kidney afferent arteriole smooth muscle cell",NA,NA
+"1115","kidney arterial blood vessel cell",NA,NA
+"1116","kidney arteriole smooth muscle cell",NA,NA
+"1117","kidney artery smooth muscle cell",NA,NA
+"1118","kidney blood vessel cell",NA,NA
+"1119","kidney capillary endothelial cell",NA,NA
+"1120","kidney cell",NA,NA
+"1121","kidney collecting duct cell",NA,NA
+"1122","kidney collecting duct epithelial cell",NA,NA
+"1123","kidney collecting duct intercalated cell",NA,NA
+"1124","kidney collecting duct principal cell",NA,NA
+"1125","kidney connecting tubule epithelial cell",NA,NA
+"1126","kidney corpuscule cell",NA,NA
+"1127","kidney cortex artery cell",NA,NA
+"1128","kidney cortex collecting duct epithelial cell",NA,NA
+"1129","kidney cortex collecting duct intercalated cell",NA,NA
+"1130","kidney cortex collecting duct principal cell",NA,NA
+"1131","kidney cortex interstitial cell",NA,NA
+"1132","kidney cortex peritubular capillary cell",NA,NA
+"1133","kidney cortex tubule cell",NA,NA
+"1134","kidney cortex vein cell",NA,NA
+"1135","kidney cortical cell",NA,NA
+"1136","kidney distal convoluted tubule epithelial cell",NA,NA
+"1137","kidney efferent arteriole cell",NA,NA
+"1138","kidney efferent arteriole endothelial cell",NA,NA
+"1139","kidney efferent arteriole smooth muscle cell",NA,NA
+"1140","kidney epithelial cell",NA,NA
+"1141","kidney glomerular epithelial cell",NA,NA
+"1142","kidney granular cell",NA,NA
+"1143","kidney inner medulla cell",NA,NA
+"1144","kidney inner medulla collecting duct epithelial cell",NA,NA
+"1145","kidney inner medulla collecting duct intercalated cell",NA,NA
+"1146","kidney inner medulla collecting duct principal cell",NA,NA
+"1147","kidney inner medulla interstitial cell",NA,NA
+"1148","kidney interstitial alternatively activated macrophage",NA,NA
+"1149","kidney interstitial cell",NA,NA
+"1150","kidney interstitial fibroblast",NA,NA
+"1151","kidney interstitial fibrocyte",NA,NA
+"1152","kidney interstitial inflammatory macrophage",NA,NA
+"1153","kidney interstitial myofibroblast",NA,NA
+"1154","kidney interstitial suppressor macrophage",NA,NA
+"1155","kidney loop of Henle ascending limb epithelial cell",NA,NA
+"1156","kidney loop of Henle cortical thick ascending limb epithelial cell",NA,NA
+"1157","kidney loop of Henle descending limb epithelial cell",NA,NA
+"1158","kidney loop of Henle epithelial cell",NA,NA
+"1159","kidney loop of Henle medullary thick ascending limb epithelial cell",NA,NA
+"1160","kidney loop of Henle thick ascending limb epithelial cell",NA,NA
+"1161","kidney loop of Henle thin ascending limb epithelial cell",NA,NA
+"1162","kidney loop of Henle thin descending limb epithelial cell",NA,NA
+"1163","kidney medulla cell",NA,NA
+"1164","kidney medulla collecting duct epithelial cell",NA,NA
+"1165","kidney medulla interstitial cell",NA,NA
+"1166","kidney nerve cell",NA,NA
+"1167","kidney outer medulla cell",NA,NA
+"1168","kidney outer medulla collecting duct epithelial cell",NA,NA
+"1169","kidney outer medulla collecting duct intercalated cell",NA,NA
+"1170","kidney outer medulla collecting duct principal cell",NA,NA
+"1171","kidney outer medulla interstitial cell",NA,NA
+"1172","kidney outer medulla peritubular capillary cell",NA,NA
+"1173","kidney papillary duct intercalated cell",NA,NA
+"1174","kidney papillary duct principal cell",NA,NA
+"1175","kidney papillary duct principal epithelial cell",NA,NA
+"1176","kidney pelvis cell",NA,NA
+"1177","kidney pelvis smooth muscle cell",NA,NA
+"1178","kidney pelvis urothelial cell",NA,NA
+"1179","kidney proximal convoluted tubule epithelial cell",NA,NA
+"1180","kidney proximal straight tubule epithelial cell",NA,NA
+"1181","kidney resident dendritic cell",NA,NA
+"1182","kidney resident macrophage",NA,NA
+"1183","kidney tubule cell",NA,NA
+"1184","kidney venous blood vessel cell",NA,NA
+"1185","kidney venous system smooth muscle cell",NA,NA
+"1186","Kit and Sca1-positive hematopoietic stem cell",NA,NA
+"1187","Kit-low proerythroblast",NA,NA
+"1188","Kit-low, CD34-positive eosinophil progenitor cell",NA,NA
+"1189","Kit-negative, Ly-76 high basophilic erythroblast",NA,NA
+"1190","Kit-negative, Ly-76 high orthochromatophilic erythroblasts",NA,NA
+"1191","Kit-negative, Ly-76 high polychromatophilic erythroblast",NA,NA
+"1192","Kit-positive erythroid progenitor cell",NA,NA
+"1193","Kit-positive granulocyte monocyte progenitor",NA,NA
+"1194","Kit-positive macrophage dendritic cell progenitor",NA,NA
+"1195","Kit-positive megakaryocyte progenitor cell",NA,NA
+"1196","Kit-positive, CD34-negative megakaryocyte erythroid progenitor cell",NA,NA
+"1197","Kit-positive, CD34-positive common myeloid progenitor",NA,NA
+"1198","Kit-positive, integrin beta7-high basophil mast progenitor cell",NA,NA
+"1199","Kit-positive, Sca1-positive common lymphoid progenitor",NA,NA
+"1200","KLRG1-positive innate lymphoid cell, human",NA,NA
+"1201","Kolmer-Agduhr neuron",NA,NA
+"1202","Kupffer cell",NA,NA
+"1203","L2/3 bipolar Vip GABAergic cortical interneuron (Mus musculus)",NA,NA
+"1204","L2/3 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Callithrix jacchus)",NA,NA
+"1205","L2/3 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Homo sapiens)",NA,NA
+"1206","L2/3 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Mus musculus)",NA,NA
+"1207","L2/3 Pvalb-like Sst GABAergic cortical interneuron (Mus musculus)",NA,NA
+"1208","L2/3-6 intratelencephalic projecting glutamatergic cortical neuron",NA,NA
+"1209","L2/3/5 fan Martinotti Sst GABAergic cortical interneuron (Mus musculus)",NA,NA
+"1210","L4 Sst GABAergic cortical interneuron (Mus musculus)",NA,NA
+"1211","L4/5 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Mus musculus)",NA,NA
+"1212","L5 extratelencephalic projecting glutamatergic cortical neuron",NA,NA
+"1213","L5 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Callithrix jacchus)",NA,NA
+"1214","L5 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Homo sapiens)",NA,NA
+"1215","L5 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Mus musculus)",NA,NA
+"1216","L5 non-Martinotti Sst GABAergic cortical interneuron (Mus musculus)",NA,NA
+"1217","L5 T-Martinotti Sst GABAergic cortical interneuron (Mus musculus)",NA,NA
+"1218","L5 Vip cortical GABAergic interneuron (Mus musculus)",NA,NA
+"1219","L5,6 Neurogliaform Lamp5 GABAergic cortical interneuron (Mus musculus)",NA,NA
+"1220","L5/6 CCK cortical GABAergic interneuron (Mus musculus)",NA,NA
+"1221","L5/6 CCK, Vip cortical GABAergic interneuron (Mus musculus)",NA,NA
+"1222","L5/6 near-projecting glutamatergic neuron of the primary motor cortex (Callithrix jacchus)",NA,NA
+"1223","L5/6 near-projecting glutamatergic neuron of the primary motor cortex (Homo sapiens)",NA,NA
+"1224","L5/6 near-projecting glutamatergic neuron of the primary motor cortex (Mus musculus)",NA,NA
+"1225","L5/6 non-Martinotti morphology sst expressing GABAergic cortical internueron (Mus musculus)",NA,NA
+"1226","L6 corticothalamic-projecting glutamatergic cortical neuron",NA,NA
+"1227","L6 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Callithrix jacchus)",NA,NA
+"1228","L6 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Homo sapiens)",NA,NA
+"1229","L6 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Mus musculus)",NA,NA
+"1230","L6b glutamatergic cortical neuron",NA,NA
+"1231","L6b subplate glutamatergic neuron of the primary motor cortex (Mus musculus)",NA,NA
+"1232","labyrinth supporting cell",NA,NA
+"1233","lamellocyte",NA,NA
+"1234","Lamp5 GABAergic cortical interneuron",NA,NA
+"1235","Langerhans cell",NA,NA
+"1236","langerin-negative dermal dendritic cell",NA,NA
+"1237","langerin-negative, CD103-negative lymph node dendritic cell",NA,NA
+"1238","langerin-positive dermal dendritic cell",NA,NA
+"1239","langerin-positive lymph node dendritic cell",NA,NA
+"1240","large basket cell",NA,NA
+"1241","large intestine crypt goblet cell",NA,NA
+"1242","large intestine goblet cell",NA,NA
+"1243","large luteal cell",NA,NA
+"1244","large pre-B-II cell",NA,NA
+"1245","larval midgut cell",NA,NA
+"1246","late pro-B cell",NA,NA
+"1247","late promyelocyte",NA,NA
+"1248","lateral line ganglion neuron",NA,NA
+"1249","lateral line nerve glial cell",NA,NA
+"1250","lateral mesodermal cell",NA,NA
+"1251","lateral motor column neuron",NA,NA
+"1252","lateral ventricle glial cell",NA,NA
+"1253","lateral ventricle neuron",NA,NA
+"1254","leading edge cell",NA,NA
+"1255","lens epithelial cell",NA,NA
+"1256","lens fiber cell",NA,NA
+"1257","leptomeningeal cell",NA,NA
+"1258","leucoblast",NA,NA
+"1259","leucophore",NA,NA
+"1260","leukocyte",NA,NA
+"1261","Leydig cell",NA,NA
+"1262","ligament cell",NA,NA
+"1263","light chief cell of parathyroid gland",NA,NA
+"1264","light melanocyte",NA,NA
+"1265","limb basal cell of epidermis",NA,NA
+"1266","lining cell",NA,NA
+"1267","littoral cell of liver",NA,NA
+"1268","liver CD103-negative dendritic cell",NA,NA
+"1269","liver CD103-positive dendritic cell",NA,NA
+"1270","liver dendritic cell",NA,NA
+"1271","long lived plasma cell",NA,NA
+"1272","long term hematopoietic stem cell",NA,NA
+"1273","Long-range projecting Sst GABAergic cortical interneuron (Mus musculus)",NA,NA
+"1274","lower motor neuron",NA,NA
+"1275","lower urinary tract cell",NA,NA
+"1276","Lugaro cell",NA,NA
+"1277","luminal cell of acinus of lactiferous gland",NA,NA
+"1278","luminal cell of lactiferous duct",NA,NA
+"1279","luminal cell of lactiferous terminal ductal lobular unit",NA,NA
+"1280","luminal cell of prostate epithelium",NA,NA
+"1281","luminal cell of prostatic acinus",NA,NA
+"1282","luminal epithelial cell of mammary gland",NA,NA
+"1283","luminal epithelial cell of prostatic duct",NA,NA
+"1284","lung ciliated cell",NA,NA
+"1285","lung endothelial cell",NA,NA
+"1286","lung goblet cell",NA,NA
+"1287","lung macrophage",NA,NA
+"1288","lung microvascular endothelial cell",NA,NA
+"1289","lung neuroendocrine cell",NA,NA
+"1290","lung parenchyma resident eosinophil",NA,NA
+"1291","lung secretory cell",NA,NA
+"1292","luteal cell",NA,NA
+"1293","luteinizing hormone secreting cell",NA,NA
+"1294","Ly-76 high positive erythrocyte",NA,NA
+"1295","Ly-76 high reticulocyte",NA,NA
+"1296","Ly49CI-negative natural killer cell, mouse",NA,NA
+"1297","Ly49CI-positive natural killer cell, mouse",NA,NA
+"1298","Ly49D-negative natural killer cell, mouse",NA,NA
+"1299","Ly49D-positive natural killer cell, mouse",NA,NA
+"1300","Ly49H-negative natural killer cell, mouse",NA,NA
+"1301","Ly49H-positive natural killer cell, mouse",NA,NA
+"1302","lymph gland crystal cell",NA,NA
+"1303","lymph gland hemocyte",NA,NA
+"1304","lymph gland plasmatocyte",NA,NA
+"1305","lymph node macrophage",NA,NA
+"1306","lymph node mantle zone B cell",NA,NA
+"1307","lymph node paracortex T cell",NA,NA
+"1308","lymph node subcapsular sinus macrophage",NA,NA
+"1309","lymph node tingible body macrophage",NA,NA
+"1310","lymphangioblast",NA,NA
+"1311","lymphatic vessel smooth muscle cell",NA,NA
+"1312","lymphocyte",NA,NA
+"1313","lymphocyte of B lineage",NA,NA
+"1314","lymphocyte of B lineage, CD19-positive",NA,NA
+"1315","lymphocyte of large intestine lamina propria",NA,NA
+"1316","lymphocyte of small intestine lamina propria",NA,NA
+"1317","lymphoid lineage restricted progenitor cell",NA,NA
+"1318","lymphoid MHC-II-negative classical monocyte",NA,NA
+"1319","lymphoid MHC-II-negative non-classical monocyte",NA,NA
+"1320","lymphoid tissue–inducer cell",NA,NA
+"1321","lysozyme secreting cell",NA,NA
+"1322","M cell of gut",NA,NA
+"1323","macroconidium",NA,NA
+"1324","macroglial cell",NA,NA
+"1325","macrophage",NA,NA
+"1326","macrophage (sensu Diptera)",NA,NA
+"1327","macrophage dendritic cell progenitor",NA,NA
+"1328","macrophage derived foam cell",NA,NA
+"1329","macrophage of medullary sinus of lymph node",NA,NA
+"1330","macula densa epithelial cell",NA,NA
+"1331","macular hair cell",NA,NA
+"1332","magnocellular neurosecretory cell",NA,NA
+"1333","male gamete",NA,NA
+"1334","male germ cell",NA,NA
+"1335","male germ line stem cell",NA,NA
+"1336","male germ line stem cell (sensu Nematoda and Protostomia)",NA,NA
+"1337","male germ line stem cell (sensu Vertebrata)",NA,NA
+"1338","male gonocyte",NA,NA
+"1339","malignant cell",NA,NA
+"1340","Malpighian tubule stellate cell",NA,NA
+"1341","malpighian tubule tip cell",NA,NA
+"1342","mammary alveolar cell",NA,NA
+"1343","mammary gland epithelial cell",NA,NA
+"1344","mammary gland glandular cell",NA,NA
+"1345","mammary microvascular endothelial cell",NA,NA
+"1346","mammary stem cell",NA,NA
+"1347","mammosomatotroph",NA,NA
+"1348","mammotroph",NA,NA
+"1349","marginal zone B cell of lymph node",NA,NA
+"1350","marginal zone B cell of spleen",NA,NA
+"1351","marrow fibroblast",NA,NA
+"1352","Martinotti morphology L2/3 Pvalb-like Sst GABAergic cortical interneuron (Mus musculus)",NA,NA
+"1353","Martinotti neuron",NA,NA
+"1354","mast cell",NA,NA
+"1355","mast cell progenitor",NA,NA
+"1356","mature alpha-beta T cell",NA,NA
+"1357","mature astrocyte",NA,NA
+"1358","mature B cell",NA,NA
+"1359","mature basophil",NA,NA
+"1360","mature CD11c-low plasmacytoid dendritic cell",NA,NA
+"1361","mature CD11c-negative plasmacytoid dendritic cell",NA,NA
+"1362","mature CD14-positive dermal dendritic cell",NA,NA
+"1363","mature CD16-positive myeloid dendritic cell",NA,NA
+"1364","mature CD1a-positive dermal dendritic cell",NA,NA
+"1365","mature CD1a-positive Langerhans cell",NA,NA
+"1366","mature CD4 single-positive thymocyte",NA,NA
+"1367","mature CD8 single-positive thymocyte",NA,NA
+"1368","mature CD8_alpha-low Langerhans cell",NA,NA
+"1369","mature CD8_alpha-negative CD11b-negative dendritic cell",NA,NA
+"1370","mature CD8_alpha-negative CD11b-positive dendritic cell",NA,NA
+"1371","mature CD8_alpha-positive CD11b-negative dendritic cell",NA,NA
+"1372","mature conventional dendritic cell",NA,NA
+"1373","mature dendritic epithelial T cell precursor",NA,NA
+"1374","mature dermal dendritic cell",NA,NA
+"1375","mature eosinophil",NA,NA
+"1376","mature gamma-delta T cell",NA,NA
+"1377","mature interstitial dendritic cell",NA,NA
+"1378","mature microglial cell",NA,NA
+"1379","mature natural killer cell",NA,NA
+"1380","mature neutrophil",NA,NA
+"1381","mature NK T cell",NA,NA
+"1382","mature T cell",NA,NA
+"1383","mature Vgamma1.1-positive, Vdelta6.3-negative thymocyte",NA,NA
+"1384","mature Vgamma1.1-positive, Vdelta6.3-positive thymocyte",NA,NA
+"1385","mature Vgamma2-negative thymocyte",NA,NA
+"1386","mature Vgamma2-positive fetal thymocyte",NA,NA
+"1387","mature Vgamma2-positive thymocyte",NA,NA
+"1388","Mauthner neuron",NA,NA
+"1389","mechanoreceptor cell",NA,NA
+"1390","medial ganglionic eminence derived GABAergic cortical interneuron",NA,NA
+"1391","medium spiny neuron",NA,NA
+"1392","medulla-projecting glutamatergic neuron of the primary motor cortex (Mus musculus)",NA,NA
+"1393","medullary thymic epithelial cell",NA,NA
+"1394","megakaryocyte",NA,NA
+"1395","megakaryocyte progenitor cell",NA,NA
+"1396","megakaryocyte-erythroid progenitor cell",NA,NA
+"1397","meis2 expressing cortical GABAergic cell (Callithrix jacchus)",NA,NA
+"1398","meis2 expressing cortical GABAergic cell (Mus musculus)",NA,NA
+"1399","melanoblast",NA,NA
+"1400","melanocyte",NA,NA
+"1401","melanocyte of eyelid",NA,NA
+"1402","melanocyte of foreskin",NA,NA
+"1403","melanocyte of skin",NA,NA
+"1404","melanocyte of skin of face",NA,NA
+"1405","melanocyte stimulating hormone secreting cell",NA,NA
+"1406","melanophage",NA,NA
+"1407","memory B cell",NA,NA
+"1408","memory CCR4-positive regulatory T cell",NA,NA
+"1409","memory regulatory T cell",NA,NA
+"1410","memory T cell",NA,NA
+"1411","meningeal macrophage",NA,NA
+"1412","meningothelial cell",NA,NA
+"1413","Merkel cell",NA,NA
+"1414","mesangial cell",NA,NA
+"1415","mesangial phagocyte",NA,NA
+"1416","mesenchymal cell",NA,NA
+"1417","mesenchymal lymphangioblast",NA,NA
+"1418","mesenchymal stem cell",NA,NA
+"1419","mesenchymal stem cell of abdominal adipose",NA,NA
+"1420","mesenchymal stem cell of adipose",NA,NA
+"1421","mesenchymal stem cell of femoral bone marrow",NA,NA
+"1422","mesenchymal stem cell of the bone marrow",NA,NA
+"1423","mesenchymal stem cell of umbilical cord",NA,NA
+"1424","mesenchymal stem cell of Wharton's jelly",NA,NA
+"1425","mesenchyme condensation cell",NA,NA
+"1426","mesenteric preadipocyte",NA,NA
+"1427","meso-epithelial cell",NA,NA
+"1428","mesodermal cell",NA,NA
+"1429","mesonephric glomerular visceral epithelial cell",NA,NA
+"1430","mesonephric nephron tubule epithelial cell",NA,NA
+"1431","mesothelial cell",NA,NA
+"1432","mesothelial cell of anterior chamber of eye",NA,NA
+"1433","mesothelial cell of appendix",NA,NA
+"1434","mesothelial cell of colon",NA,NA
+"1435","mesothelial cell of dura mater",NA,NA
+"1436","mesothelial cell of epicardium",NA,NA
+"1437","mesothelial cell of parietal peritoneum",NA,NA
+"1438","mesothelial cell of parietal pleura",NA,NA
+"1439","mesothelial cell of peritoneum",NA,NA
+"1440","mesothelial cell of pleura",NA,NA
+"1441","mesothelial cell of small intestine",NA,NA
+"1442","mesothelial cell of visceral peritoneum",NA,NA
+"1443","mesothelial cell of visceral pleura",NA,NA
+"1444","mesothelial fibroblast",NA,NA
+"1445","mesothelial fibroblast of the leptomeninx",NA,NA
+"1446","metal ion accumulating cell",NA,NA
+"1447","metamyelocyte",NA,NA
+"1448","metanephric glomerular visceral epithelial cell",NA,NA
+"1449","metanephric mesenchyme stem cell",NA,NA
+"1450","metanephric nephron tubule epithelial cell",NA,NA
+"1451","Meynert cell",NA,NA
+"1452","MHC-II-high non-classical monocyte",NA,NA
+"1453","MHC-II-low non-classical monocyte",NA,NA
+"1454","MHC-II-negative classical monocyte",NA,NA
+"1455","MHC-II-negative non-classical monocyte",NA,NA
+"1456","MHC-II-positive classical monocyte",NA,NA
+"1457","microcirculation associated smooth muscle cell",NA,NA
+"1458","microconidium",NA,NA
+"1459","microfold cell of epithelium of intestinal villus",NA,NA
+"1460","microfold cell of epithelium of small intestine",NA,NA
+"1461","microfold cell of epithelium proper of anorectum",NA,NA
+"1462","microfold cell of epithelium proper of appendix",NA,NA
+"1463","microfold cell of epithelium proper of duodenum",NA,NA
+"1464","microfold cell of epithelium proper of ileum",NA,NA
+"1465","microfold cell of epithelium proper of jejunum",NA,NA
+"1466","microfold cell of epithelium proper of large intestine",NA,NA
+"1467","microfold cell of epithelium proper of small intestine",NA,NA
+"1468","microglial cell",NA,NA
+"1469","micropylar cell",NA,NA
+"1470","microvascular endothelial cell",NA,NA
+"1471","microvillous olfactory receptor neuron",NA,NA
+"1472","midbrain dopaminergic neuron",NA,NA
+"1473","midzonal region hepatocyte",NA,NA
+"1474","migratory cardiac neural crest cell",NA,NA
+"1475","migratory cranial neural crest cell",NA,NA
+"1476","migratory enteric neural crest cell",NA,NA
+"1477","migratory neural crest cell",NA,NA
+"1478","migratory trunk neural crest cell",NA,NA
+"1479","milk secreting cell",NA,NA
+"1480","mineralocorticoid secreting cell",NA,NA
+"1481","mitogenic signaling cell",NA,NA
+"1482","mitral cell",NA,NA
+"1483","monoblast",NA,NA
+"1484","monocyte",NA,NA
+"1485","mononuclear cell",NA,NA
+"1486","mononuclear cell of bone marrow",NA,NA
+"1487","mononuclear cell of umbilical cord",NA,NA
+"1488","mononuclear cytotrophoblast cell",NA,NA
+"1489","mononuclear odontoclast",NA,NA
+"1490","mononuclear osteoclast",NA,NA
+"1491","mononuclear phagocyte",NA,NA
+"1492","monopoietic cell",NA,NA
+"1493","morula cell",NA,NA
+"1494","motile cell",NA,NA
+"1495","motile sperm cell",NA,NA
+"1496","motilin secreting cell",NA,NA
+"1497","motor neuron",NA,NA
+"1498","mucosa-associated lymphoid tissue macrophage",NA,NA
+"1499","mucosal invariant T cell",NA,NA
+"1500","mucosal type mast cell",NA,NA
+"1501","mucous cell of stomach",NA,NA
+"1502","mucous neck cell",NA,NA
+"1503","mucus neck cell of gastric gland",NA,NA
+"1504","mucus secreting cell",NA,NA
+"1505","Mueller cell",NA,NA
+"1506","multi fate stem cell",NA,NA
+"1507","multi-ciliated epithelial cell",NA,NA
+"1508","multi-potent skeletal muscle stem cell",NA,NA
+"1509","multinuclear odontoclast",NA,NA
+"1510","multinuclear osteoclast",NA,NA
+"1511","multinucleate arthroconidium",NA,NA
+"1512","multinucleate blastoconidium",NA,NA
+"1513","multinucleate cell",NA,NA
+"1514","multinucleate conidium",NA,NA
+"1515","multinucleate macroconidium",NA,NA
+"1516","multinucleated giant cell",NA,NA
+"1517","multinucleated phagocyte",NA,NA
+"1518","multipolar neuron",NA,NA
+"1519","mural cell",NA,NA
+"1520","muscle cell",NA,NA
+"1521","muscle fibroblast",NA,NA
+"1522","muscle founder cell",NA,NA
+"1523","muscle precursor cell",NA,NA
+"1524","myelin accumulating cell",NA,NA
+"1525","myelinating Schwann cell",NA,NA
+"1526","myeloblast",NA,NA
+"1527","myelocyte",NA,NA
+"1528","myeloid cell",NA,NA
+"1529","myeloid dendritic cell",NA,NA
+"1530","myeloid dendritic cell, human",NA,NA
+"1531","myeloid leukocyte",NA,NA
+"1532","myeloid lineage restricted progenitor cell",NA,NA
+"1533","myeloid suppressor cell",NA,NA
+"1534","myoblast",NA,NA
+"1535","myocardial endocrine cell",NA,NA
+"1536","myocardial endocrine cell of atrium",NA,NA
+"1537","myocardial endocrine cell of interventricular septum",NA,NA
+"1538","myocardial endocrine cell of septal division of left branch of atrioventricular bundle",NA,NA
+"1539","myocyte of anterior internodal tract",NA,NA
+"1540","myocyte of atrial branch of anterior internodal tract",NA,NA
+"1541","myocyte of atrial septal branch of anterior internodal tract",NA,NA
+"1542","myocyte of atrioventricular node",NA,NA
+"1543","myocyte of middle internodal tract",NA,NA
+"1544","myocyte of posterior internodal tract",NA,NA
+"1545","myocyte of sinoatrial node",NA,NA
+"1546","myoendocrine cell",NA,NA
+"1547","myoepithelial cell",NA,NA
+"1548","myoepithelial cell of acinus of lactiferous gland",NA,NA
+"1549","myoepithelial cell of dilator pupillae",NA,NA
+"1550","myoepithelial cell of intralobular lactiferous duct",NA,NA
+"1551","myoepithelial cell of lactiferous alveolus",NA,NA
+"1552","myoepithelial cell of lactiferous duct",NA,NA
+"1553","myoepithelial cell of lactiferous gland",NA,NA
+"1554","myoepithelial cell of main lactiferous duct",NA,NA
+"1555","myoepithelial cell of mammary gland",NA,NA
+"1556","myoepithelial cell of primary lactiferous duct",NA,NA
+"1557","myoepithelial cell of quarternary lactiferous duct",NA,NA
+"1558","myoepithelial cell of secondary lactiferous duct",NA,NA
+"1559","myoepithelial cell of sweat gland",NA,NA
+"1560","myoepithelial cell of terminal lactiferous duct",NA,NA
+"1561","myoepithelial cell of tertiary lactiferous duct",NA,NA
+"1562","myofibroblast cell",NA,NA
+"1563","myometrial cell",NA,NA
+"1564","myotube",NA,NA
+"1565","naive B cell",NA,NA
+"1566","naive CCR4-positive regulatory T cell",NA,NA
+"1567","naive regulatory T cell",NA,NA
+"1568","naive T cell",NA,NA
+"1569","naive thymus-derived CD4-positive, alpha-beta T cell",NA,NA
+"1570","naive thymus-derived CD8-positive, alpha-beta T cell",NA,NA
+"1571","nasal and broncial associated lymphoid tissue macrophage",NA,NA
+"1572","nasal cavity respiratory epithelium epithelial cell of viscerocranial mucosa",NA,NA
+"1573","nasal mucosa goblet cell",NA,NA
+"1574","nasopharyngeal epithelial cell",NA,NA
+"1575","native cell",NA,NA
+"1576","natural helper lymphocyte",NA,NA
+"1577","natural killer cell",NA,NA
+"1578","natural T-regulatory cell",NA,NA
+"1579","near-projecting glutamatergic cortical neuron",NA,NA
+"1580","neocortex basket cell",NA,NA
+"1581","neoplastic cell",NA,NA
+"1582","nephrocyte",NA,NA
+"1583","nephrogenic mesenchyme stem cell",NA,NA
+"1584","nephrogenic zone cell",NA,NA
+"1585","nephron tubule epithelial cell",NA,NA
+"1586","nest basket cell",NA,NA
+"1587","neural cell",NA,NA
+"1588","neural crest cell",NA,NA
+"1589","neural crest derived fat cell",NA,NA
+"1590","neural crest derived neuroblast",NA,NA
+"1591","neural crest derived neuron",NA,NA
+"1592","neural progenitor cell",NA,NA
+"1593","neurecto-epithelial cell",NA,NA
+"1594","neurectodermal cell",NA,NA
+"1595","neuroblast (sensu Nematoda and Protostomia)",NA,NA
+"1596","neuroblast (sensu Vertebrata)",NA,NA
+"1597","neuroendocrine cell",NA,NA
+"1598","neuroepidermoblast",NA,NA
+"1599","neuroepithelial stem cell",NA,NA
+"1600","neurogliaform cell",NA,NA
+"1601","Neurogliaform Lamp5 GABAergic cortical interneuron (Mus musculus)",NA,NA
+"1602","neuroglioblast (sensu Nematoda and Protostomia)",NA,NA
+"1603","neuroglioblast (sensu Nematoda)",NA,NA
+"1604","neuromast hair cell",NA,NA
+"1605","neuromast mantle cell",NA,NA
+"1606","neuromast support cell",NA,NA
+"1607","neuron",NA,NA
+"1608","neuron associated cell",NA,NA
+"1609","neuron associated cell (sensu Nematoda and Protostomia)",NA,NA
+"1610","neuron associated cell (sensu Vertebrata)",NA,NA
+"1611","neuron of cerebral cortex",NA,NA
+"1612","neuron of the dorsal spinal cord",NA,NA
+"1613","neuron of the forebrain",NA,NA
+"1614","neuron of the substantia nigra",NA,NA
+"1615","neuron of the ventral spinal cord",NA,NA
+"1616","neuronal brush cell",NA,NA
+"1617","neuronal receptor cell",NA,NA
+"1618","neuronal stem cell",NA,NA
+"1619","neuroplacodal cell",NA,NA
+"1620","neurosecretory neuron",NA,NA
+"1621","neutrophil",NA,NA
+"1622","neutrophil progenitor cell",NA,NA
+"1623","neutrophilic metamyelocyte",NA,NA
+"1624","neutrophilic myeloblast",NA,NA
+"1625","neutrophilic myelocyte",NA,NA
+"1626","neutrophilic promyelocyte",NA,NA
+"1627","nitrergic neuron",NA,NA
+"1628","nitrogen fixing cell",NA,NA
+"1629","NK1.1-positive natural killer cell, mouse",NA,NA
+"1630","NKGA2-positive natural killer cell, mouse",NA,NA
+"1631","NKp44-negative group 3 innate lymphoid cell, human",NA,NA
+"1632","NKp44-positive group 3 innate lymphoid cell, human",NA,NA
+"1633","NKp46-positive innate lymphoid cell, human",NA,NA
+"1634","nodal myocyte",NA,NA
+"1635","non keratinizing barrier epithelial cell",NA,NA
+"1636","non-branched duct epithelial cell",NA,NA
+"1637","non-classical monocyte",NA,NA
+"1638","non-medulla, extratelencephalic-projecting glutamatergic neuron of the primary motor cortex (Mus musculus)",NA,NA
+"1639","non-motile sperm cell",NA,NA
+"1640","non-myelinating Schwann cell",NA,NA
+"1641","non-nucleated secondary lens fiber",NA,NA
+"1642","non-pigmented ciliary epithelial cell",NA,NA
+"1643","non-striated muscle cell",NA,NA
+"1644","non-terminally differentiated cell",NA,NA
+"1645","non-terminally differentiated odontoblast",NA,NA
+"1646","non-terminally differentiated osteoblast",NA,NA
+"1647","nongranular leukocyte",NA,NA
+"1648","nonkeratinized cell of epidermis",NA,NA
+"1649","nonkeratinized cell of stratum corneum of esophageal epithelium",NA,NA
+"1650","nonkeratinized epithelial cell of anal column",NA,NA
+"1651","nonkeratinized epithelial cell of inferior part of anal canal",NA,NA
+"1652","noradrenergic cell",NA,NA
+"1653","noradrenergic neuron",NA,NA
+"1654","notochordal cell",NA,NA
+"1655","notochordal sheath cell",NA,NA
+"1656","notochordal vacuole cell",NA,NA
+"1657","nuclear bag fiber",NA,NA
+"1658","nuclear chain fiber",NA,NA
+"1659","nucleate cell",NA,NA
+"1660","nucleate erythrocyte",NA,NA
+"1661","nucleated reticulocyte",NA,NA
+"1662","nucleated secondary lens fiber",NA,NA
+"1663","nucleated thrombocyte",NA,NA
+"1664","nucleus pulposus cell of intervertebral disc",NA,NA
+"1665","obliquely striated muscle cell",NA,NA
+"1666","obliquely striated somatic muscle cell",NA,NA
+"1667","obsolete aggregate cell",NA,NA
+"1668","obsolete anterior cell",NA,NA
+"1669","obsolete anterior like cell",NA,NA
+"1670","obsolete antibody secreting cell",NA,NA
+"1671","obsolete antipodal cell",NA,NA
+"1672","obsolete apical cell",NA,NA
+"1673","obsolete atrichoblast",NA,NA
+"1674","obsolete axial cell",NA,NA
+"1675","obsolete B lymphoblast",NA,NA
+"1676","obsolete breast adipocyte",NA,NA
+"1677","obsolete bursa processed stem cell",NA,NA
+"1678","obsolete cambial initial",NA,NA
+"1679","obsolete cardiac fibroblast",NA,NA
+"1680","obsolete cell by class",NA,NA
+"1681","obsolete cell by function",NA,NA
+"1682","obsolete cell by histology",NA,NA
+"1683","obsolete cell by lineage",NA,NA
+"1684","obsolete cell by nuclear number",NA,NA
+"1685","obsolete cell by organism",NA,NA
+"1686","obsolete cell by ploidy",NA,NA
+"1687","obsolete cell line cell",NA,NA
+"1688","obsolete central cell",NA,NA
+"1689","obsolete cerebellum Golgi cell",NA,NA
+"1690","obsolete chemotactic amoeboid cell (sensu Mycetozoa)",NA,NA
+"1691","obsolete chlorenchyma cell",NA,NA
+"1692","obsolete collenchymal cell",NA,NA
+"1693","obsolete companion cell",NA,NA
+"1694","obsolete cytotoxic T cell",NA,NA
+"1695","obsolete degenerate megaspore",NA,NA
+"1696","obsolete dentine secreting cell",NA,NA
+"1697","obsolete egg cell",NA,NA
+"1698","obsolete epidermal initial",NA,NA
+"1699","obsolete epithelial cell of anterior palatal part of viscerocranial mucosa",NA,NA
+"1700","obsolete epithelial cell of buccal part of viscerocranial mucosa",NA,NA
+"1701","obsolete epithelial cell of gingival part of viscerocranial mucosa",NA,NA
+"1702","obsolete epithelial cell of gland",NA,NA
+"1703","obsolete epithelial cell of nasal part of viscerocranial mucosa",NA,NA
+"1704","obsolete epithelial cell of paranasal sinus part of viscerocranial mucosa",NA,NA
+"1705","obsolete epithelial cell of visceral layer of glomerular capsule",NA,NA
+"1706","obsolete epithem cell",NA,NA
+"1707","obsolete excitatory motor neuron",NA,NA
+"1708","obsolete fiber tracheid",NA,NA
+"1709","obsolete functional megaspore",NA,NA
+"1710","obsolete fusiform initial",NA,NA
+"1711","obsolete generative cell",NA,NA
+"1712","obsolete glial cell (sensu Nematoda and Protostomia)",NA,NA
+"1713","obsolete glial cell (sensu Vertebrata)",NA,NA
+"1714","obsolete goblet cell of epithelium of small intestine",NA,NA
+"1715","obsolete goblet cell of epithelium proper of large intestine",NA,NA
+"1716","obsolete goblet cell of epithelium proper of small intestine",NA,NA
+"1717","obsolete guard cell",NA,NA
+"1718","obsolete guard mother cell",NA,NA
+"1719","obsolete idioblast",NA,NA
+"1720","obsolete IgA B cell",NA,NA
+"1721","obsolete IgE B cell",NA,NA
+"1722","obsolete IgG B cell",NA,NA
+"1723","obsolete IgM B cell",NA,NA
+"1724","obsolete immortal cell line cell",NA,NA
+"1725","obsolete lymphoblast",NA,NA
+"1726","obsolete magnocellular neurosecretory cell",NA,NA
+"1727","obsolete megaspore",NA,NA
+"1728","obsolete megasporocyte",NA,NA
+"1729","obsolete meristematic cell",NA,NA
+"1730","obsolete meristemoid",NA,NA
+"1731","obsolete metabolising cell",NA,NA
+"1732","obsolete microspore",NA,NA
+"1733","obsolete microsporocyte",NA,NA
+"1734","obsolete microvascular endothelium blood vessel endothelial cell",NA,NA
+"1735","obsolete mortal cell line cell",NA,NA
+"1736","obsolete mucilage cell",NA,NA
+"1737","obsolete Muller cell",NA,NA
+"1738","obsolete myrosin cell",NA,NA
+"1739","obsolete nodal cardiac cell",NA,NA
+"1740","obsolete non-visual cell (sensu Vertebrata)",NA,NA
+"1741","obsolete null cell",NA,NA
+"1742","obsolete null lymphocyte",NA,NA
+"1743","obsolete osteochondroclast",NA,NA
+"1744","obsolete osteoprogenitor cell",NA,NA
+"1745","obsolete paraganglial cell",NA,NA
+"1746","obsolete parenchymal cell",NA,NA
+"1747","obsolete passage cell",NA,NA
+"1748","obsolete pavement cell",NA,NA
+"1749","obsolete phloem element",NA,NA
+"1750","obsolete phloem initial",NA,NA
+"1751","obsolete plant basal cell",NA,NA
+"1752","obsolete plant cell",NA,NA
+"1753","obsolete plant spore",NA,NA
+"1754","obsolete PP cell of pancreatic acinus",NA,NA
+"1755","obsolete prespore cell",NA,NA
+"1756","obsolete prestalk 0 cell",NA,NA
+"1757","obsolete prestalk A cell",NA,NA
+"1758","obsolete prestalk AB cell",NA,NA
+"1759","obsolete prestalk B cell",NA,NA
+"1760","obsolete prestalk cell",NA,NA
+"1761","obsolete prestalk I cell",NA,NA
+"1762","obsolete pstAB/ALC",NA,NA
+"1763","obsolete pstO/ALC",NA,NA
+"1764","obsolete Purkinje fiber",NA,NA
+"1765","obsolete ray cell",NA,NA
+"1766","obsolete ray initial",NA,NA
+"1767","obsolete regulatory T cell",NA,NA
+"1768","obsolete retina retinal ganglion cell",NA,NA
+"1769","obsolete scaffold cell",NA,NA
+"1770","obsolete sclerenchyma cell",NA,NA
+"1771","obsolete sieve cell",NA,NA
+"1772","obsolete sieve element",NA,NA
+"1773","obsolete sieve tube member",NA,NA
+"1774","obsolete small intestine crypt goblet cell",NA,NA
+"1775","obsolete socket cell",NA,NA
+"1776","obsolete sperm cell (sensu Viridiplantae)",NA,NA
+"1777","obsolete sporangiospore",NA,NA
+"1778","obsolete spore",NA,NA
+"1779","obsolete spore (sensu Mycetozoa)",NA,NA
+"1780","obsolete stalk cell",NA,NA
+"1781","obsolete starch sheath cell",NA,NA
+"1782","obsolete subsidiary cell",NA,NA
+"1783","obsolete synergid",NA,NA
+"1784","obsolete T lymphoblast",NA,NA
+"1785","obsolete thymus processed stem cell",NA,NA
+"1786","obsolete tracheary element",NA,NA
+"1787","obsolete tracheid",NA,NA
+"1788","obsolete transfer cell",NA,NA
+"1789","obsolete trichoblast",NA,NA
+"1790","obsolete trichome",NA,NA
+"1791","obsolete vegetative cell",NA,NA
+"1792","obsolete vegetative cell (sensu Mycetozoa)",NA,NA
+"1793","obsolete xylem element",NA,NA
+"1794","obsolete xylem fiber cell",NA,NA
+"1795","obsolete zoospore",NA,NA
+"1796","odontoblast",NA,NA
+"1797","odontoclast",NA,NA
+"1798","odontocyte",NA,NA
+"1799","oenocyte",NA,NA
+"1800","OFF-bipolar cell",NA,NA
+"1801","olfactory bulb interneuron",NA,NA
+"1802","olfactory bulb tufted cell",NA,NA
+"1803","olfactory ensheathing cell",NA,NA
+"1804","olfactory epithelial cell",NA,NA
+"1805","olfactory epithelial support cell",NA,NA
+"1806","olfactory granule cell",NA,NA
+"1807","olfactory receptor cell",NA,NA
+"1808","oligodendrocyte",NA,NA
+"1809","oligodendrocyte precursor cell",NA,NA
+"1810","omentum preadipocyte",NA,NA
+"1811","ON-bipolar cell",NA,NA
+"1812","oncocyte",NA,NA
+"1813","ooblast",NA,NA
+"1814","oocyte",NA,NA
+"1815","oogonial cell",NA,NA
+"1816","oospore",NA,NA
+"1817","open tracheal system tracheocyte",NA,NA
+"1818","optic choroid fibroblast",NA,NA
+"1819","oral mucosa squamous cell",NA,NA
+"1820","organ of Corti supporting cell",NA,NA
+"1821","orthochromatic erythroblast",NA,NA
+"1822","osteoblast",NA,NA
+"1823","osteoclast",NA,NA
+"1824","osteocyte",NA,NA
+"1825","otic fibrocyte",NA,NA
+"1826","outer hair cell",NA,NA
+"1827","outer medulla vasa recta ascending limb cell",NA,NA
+"1828","outer medulla vasa recta descending limb cell",NA,NA
+"1829","outer renal medulla vasa recta cell",NA,NA
+"1830","outer root sheath cell",NA,NA
+"1831","ovarian fibroblast",NA,NA
+"1832","ovarian follicle cell",NA,NA
+"1833","ovarian microvascular endothelial cell",NA,NA
+"1834","ovarian surface epithelial cell",NA,NA
+"1835","oviduct glandular cell",NA,NA
+"1836","oxygen accumulating cell",NA,NA
+"1837","oxyphil cell of parathyroid gland",NA,NA
+"1838","oxyphil cell of thyroid",NA,NA
+"1839","oxytocin stimulating hormone secreting cell",NA,NA
+"1840","oxytocin-secreting magnocellular cell",NA,NA
+"1841","P enteroendocrine cell",NA,NA
+"1842","P/D1 enteroendocrine cell",NA,NA
+"1843","pain receptor cell",NA,NA
+"1844","pancreas exocrine glandular cell",NA,NA
+"1845","pancreatic A cell",NA,NA
+"1846","pancreatic acinar cell",NA,NA
+"1847","pancreatic centro-acinar cell",NA,NA
+"1848","pancreatic D cell",NA,NA
+"1849","pancreatic ductal cell",NA,NA
+"1850","pancreatic endocrine cell",NA,NA
+"1851","pancreatic epsilon cell",NA,NA
+"1852","pancreatic goblet cell",NA,NA
+"1853","pancreatic PP cell",NA,NA
+"1854","pancreatic stellate cell",NA,NA
+"1855","paneth cell",NA,NA
+"1856","paneth cell of anorectum",NA,NA
+"1857","paneth cell of colon",NA,NA
+"1858","paneth cell of epithelium of crypt of Lieberkuhn of small intestine",NA,NA
+"1859","paneth cell of epithelium of small intestine",NA,NA
+"1860","paneth cell of epithelium proper of small intestine",NA,NA
+"1861","paneth cell of the appendix",NA,NA
+"1862","papillary tips cell",NA,NA
+"1863","paracrine cell",NA,NA
+"1864","parafollicular cell",NA,NA
+"1865","paraganglia type 2 cell",NA,NA
+"1866","paraganglial type 1 cell",NA,NA
+"1867","parasympathetic neuron",NA,NA
+"1868","parathyroid glandular cell",NA,NA
+"1869","paraxial cell",NA,NA
+"1870","parietal cell",NA,NA
+"1871","parietal epithelial cell",NA,NA
+"1872","parvocellular neurosecretory cell",NA,NA
+"1873","peptic cell",NA,NA
+"1874","peptide hormone secreting cell",NA,NA
+"1875","peptidergic neuron",NA,NA
+"1876","periarticular chondrocyte",NA,NA
+"1877","pericardial nephrocyte",NA,NA
+"1878","pericardium fibroblast",NA,NA
+"1879","pericyte cell",NA,NA
+"1880","peridermal cell",NA,NA
+"1881","periglomerular cell",NA,NA
+"1882","perijunctional fibroblast",NA,NA
+"1883","perineural cell",NA,NA
+"1884","perineuronal satellite cell",NA,NA
+"1885","periperhal blood mesothelial cell",NA,NA
+"1886","peripheral blood mononuclear cell",NA,NA
+"1887","peripheral blood stem cell",NA,NA
+"1888","peripheral nervous system neuron",NA,NA
+"1889","peripheral neuron",NA,NA
+"1890","peripheral sensory neuron",NA,NA
+"1891","periportal region hepatocyte",NA,NA
+"1892","perirenal adipocyte cell",NA,NA
+"1893","perirenal preadipocyte",NA,NA
+"1894","peritoneal macrophage",NA,NA
+"1895","peritubular capillary endothelial cell",NA,NA
+"1896","peritubular myoid cell",NA,NA
+"1897","perivascular macrophage",NA,NA
+"1898","permanently open valve cell",NA,NA
+"1899","Peyer's patch B cell",NA,NA
+"1900","Peyer's patch follicular dendritic cell",NA,NA
+"1901","Peyer's patch lymphocyte",NA,NA
+"1902","Peyer's patch macrophage",NA,NA
+"1903","pH receptor cell",NA,NA
+"1904","phagocyte",NA,NA
+"1905","phagocyte (sensu Nematoda and Protostomia)",NA,NA
+"1906","phagocyte (sensu Vertebrata)",NA,NA
+"1907","phalangeal cell",NA,NA
+"1908","photopic photoreceptor cell",NA,NA
+"1909","photoreceptor cell",NA,NA
+"1910","photosynthetic cell",NA,NA
+"1911","pigment cell",NA,NA
+"1912","pigment cell (sensu Nematoda and Protostomia)",NA,NA
+"1913","pigment cell (sensu Vertebrata)",NA,NA
+"1914","pigment erythroblast",NA,NA
+"1915","pigmented ciliary epithelial cell",NA,NA
+"1916","pigmented epithelial cell",NA,NA
+"1917","pillar cell",NA,NA
+"1918","pinealocyte",NA,NA
+"1919","pioneer neuron",NA,NA
+"1920","pituicyte",NA,NA
+"1921","pituitary gland cell",NA,NA
+"1922","placental amniotic mesenchymal stromal cell",NA,NA
+"1923","placental epithelial cell",NA,NA
+"1924","placental hematopoietic stem cell",NA,NA
+"1925","placental pericyte",NA,NA
+"1926","placental villous trophoblast",NA,NA
+"1927","placental villus capillary endothelial cell",NA,NA
+"1928","plasma cell",NA,NA
+"1929","plasma cell of appendix",NA,NA
+"1930","plasma cell of medullary sinus of lymph node",NA,NA
+"1931","plasmablast",NA,NA
+"1932","plasmacytoid dendritic cell",NA,NA
+"1933","plasmacytoid dendritic cell, human",NA,NA
+"1934","plasmatocyte",NA,NA
+"1935","platelet",NA,NA
+"1936","pleural macrophage",NA,NA
+"1937","pluripotent stem cell",NA,NA
+"1938","pneumocyte",NA,NA
+"1939","podocyte (sensu Diptera)",NA,NA
+"1940","polar body",NA,NA
+"1941","pole cell",NA,NA
+"1942","polychromatophilic erythroblast",NA,NA
+"1943","polygonal cell",NA,NA
+"1944","polymodal neuron",NA,NA
+"1945","polymodal nocireceptor",NA,NA
+"1946","polyploid cell",NA,NA
+"1947","polytene cell",NA,NA
+"1948","pore cell",NA,NA
+"1949","posterior cone cell (sensu Endopterygota)",NA,NA
+"1950","posterior lateral line ganglion neuron",NA,NA
+"1951","posterior lateral line nerve glial cell",NA,NA
+"1952","posterior lateral line neuromast hair cell",NA,NA
+"1953","posterior lateral line neuromast mantle cell",NA,NA
+"1954","posterior lateral line neuromast support cell",NA,NA
+"1955","PP cell",NA,NA
+"1956","PP cell of intestine",NA,NA
+"1957","pre-B-I cell",NA,NA
+"1958","pre-B-II cell",NA,NA
+"1959","pre-conventional dendritic cell",NA,NA
+"1960","pre-natural killer cell",NA,NA
+"1961","preadipocyte",NA,NA
+"1962","preadipocyte of the breast",NA,NA
+"1963","preameloblast",NA,NA
+"1964","preBCR-negative large pre-B-II cell",NA,NA
+"1965","preBCR-positive large pre-B-II cell",NA,NA
+"1966","precementoblast",NA,NA
+"1967","prechondroblast",NA,NA
+"1968","precursor B cell",NA,NA
+"1969","precursor cell",NA,NA
+"1970","premigratory neural crest cell",NA,NA
+"1971","preodontoblast",NA,NA
+"1972","preosteoblast",NA,NA
+"1973","pressoreceptor cell",NA,NA
+"1974","prickle cell",NA,NA
+"1975","primary cultured cell",NA,NA
+"1976","primary follicular cell of ovary",NA,NA
+"1977","primary interneuron",NA,NA
+"1978","primary lens fiber",NA,NA
+"1979","primary motor cortex pyramidal cell",NA,NA
+"1980","primary motor neuron",NA,NA
+"1981","primary neuron",NA,NA
+"1982","primary oocyte",NA,NA
+"1983","primary pigment cell",NA,NA
+"1984","primary polar body",NA,NA
+"1985","primary sensory neuron",NA,NA
+"1986","primary spermatocyte",NA,NA
+"1987","primary trophoblast giant cell",NA,NA
+"1988","primitive cardiac myocyte",NA,NA
+"1989","primitive erythroid lineage cell",NA,NA
+"1990","primitive erythroid progenitor",NA,NA
+"1991","primitive red blood cell",NA,NA
+"1992","primitive reticulocyte",NA,NA
+"1993","primordial germ cell",NA,NA
+"1994","principal gastric gland goblet cell",NA,NA
+"1995","pro-B cell",NA,NA
+"1996","pro-NK cell",NA,NA
+"1997","pro-T cell",NA,NA
+"1998","procrystal cell",NA,NA
+"1999","proerythroblast",NA,NA
+"2000","professional antigen presenting cell",NA,NA
+"2001","progenitor cell",NA,NA
+"2002","progenitor cell of endocrine pancreas",NA,NA
+"2003","progesterone secreting cell",NA,NA
+"2004","prohemocyte (sensu Nematoda and Protostomia)",NA,NA
+"2005","prokaryotic cell",NA,NA
+"2006","prolactin secreting cell",NA,NA
+"2007","promonocyte",NA,NA
+"2008","promyelocyte",NA,NA
+"2009","pronephric nephron tubule epithelial cell",NA,NA
+"2010","prostate gland microvascular endothelial cell",NA,NA
+"2011","prostate stem cell",NA,NA
+"2012","prostate stromal cell",NA,NA
+"2013","protein secreting cell",NA,NA
+"2014","protoplast",NA,NA
+"2015","pseudounipolar neuron",NA,NA
+"2016","pulmonary artery endothelial cell",NA,NA
+"2017","pulmonary interstitial fibroblast",NA,NA
+"2018","pulmonary ionocyte",NA,NA
+"2019","Purkinje cell",NA,NA
+"2020","Purkinje myocyte",NA,NA
+"2021","Purkinje myocyte of atrioventricular bundle",NA,NA
+"2022","Purkinje myocyte of atrioventricular node",NA,NA
+"2023","Purkinje myocyte of internodal tract",NA,NA
+"2024","Purkinje myocyte of interventricular septum",NA,NA
+"2025","pvalb GABAergic cortical interneuron",NA,NA
+"2026","pyloric gastric gland goblet cell",NA,NA
+"2027","pyramidal neuron",NA,NA
+"2028","pyrenocyte",NA,NA
+"2029","quiescent skeletal muscle satellite cell",NA,NA
+"2030","R1 photoreceptor cell",NA,NA
+"2031","R2 photoreceptor cell",NA,NA
+"2032","R3 photoreceptor cell",NA,NA
+"2033","R4 photoreceptor cell",NA,NA
+"2034","R5 photoreceptor cell",NA,NA
+"2035","R6 photoreceptor cell",NA,NA
+"2036","R7 photoreceptor cell",NA,NA
+"2037","R8 photoreceptor cell",NA,NA
+"2038","radial glial cell",NA,NA
+"2039","raphe nuclei neuron",NA,NA
+"2040","rectum glandular cell",NA,NA
+"2041","red muscle cell",NA,NA
+"2042","red sensitive photoreceptor cell",NA,NA
+"2043","regular atrial cardiac myocyte",NA,NA
+"2044","regular cardiac myocyte",NA,NA
+"2045","regular interatrial cardiac myocyte",NA,NA
+"2046","regular interventricular cardiac myocyte",NA,NA
+"2047","regular ventricular cardiac myocyte",NA,NA
+"2048","regulatory B cell",NA,NA
+"2049","regulatory T cell",NA,NA
+"2050","renal alpha-intercalated cell",NA,NA
+"2051","renal beta-intercalated cell",NA,NA
+"2052","renal cortical epithelial cell",NA,NA
+"2053","renal filtration cell",NA,NA
+"2054","renal intercalated cell",NA,NA
+"2055","renal interstitial pericyte",NA,NA
+"2056","renal principal cell",NA,NA
+"2057","respiratory basal cell",NA,NA
+"2058","respiratory epithelial cell",NA,NA
+"2059","respiratory goblet cell",NA,NA
+"2060","resting double-positive thymocyte",NA,NA
+"2061","reticular cell",NA,NA
+"2062","reticular cell of splenic cord",NA,NA
+"2063","reticulocyte",NA,NA
+"2064","reticulospinal neuron",NA,NA
+"2065","retina horizontal cell",NA,NA
+"2066","retinal bipolar neuron",NA,NA
+"2067","retinal blood vessel endothelial cell",NA,NA
+"2068","retinal cell",NA,NA
+"2069","retinal cone cell",NA,NA
+"2070","retinal ganglion cell",NA,NA
+"2071","retinal melanocyte",NA,NA
+"2072","retinal pigment epithelial cell",NA,NA
+"2073","retinal progenitor cell",NA,NA
+"2074","retinal rod cell",NA,NA
+"2075","retrotrapezoid nucleus neuron",NA,NA
+"2076","rod bipolar cell",NA,NA
+"2077","rod bipolar cell (sensu Mus)",NA,NA
+"2078","Rohon-Beard neuron",NA,NA
+"2079","rosehip neuron",NA,NA
+"2080","salivary gland cell",NA,NA
+"2081","salivary gland glandular cell",NA,NA
+"2082","Schwann cell",NA,NA
+"2083","Schwann cell precursor",NA,NA
+"2084","scleral cell",NA,NA
+"2085","scolopale cell",NA,NA
+"2086","scolopidial ligament cell",NA,NA
+"2087","scolopidial sheath cell",NA,NA
+"2088","scotopic photoreceptor cell",NA,NA
+"2089","seam cell",NA,NA
+"2090","sebaceous gland cell",NA,NA
+"2091","sebum secreting cell",NA,NA
+"2092","secondary follicular cell of ovary",NA,NA
+"2093","secondary lens fiber",NA,NA
+"2094","secondary lymphoid organ macrophage",NA,NA
+"2095","secondary motor neuron",NA,NA
+"2096","secondary neuron",NA,NA
+"2097","secondary oocyte",NA,NA
+"2098","secondary pigment cell",NA,NA
+"2099","secondary polar body",NA,NA
+"2100","secondary spermatocyte",NA,NA
+"2101","secondary trophoblast giant cell",NA,NA
+"2102","secretin stimulating hormone secreting cell",NA,NA
+"2103","secretory cell",NA,NA
+"2104","segmented neutrophil of bone marrow",NA,NA
+"2105","seminal fluid secreting cell",NA,NA
+"2106","seminal vesicle glandular cell",NA,NA
+"2107","seminiferous tubule epithelial cell",NA,NA
+"2108","sensory epithelial cell",NA,NA
+"2109","sensory hair cell",NA,NA
+"2110","sensory neuron",NA,NA
+"2111","sensory neuron of dorsal root ganglion",NA,NA
+"2112","sensory neuron of spinal nerve",NA,NA
+"2113","sensory processing neuron",NA,NA
+"2114","sensory receptor cell",NA,NA
+"2115","seromucus secreting cell",NA,NA
+"2116","serotonergic neuron",NA,NA
+"2117","serotonin secreting cell",NA,NA
+"2118","serous cell of epithelium of bronchus",NA,NA
+"2119","serous cell of epithelium of lobular bronchiole",NA,NA
+"2120","serous cell of epithelium of terminal bronchiole",NA,NA
+"2121","serous cell of epithelium of trachea",NA,NA
+"2122","serous secreting cell",NA,NA
+"2123","Sertoli cell",NA,NA
+"2124","sexual spore",NA,NA
+"2125","sheath cell",NA,NA
+"2126","sheath cell (sensu Nematoda)",NA,NA
+"2127","short lived plasma cell",NA,NA
+"2128","short term hematopoietic stem cell",NA,NA
+"2129","simple columnar epithelial cell",NA,NA
+"2130","single ciliated epithelial cell",NA,NA
+"2131","single fate stem cell",NA,NA
+"2132","single nucleate cell",NA,NA
+"2133","SIRPa-negative adipose dendritic cell",NA,NA
+"2134","SIRPa-positive adipose dendritic cell",NA,NA
+"2135","skeletal muscle fiber",NA,NA
+"2136","skeletal muscle fibroblast",NA,NA
+"2137","skeletal muscle myoblast",NA,NA
+"2138","skeletal muscle satellite cell",NA,NA
+"2139","skeletal muscle satellite myogenic cell",NA,NA
+"2140","skeletal muscle satellite stem cell",NA,NA
+"2141","skeletal muscle tissue of pectoralis major striated muscle cell",NA,NA
+"2142","skeletogenic cell",NA,NA
+"2143","skin fibroblast",NA,NA
+"2144","Slamf1-negative multipotent progenitor cell",NA,NA
+"2145","Slamf1-positive multipotent progenitor cell",NA,NA
+"2146","slow muscle cell",NA,NA
+"2147","slow muscle myoblast",NA,NA
+"2148","slowly adapting mechanoreceptor cell",NA,NA
+"2149","small basket cell",NA,NA
+"2150","small intestine glandular cell",NA,NA
+"2151","small intestine goblet cell",NA,NA
+"2152","small intestine Peyer's patch T cell",NA,NA
+"2153","small intestine serosal dendritic cell",NA,NA
+"2154","small luteal cell",NA,NA
+"2155","small pre-B-II cell",NA,NA
+"2156","smooth muscle cell",NA,NA
+"2157","smooth muscle cell derived foam cell",NA,NA
+"2158","smooth muscle cell neural crest derived",NA,NA
+"2159","smooth muscle cell of anorectum",NA,NA
+"2160","smooth muscle cell of bladder",NA,NA
+"2161","smooth muscle cell of cecum",NA,NA
+"2162","smooth muscle cell of colon",NA,NA
+"2163","smooth muscle cell of high endothelial venule of lymph node",NA,NA
+"2164","smooth muscle cell of large intestine",NA,NA
+"2165","smooth muscle cell of prostate",NA,NA
+"2166","smooth muscle cell of rectum",NA,NA
+"2167","smooth muscle cell of sigmoid colon",NA,NA
+"2168","smooth muscle cell of small intestine",NA,NA
+"2169","smooth muscle cell of sphincter of pupil",NA,NA
+"2170","smooth muscle cell of the brachiocephalic vasculature",NA,NA
+"2171","smooth muscle cell of the brain vasculature",NA,NA
+"2172","smooth muscle cell of the carotid artery",NA,NA
+"2173","smooth muscle cell of the coronary artery",NA,NA
+"2174","smooth muscle cell of the esophagus",NA,NA
+"2175","smooth muscle cell of the internal thoracic artery",NA,NA
+"2176","smooth muscle cell of the pulmonary artery",NA,NA
+"2177","smooth muscle cell of the subclavian artery",NA,NA
+"2178","smooth muscle cell of the umbilical artery",NA,NA
+"2179","smooth muscle cell of the umbilical vein",NA,NA
+"2180","smooth muscle cell of trachea",NA,NA
+"2181","smooth muscle fiber of ascending colon",NA,NA
+"2182","smooth muscle fiber of descending colon",NA,NA
+"2183","smooth muscle fiber of duodenum",NA,NA
+"2184","smooth muscle fiber of ileum",NA,NA
+"2185","smooth muscle fiber of jejunum",NA,NA
+"2186","smooth muscle fiber of transverse colon",NA,NA
+"2187","smooth muscle myoblast",NA,NA
+"2188","sncg GABAergic cortical interneuron",NA,NA
+"2189","socket cell (sensu Nematoda)",NA,NA
+"2190","somatic cell",NA,NA
+"2191","somatic muscle cell",NA,NA
+"2192","somatic muscle myoblast",NA,NA
+"2193","somatic muscle myotube",NA,NA
+"2194","somatic stem cell",NA,NA
+"2195","somatomotor neuron",NA,NA
+"2196","somatostatin secreting cell",NA,NA
+"2197","somatotroph",NA,NA
+"2198","somatotropin secreting cell",NA,NA
+"2199","specialized cardiac myocyte",NA,NA
+"2200","sperm",NA,NA
+"2201","spermatid",NA,NA
+"2202","spermatocyte",NA,NA
+"2203","spermatogonium",NA,NA
+"2204","spheroplast",NA,NA
+"2205","sphincter associated smooth muscle cell",NA,NA
+"2206","spinal accessory motor neuron",NA,NA
+"2207","spinal cord interneuron",NA,NA
+"2208","spinal cord medial motor column neuron",NA,NA
+"2209","spinal cord motor neuron",NA,NA
+"2210","spinal cord oligodendrocyte",NA,NA
+"2211","spinal cord radial glial cell",NA,NA
+"2212","spinal cord ventral column interneuron",NA,NA
+"2213","spinal interneuron synapsing Betz cell",NA,NA
+"2214","spiral ganglion neuron",NA,NA
+"2215","splanchnic mesodermal cell",NA,NA
+"2216","splenic endothelial cell",NA,NA
+"2217","splenic fibroblast",NA,NA
+"2218","splenic macrophage",NA,NA
+"2219","splenic marginal zone macrophage",NA,NA
+"2220","splenic metallophillic macrophage",NA,NA
+"2221","splenic red pulp macrophage",NA,NA
+"2222","splenic tingible body macrophage",NA,NA
+"2223","splenic white pulp macrophage",NA,NA
+"2224","splenocyte",NA,NA
+"2225","spongiotrophoblast cell",NA,NA
+"2226","squamous cell of ectocervix",NA,NA
+"2227","squamous cell of epidermis",NA,NA
+"2228","squamous endothelial cell",NA,NA
+"2229","squamous epithelial cell",NA,NA
+"2230","sst GABAergic cortical interneuron",NA,NA
+"2231","static beta motor neuron",NA,NA
+"2232","static gamma motor neuron",NA,NA
+"2233","static nuclear bag fiber",NA,NA
+"2234","stellate interneuron",NA,NA
+"2235","stellate L6 intratelencephalic projecting glutamatergic neuron of the primary motor cortex (Mus musculus)",NA,NA
+"2236","stellate neuron",NA,NA
+"2237","stellate pyramidal neuron",NA,NA
+"2238","stem cell",NA,NA
+"2239","stem cell of epidermis",NA,NA
+"2240","stem cell of gastric gland",NA,NA
+"2241","steroid hormone secreting cell",NA,NA
+"2242","Stiftchenzellen",NA,NA
+"2243","stomach enteroendocrine cell",NA,NA
+"2244","stomach neuroendocrine cell",NA,NA
+"2245","storage cell",NA,NA
+"2246","stratified cuboidal epithelial cell",NA,NA
+"2247","stratified epithelial cell",NA,NA
+"2248","stratified epithelial stem cell",NA,NA
+"2249","stratified keratinized epithelial stem cell",NA,NA
+"2250","stratified non keratinized epithelial stem cell",NA,NA
+"2251","stratified squamous epithelial cell",NA,NA
+"2252","stratified squamous epithelial cell of anal canal",NA,NA
+"2253","stratum granulosum cell",NA,NA
+"2254","stretch receptor cell",NA,NA
+"2255","strial basal cell",NA,NA
+"2256","strial intermediate cell",NA,NA
+"2257","strial marginal cell",NA,NA
+"2258","striated muscle cell",NA,NA
+"2259","striated visceral muscle cell",NA,NA
+"2260","striatum neuron",NA,NA
+"2261","stromal cell",NA,NA
+"2262","stromal cell of anorectum lamina propria",NA,NA
+"2263","stromal cell of bone marrow",NA,NA
+"2264","stromal cell of endometrium",NA,NA
+"2265","stromal cell of lamina propria of colon",NA,NA
+"2266","stromal cell of lamina propria of large intestine",NA,NA
+"2267","stromal cell of lamina propria of small intestine",NA,NA
+"2268","stromal cell of lamina propria of vermiform appendix",NA,NA
+"2269","stromal cell of ovarian cortex",NA,NA
+"2270","stromal cell of ovarian medulla",NA,NA
+"2271","stromal cell of ovary",NA,NA
+"2272","stromal cell of pancreas",NA,NA
+"2273","structural cell",NA,NA
+"2274","stuff accumulating cell",NA,NA
+"2275","subcutaneous fat cell",NA,NA
+"2276","subcutaneous preadipocyte",NA,NA
+"2277","substance P secreting cell",NA,NA
+"2278","superficial external epithelial cell of tympanic membrane",NA,NA
+"2279","support cell (sensu Nematoda and Protostomia)",NA,NA
+"2280","support cell (sensu Nematoda)",NA,NA
+"2281","supporting cell of carotid body",NA,NA
+"2282","supporting cell of cochlea",NA,NA
+"2283","supporting cell of vestibular epithelium",NA,NA
+"2284","supportive cell",NA,NA
+"2285","suppressor macrophage",NA,NA
+"2286","surface ectodermal cell",NA,NA
+"2287","surface mucosal cell of stomach",NA,NA
+"2288","surfactant secreting cell",NA,NA
+"2289","sustentacular cell",NA,NA
+"2290","sweat secreting cell",NA,NA
+"2291","sympathetic cholinergic neuron",NA,NA
+"2292","sympathetic neuron",NA,NA
+"2293","sympathetic noradrenergic neuron",NA,NA
+"2294","syncytial epithelial cell",NA,NA
+"2295","syncytiotrophoblast cell",NA,NA
+"2296","synovial cell",NA,NA
+"2297","T cell",NA,NA
+"2298","T cell of anorectum",NA,NA
+"2299","T cell of appendix",NA,NA
+"2300","T cell of medullary sinus of lymph node",NA,NA
+"2301","T follicular helper cell",NA,NA
+"2302","T Martinotti neuron",NA,NA
+"2303","T-helper 1 cell",NA,NA
+"2304","T-helper 17 cell",NA,NA
+"2305","T-helper 2 cell",NA,NA
+"2306","T-helper 22 cell",NA,NA
+"2307","T-helper 9 cell",NA,NA
+"2308","T1 B cell",NA,NA
+"2309","T2 B cell",NA,NA
+"2310","T3 B cell",NA,NA
+"2311","tanycyte",NA,NA
+"2312","taste receptor cell",NA,NA
+"2313","Tc1 cell",NA,NA
+"2314","Tc17 cell",NA,NA
+"2315","Tc2 cell",NA,NA
+"2316","tears secreting cell",NA,NA
+"2317","tendon cell",NA,NA
+"2318","terminal Schwann cell",NA,NA
+"2319","terminally differentiated odontoblast",NA,NA
+"2320","terminally differentiated osteoblast",NA,NA
+"2321","tertiary pigment cell",NA,NA
+"2322","testosterone secreting cell",NA,NA
+"2323","tether cell",NA,NA
+"2324","theca cell",NA,NA
+"2325","thecogen cell",NA,NA
+"2326","thermoreceptor cell",NA,NA
+"2327","thoracic aorta endothelial cell",NA,NA
+"2328","thromboblast",NA,NA
+"2329","thymic conventional dendritic cell",NA,NA
+"2330","thymic cortical macrophage",NA,NA
+"2331","thymic macrophage",NA,NA
+"2332","thymic medullary macrophage",NA,NA
+"2333","thymic plasmacytoid dendritic cell",NA,NA
+"2334","thymocyte",NA,NA
+"2335","thyroid follicular cell",NA,NA
+"2336","thyroid hormone secreting cell",NA,NA
+"2337","thyrotroph",NA,NA
+"2338","tip cell",NA,NA
+"2339","tissue-resident macrophage",NA,NA
+"2340","tongue muscle cell",NA,NA
+"2341","tonsil germinal center B cell",NA,NA
+"2342","tonsil squamous cell",NA,NA
+"2343","tonsillar macrophage",NA,NA
+"2344","tormogen cell",NA,NA
+"2345","totipotent stem cell",NA,NA
+"2346","touch receptor cell",NA,NA
+"2347","Tr1 cell",NA,NA
+"2348","trabecular meshwork cell",NA,NA
+"2349","tracheal epithelial cell",NA,NA
+"2350","tracheal goblet cell",NA,NA
+"2351","tracheoblast",NA,NA
+"2352","tracheobronchial chondrocyte",NA,NA
+"2353","tracheobronchial goblet cell",NA,NA
+"2354","tracheobronchial serous cell",NA,NA
+"2355","tracheobronchial smooth muscle cell",NA,NA
+"2356","transit amplifying cell",NA,NA
+"2357","transit amplifying cell of anorectum",NA,NA
+"2358","transit amplifying cell of appendix",NA,NA
+"2359","transit amplifying cell of colon",NA,NA
+"2360","transit amplifying cell of small intestine",NA,NA
+"2361","transitional cell of parathyroid gland",NA,NA
+"2362","transitional epithelial cell",NA,NA
+"2363","transitional myocyte",NA,NA
+"2364","transitional myocyte of anterior division of left branch of atrioventricular bundle",NA,NA
+"2365","transitional myocyte of anterior internodal tract",NA,NA
+"2366","transitional myocyte of atrial branch of anterior internodal tract",NA,NA
+"2367","transitional myocyte of atrial part of atrioventricular bundle",NA,NA
+"2368","transitional myocyte of atrial septal branch of anterior internodal tract",NA,NA
+"2369","transitional myocyte of atrioventricular bundle",NA,NA
+"2370","transitional myocyte of interatrial septum",NA,NA
+"2371","transitional myocyte of internodal tract",NA,NA
+"2372","transitional myocyte of interventricular septum",NA,NA
+"2373","transitional myocyte of left branch of atrioventricular bundle",NA,NA
+"2374","transitional myocyte of middle internodal tract",NA,NA
+"2375","transitional myocyte of posterior division of left branch of atrioventricular bundle",NA,NA
+"2376","transitional myocyte of posterior internodal tract",NA,NA
+"2377","transitional myocyte of right branch of atrioventricular bundle",NA,NA
+"2378","transitional myocyte of septal division of left branch of atrioventricular bundle",NA,NA
+"2379","transitional myocyte of sinoatrial node",NA,NA
+"2380","transitional myocyte of ventricular part of atrioventricular bundle",NA,NA
+"2381","transitional stage B cell",NA,NA
+"2382","transporting cell",NA,NA
+"2383","transversely striated visceral muscle cell",NA,NA
+"2384","trichogen cell",NA,NA
+"2385","trophectodermal cell",NA,NA
+"2386","trophoblast cell",NA,NA
+"2387","trophoblast giant cell",NA,NA
+"2388","tuft cell of anorectum",NA,NA
+"2389","tuft cell of appendix",NA,NA
+"2390","tuft cell of colon",NA,NA
+"2391","tufted pyramidal neuron",NA,NA
+"2392","type 1 cone bipolar cell (sensu Mus)",NA,NA
+"2393","type 1 otic fibrocyte",NA,NA
+"2394","type 1 vestibular sensory cell of epithelium of crista of ampulla of semicircular duct of membranous labyrinth",NA,NA
+"2395","type 1 vestibular sensory cell of epithelium of macula of saccule of membranous labyrinth",NA,NA
+"2396","type 1 vestibular sensory cell of epithelium of macula of utricle of membranous labyrinth",NA,NA
+"2397","type 1 vestibular sensory cell of stato-acoustic epithelium",NA,NA
+"2398","type 2 cone bipolar cell (sensu Mus)",NA,NA
+"2399","type 2 otic fibrocyte",NA,NA
+"2400","type 2 vestibular sensory cell of epithelium of crista of ampulla of semicircular duct of membranous labyrinth",NA,NA
+"2401","type 2 vestibular sensory cell of epithelium of macula of saccule of membranous labyrinth",NA,NA
+"2402","type 2 vestibular sensory cell of epithelium of macula of utricle of membranous labyrinth",NA,NA
+"2403","type 2 vestibular sensory cell of stato-acoustic epithelium",NA,NA
+"2404","type 3 cone bipolar cell (sensu Mus)",NA,NA
+"2405","type 3 otic fibrocyte",NA,NA
+"2406","type 4 cone bipolar cell (sensu Mus)",NA,NA
+"2407","type 4 otic fibrocyte",NA,NA
+"2408","type 5 cone bipolar cell (sensu Mus)",NA,NA
+"2409","type 5 otic fibrocyte",NA,NA
+"2410","type 6 cone bipolar cell (sensu Mus)",NA,NA
+"2411","type 7 cone bipolar cell (sensu Mus)",NA,NA
+"2412","type 8 cone bipolar cell (sensu Mus)",NA,NA
+"2413","type 9 cone bipolar cell (sensu Mus)",NA,NA
+"2414","type A cell of stomach",NA,NA
+"2415","type A enteroendocrine cell",NA,NA
+"2416","type A synovial cell",NA,NA
+"2417","type B pancreatic cell",NA,NA
+"2418","type B synovial cell",NA,NA
+"2419","type D cell of colon",NA,NA
+"2420","type D cell of small intestine",NA,NA
+"2421","type D cell of stomach",NA,NA
+"2422","type D enteroendocrine cell",NA,NA
+"2423","type D1 enteroendocrine cell",NA,NA
+"2424","type EC enteroendocrine cell",NA,NA
+"2425","type EC1 enteroendocrine cell",NA,NA
+"2426","type EC2 enteroendocrine cell",NA,NA
+"2427","type ECL enteroendocrine cell",NA,NA
+"2428","type G enteroendocrine cell",NA,NA
+"2429","type I cell of adrenal cortex",NA,NA
+"2430","type I cell of adrenal medulla",NA,NA
+"2431","type I cell of carotid body",NA,NA
+"2432","type I enteroendocrine cell",NA,NA
+"2433","type I muscle cell",NA,NA
+"2434","type I NK T cell",NA,NA
+"2435","type I pinealocyte",NA,NA
+"2436","type I pneumocyte",NA,NA
+"2437","type I taste bud cell",NA,NA
+"2438","type I vestibular sensory cell",NA,NA
+"2439","type II cell of adrenal cortex",NA,NA
+"2440","type II cell of adrenal medulla",NA,NA
+"2441","type II cell of carotid body",NA,NA
+"2442","type II muscle cell",NA,NA
+"2443","type II NK T cell",NA,NA
+"2444","type II NK T cell secreting interferon-gamma",NA,NA
+"2445","type II NK T cell secreting interleukin-4",NA,NA
+"2446","type II pinealocyte",NA,NA
+"2447","type II pneumocyte",NA,NA
+"2448","type II taste cell",NA,NA
+"2449","type II vestibular sensory cell",NA,NA
+"2450","type IIa muscle cell",NA,NA
+"2451","type IIb muscle cell",NA,NA
+"2452","type III cell of adrenal cortex",NA,NA
+"2453","type III taste bud cell",NA,NA
+"2454","type IV taste receptor cell",NA,NA
+"2455","type L enteroendocrine cell",NA,NA
+"2456","type M enteroendocrine cell",NA,NA
+"2457","type N enteroendocrine cell",NA,NA
+"2458","type S enteroendocrine cell",NA,NA
+"2459","type TG enteroendocrine cell",NA,NA
+"2460","type V taste receptor cell",NA,NA
+"2461","type X enteroendocrine cell",NA,NA
+"2462","type-1 epithelial cell of thymus",NA,NA
+"2463","type-2 epithelial cell of thymus",NA,NA
+"2464","type-3 epithelial cell of thymus",NA,NA
+"2465","type-4 epithelial cell of thymus",NA,NA
+"2466","type-5 epithelial cell of thymus",NA,NA
+"2467","type-6 epithelial cell of thymus",NA,NA
+"2468","type-7 epithelial cell of thymus",NA,NA
+"2469","umbilical artery endothelial cell",NA,NA
+"2470","undifferentiated cell of bronchus epithelium",NA,NA
+"2471","unimodal nocireceptor",NA,NA
+"2472","uninucleate arthroconidium",NA,NA
+"2473","uninucleate blastconidium",NA,NA
+"2474","uninucleate conidium",NA,NA
+"2475","uninucleate macroconidium",NA,NA
+"2476","unipolar neuron",NA,NA
+"2477","unswitched memory B cell",NA,NA
+"2478","untufted pyramidal neuron",NA,NA
+"2479","upper motor neuron",NA,NA
+"2480","ureter adventitial cell",NA,NA
+"2481","ureter smooth muscle cell",NA,NA
+"2482","ureter urothelial cell",NA,NA
+"2483","ureteral cell",NA,NA
+"2484","urethra cell",NA,NA
+"2485","urethra urothelial cell",NA,NA
+"2486","uric acid accumulating cell",NA,NA
+"2487","urothelial cell",NA,NA
+"2488","urothelial cell of trigone of urinary bladder",NA,NA
+"2489","uterine cervix glandular cell",NA,NA
+"2490","uterine cervix squamous cell",NA,NA
+"2491","uterine smooth muscle cell",NA,NA
+"2492","UV sensitive photoreceptor cell",NA,NA
+"2493","vacuolar absorptive cell of epithelium of colon",NA,NA
+"2494","vacuolar absorptive cell of epithelium proper of large intestine",NA,NA
+"2495","vagal neural crest cell",NA,NA
+"2496","vagina squamous cell",NA,NA
+"2497","vaginal lubricant secreting cell",NA,NA
+"2498","valve cell",NA,NA
+"2499","vasa recta ascending limb cell",NA,NA
+"2500","vasa recta cell",NA,NA
+"2501","vasa recta descending limb cell",NA,NA
+"2502","vascular associated smooth muscle cell",NA,NA
+"2503","vascular leptomeningeal cell",NA,NA
+"2504","vascular leptomeningeal cell (Mus musculus)",NA,NA
+"2505","vascular lymphangioblast",NA,NA
+"2506","vasoactive intestinal peptide secreting cell",NA,NA
+"2507","vasopressin stimulating hormone secreting cell",NA,NA
+"2508","vasopressin-secreting magnocellular cell",NA,NA
+"2509","vegetative cell (sensu Fungi)",NA,NA
+"2510","vein endothelial cell",NA,NA
+"2511","ventricular cardiac muscle cell",NA,NA
+"2512","vertebral mesenchymal stem cell",NA,NA
+"2513","vertebrate lens cell",NA,NA
+"2514","vestibular dark cell",NA,NA
+"2515","vestibular hair cell",NA,NA
+"2516","Vgamma1.1-positive, Vdelta6.3-negative thymocyte",NA,NA
+"2517","Vgamma1.1-positive, Vdelta6.3-positive thymocyte",NA,NA
+"2518","Vgamma5-negative CD8alpha alpha positive gamma-delta intraepithelial T cell",NA,NA
+"2519","Vgamma5-positive CD8alpha alpha positive gamma-delta intraepithelial T cell",NA,NA
+"2520","Vip GABAergic cortical interneuron",NA,NA
+"2521","visceral muscle cell",NA,NA
+"2522","visceral preadipocyte",NA,NA
+"2523","visceromotor neuron",NA,NA
+"2524","visible light photoreceptor cell",NA,NA
+"2525","visual pigment cell",NA,NA
+"2526","visual pigment cell (sensu Nematoda and Protostomia)",NA,NA
+"2527","visual pigment cell (sensu Vertebrata)",NA,NA
+"2528","visual system neuron",NA,NA
+"2529","vomeronasal sensory neuron",NA,NA
+"2530","warmth sensing thermoreceptor cell",NA,NA
+"2531","white fat cell",NA,NA
+"2532","white muscle cell",NA,NA
+"2533","X chromosome-bearing sperm cell",NA,NA
+"2534","xanthoblast",NA,NA
+"2535","xanthophore cell",NA,NA
+"2536","Y chromosome-bearing sperm cell",NA,NA
+"2537","yolk cell",NA,NA
+"2538","yolk sac hematopoietic stem cell",NA,NA
+"2539","zygospore",NA,NA
+"2540","zygote",NA,NA

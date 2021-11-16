@@ -22,17 +22,35 @@ cols = c("steelblue","darkred","gold","coral2")
 
 # CD45 (PTPRC) ####
 features=c("PTPRC")
+m1 =VlnPlot(ob, features, split.by = "disease", group.by = "annotation.l2", cols=cols,
+            sort = TRUE,pt.size = 0, combine = FALSE)
+m1
 
+d = m1[[1]]$data
+mu = aggregate(x=d$PTPRC,
+               by=list(d$ident,d$split),
+               FUN=mean, na.action=)
+summary(mu)
+normal_PTPRC <- normal[,c(2,4)]
+mu2 <- merge(mu, normal_PTPRC, by.x= "Group.1", by.y= "Cell.type",all.x=T)
+set1 = unique(sort(mu2[mu2$x >=mu2$PTPRC,]$Group.1))
+set2 = levels(set1)[!levels(set1) %in% set1]
+meta = ob$annotation.l2
+meta[meta %in% set1] = paste0(features, "+")
+meta[meta %in% set2] = paste0(features, "-")
+
+
+ob <- AddMetaData(object = ob, metadata = meta, col.name = "split1.1")
 
 
 # EPCAM ####
-ob_split <- SplitObject(ob, split.by = "split1")
+ob_split <- SplitObject(ob, split.by = "split1.1")
 ob_split_PTPRC0 = ob_split$`PTPRC-`
 
 features=c("EPCAM")
 m1 =VlnPlot(ob_split_PTPRC0, features, split.by = "disease", group.by = "annotation.l2", 
             cols = cols,sort = TRUE,pt.size = 0, combine = FALSE)
-
+m1
 d = m1[[1]]$data
 mu = aggregate(x=d$EPCAM,
                by=list(d$ident,d$split),
@@ -76,3 +94,22 @@ meta[meta %in% set2] = paste0(features, "-")
 ob3 <- AddMetaData(object = ob2, metadata = meta, col.name = "split3")
 
 saveRDS(ob3,"/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019_addsplits.rds")
+
+
+####### CL ##############
+CL <- read.csv("procdata/CL_cell_names_lee.csv")
+CL <- CL[,3]
+CL <- unique(sort(CL))
+anno1 <- ob@meta.data[["annotation.l1"]]
+anno1 <- unique(sort(anno1))
+
+anno2 <- ob@meta.data[["annotation.l2"]]
+anno2 <- unique(sort(anno2))
+
+n <- max(length(anno1), length(anno2),length(CL))
+length(anno1) <- n                      
+length(anno2) <- n
+
+cell_anno <- cbind(CL,anno1,anno2)
+colnames(cell_anno) <- c("Cell ontology","annotation.l1","annotation.l2")
+write.csv(cell_anno,"dirty_scripts/compare_cell_anno.csv")
