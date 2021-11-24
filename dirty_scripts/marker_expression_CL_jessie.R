@@ -9,7 +9,7 @@ library(gridExtra)
 wd = "/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter"
 setwd(wd)
 ob = readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019.rds")
-normal = read.csv("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/maker_gene_expression_in_normal_lung.csv")
+normal = read.csv("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/procdata/maker_gene_expression_in_normal_lung.csv")
 #ob@meta.data$disease[!(ob@meta.data$disease=="adjacent normal"|ob@meta.data$disease=="normal"|ob@meta.data$disease=="nsclc")]="nsclc_meta"
 table(ob@meta.data$disease)
 #adjacent normal 6598 #nsclc 4883
@@ -29,11 +29,11 @@ m1
 d = m1[[1]]$data
 mu = aggregate(x=d$PTPRC,
                by=list(d$ident,d$split),
-               FUN=mean, na.action=)
+               FUN=mean)
 summary(mu)
-normal_PTPRC <- normal[,c(2,4)]
-mu2 <- merge(mu, normal_PTPRC, by.x= "Group.1", by.y= "Cell.type",all.x=T)
-set1 = unique(sort(mu2[mu2$x >=mu2$PTPRC,]$Group.1))
+normal_PTPRC <- mean(normal$PTPRC, na.rm = T)
+
+set1 = unique(sort(normal[normal$PTPRC >=normal_PTPRC,]$Cell.type))
 set2 = levels(set1)[!levels(set1) %in% set1]
 meta = ob$annotation.l2
 meta[meta %in% set1] = paste0(features, "+")
@@ -56,9 +56,9 @@ mu = aggregate(x=d$EPCAM,
                by=list(d$ident,d$split),
                FUN=mean, na.action=)
 summary(mu)
-normal_EPCAM <- normal[,c(2,5)]
-mu2 <- merge(mu, normal_EPCAM, by.x= "Group.1", by.y= "Cell.type",all.x=T)
-set1 = unique(sort(mu2[mu2$x >=mu2$EPCAM,]$Group.1))
+normal_EPCAM <-  mean(normal$EPCAM)
+
+set1 = unique(sort(normal[normal$EPCAM >=normal_EPCAM,]$Cell.type))
 set2 = levels(set1)[!levels(set1) %in% set1]
 meta = ob$annotation.l2
 meta[meta %in% set1] = paste0(features, "+")
@@ -76,16 +76,17 @@ ob_split_EPCAM0 = ob3$`EPCAM-`
 
 features=c("PECAM1")
 m1 =VlnPlot(ob_split_EPCAM0, features, split.by = "disease", group.by = "annotation.l2", 
-            cols = c("steelblue","gold","darkred"),sort = TRUE,pt.size = 0, combine = FALSE)
+            cols = cols,sort = TRUE,pt.size = 0, combine = FALSE)
 
+m1
 d = m1[[1]]$data
 mu = aggregate(x=d$PECAM1,
                by=list(d$ident,d$split),
                FUN=mean, na.action=)
 summary(mu)
-normal_PECAM1 <- normal[,c(2,6)]
-mu2 <- merge(mu, normal_PECAM1, by.x= "Group.1", by.y= "Cell.type",all.x=T)
-set1 = unique(sort(mu2[mu2$x >=mu2$PECAM1,]$Group.1))
+normal_PECAM1 <- mean(normal$PECAM1)
+
+set1 = unique(sort(normal[normal$PECAM1 >=normal_PECAM1,]$Cell.type))
 set2 = levels(set1)[!levels(set1) %in% set1]
 meta = ob$annotation.l2
 meta[meta %in% set1] = paste0(features, "+")
