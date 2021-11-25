@@ -27,7 +27,7 @@ normal <- readRDS("procdata/maker_gene_expression_in_normal_lung_jessie.RDS")
 cols = c("steelblue","darkred","gold","coral2")
 
 
-# CD45 (PTPRC) ####
+## CD45 (PTPRC) ####
 features=c("PTPRC")
 m1 =VlnPlot(ob, features, split.by = "disease", group.by = "annotation.l2", cols=cols,
             sort = TRUE,pt.size = 0, combine = FALSE)
@@ -54,7 +54,7 @@ meta[meta %in% set2] = paste0(features, "-")
 ob <- AddMetaData(object = ob, metadata = meta, col.name = "split1.1")
 
 
-# EPCAM ####
+## EPCAM ####
 ob2 <- SplitObject(ob, split.by = "split1.1")
 ob2 = ob2$`PTPRC-`
 
@@ -87,7 +87,7 @@ ob2 <- AddMetaData(object = ob2, metadata = meta, col.name = "split2")
 
 
 
-## Level 3
+## PECAM1 ####
 ob3 <- SplitObject(ob2, split.by = "split2")
 ob3 = ob3$`EPCAM-`
 
