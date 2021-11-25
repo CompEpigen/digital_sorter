@@ -20,6 +20,7 @@ table(ob@meta.data$donor)
 
 cols = c("steelblue","darkred","gold","coral2")
 
+
 # CD45 (PTPRC) ####
 features=c("PTPRC")
 m1 =VlnPlot(ob, features, split.by = "disease", group.by = "annotation.l2", cols=cols,
@@ -27,18 +28,21 @@ m1 =VlnPlot(ob, features, split.by = "disease", group.by = "annotation.l2", cols
 m1
 
 d = m1[[1]]$data
-mu = aggregate(x=d$PTPRC,
-               by=list(d$ident,d$split),
-               FUN=mean)
-summary(mu)
+
 normal_PTPRC <- mean(normal$PTPRC, na.rm = T)
 
-set1 = unique(sort(normal[normal$PTPRC >=normal_PTPRC,]$Cell.type))
-set2 = levels(set1)[!levels(set1) %in% set1]
+PTPRC_group <- c()
+for(i in 1:length(normal$PTPRC)){
+  if(normal$PTPRC[i] >=normal_PTPRC){PTPRC_group <- append(PTPRC_group,"PTPRC+")}
+  else{PTPRC_group <- append(PTPRC_group,"PTPRC-")}
+}
+
+normal$PTPRC_group <- PTPRC_group
+set1 <- unique(sort(normal[normal$PTPRC_group =="PTPRC+",]$Cell.type))
+set2 <- unique(sort(normal[normal$PTPRC_group =="PTPRC-",]$Cell.type))
 meta = ob$annotation.l2
 meta[meta %in% set1] = paste0(features, "+")
 meta[meta %in% set2] = paste0(features, "-")
-
 
 ob <- AddMetaData(object = ob, metadata = meta, col.name = "split1.1")
 
@@ -52,19 +56,23 @@ m1 =VlnPlot(ob_split_PTPRC0, features, split.by = "disease", group.by = "annotat
             cols = cols,sort = TRUE,pt.size = 0, combine = FALSE)
 m1
 d = m1[[1]]$data
-mu = aggregate(x=d$EPCAM,
-               by=list(d$ident,d$split),
-               FUN=mean, na.action=)
-summary(mu)
-normal_EPCAM <-  mean(normal$EPCAM)
+cell <- as.character(unique(sort(ob_split_PTPRC0@meta.data[["annotation.l2"]])))
+normal_sub <- normal[normal$Cell.type %in% cell,]
+normal_EPCAM <-  mean(normal_sub$EPCAM)
+EPCAM_group <- c()
+for(i in 1:length(normal$EPCAM)){
+  if(normal$EPCAM[i] >=normal_EPCAM){EPCAM_group <- append(EPCAM_group,"EPCAM+")}
+  else{EPCAM_group <- append(EPCAM_group,"EPCAM-")}
+}
 
-set1 = unique(sort(normal[normal$EPCAM >=normal_EPCAM,]$Cell.type))
-set2 = levels(set1)[!levels(set1) %in% set1]
+
+normal$EPCAM_group <- EPCAM_group
+set1 <- unique(sort(normal[normal$EPCAM_group =="EPCAM+",]$Cell.type))
+set2 <- unique(sort(normal[normal$EPCAM_group =="EPCAM-",]$Cell.type))
 meta = ob$annotation.l2
 meta[meta %in% set1] = paste0(features, "+")
 meta[meta %in% set2] = paste0(features, "-")
 
-ob_split_PTPRC0 <- AddMetaData(object = ob_split_PTPRC0, metadata = meta, col.name = "split2")
 ob2 <- AddMetaData(object = ob, metadata = meta, col.name = "split2")
 ob_split = SplitObject(ob, split.by = "disease")
 
@@ -80,14 +88,19 @@ m1 =VlnPlot(ob_split_EPCAM0, features, split.by = "disease", group.by = "annotat
 
 m1
 d = m1[[1]]$data
-mu = aggregate(x=d$PECAM1,
-               by=list(d$ident,d$split),
-               FUN=mean, na.action=)
-summary(mu)
-normal_PECAM1 <- mean(normal$PECAM1)
+cell <- as.character(unique(sort(d$ident)))
+normal_sub <- normal[normal$Cell.type %in% cell,]
+normal_PECAM1 <-  mean(normal_sub$PECAM1)
+PECAM1_group <- c()
+for(i in 1:length(normal$PECAM1)){
+  if(normal$PECAM1[i] >=normal_PECAM1){PECAM1_group <- append(PECAM1_group,"PECAM1+")}
+  else{PECAM1_group <- append(PECAM1_group,"PECAM1-")}
+}
 
-set1 = unique(sort(normal[normal$PECAM1 >=normal_PECAM1,]$Cell.type))
-set2 = levels(set1)[!levels(set1) %in% set1]
+
+normal$PECAM1_group <- PECAM1_group
+set1 <- unique(sort(normal[normal$PECAM1_group =="PECAM1+",]$Cell.type))
+set2 <- unique(sort(normal[normal$PECAM1_group =="PECAM1-",]$Cell.type))
 meta = ob$annotation.l2
 meta[meta %in% set1] = paste0(features, "+")
 meta[meta %in% set2] = paste0(features, "-")
@@ -96,7 +109,9 @@ ob3 <- AddMetaData(object = ob2, metadata = meta, col.name = "split3")
 
 saveRDS(ob3,"/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019_addsplits.rds")
 
+normal$X <- NULL
 
+write.csv(normal,"procdata/maker_gene_expression_in_normal_lung_add_groups.csv")
 ####### CL ##############
 CL <- read.csv("procdata/CL_cell_names_lee.csv")
 CL <- CL[,3]
