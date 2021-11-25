@@ -19,7 +19,7 @@ song_2019 <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sort
 song_split <- SplitObject(song_2019, split.by = "disease")
 
 genelist <-readRDS("R/cell.surface.marker.rds") 
-#cell-surface marker list #different from cerebroApp????????????????????
+#cell-surface marker list 
 
 # CD45 (PTPRC)
 # CD31 (PECAM1)
@@ -81,7 +81,22 @@ server <- function(input, output, update_gene_list=F) {
     else shinyjs::enable(id="gene") 
   })
   
- 
+  ## Select cell types for selecting markers ####
+  
+  celltypes <- unique(sort(song_2019@meta.data[["annotation.l2"]]))
+  
+  output$celltype <- renderUI({
+    selectizeInput(inputId = "celltype", label= "Select cell types for automatically choose the features of dot plots:",
+                   choices = celltypes,
+                   selected = NULL,
+                   multiple = TRUE
+    )
+  })
+  
+  observeEvent(input$cellMark,{
+    if (input$cellMark) shinyjs::enable(id="celltype")  
+    else shinyjs::disable(id="celltype") 
+  })
   
   ## Event reactive objects #### 
   datasets <- eventReactive(input$go, {input$cohort})
@@ -110,14 +125,13 @@ server <- function(input, output, update_gene_list=F) {
       organism = 'hg',
       groups = c('annotation.l2'),
       name = 'cerebro_seurat',
-      only_pos = TRUE,
+      only_pos = F, #Identify only over-expressed genes
       min_pct = 0.7,
       thresh_logFC = 0.25,
       thresh_p_val = 0.01,
       test = 'wilcox',
       verbose = TRUE
     )
-    #marker_gene <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]][["gene"]]
     marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]]
     marker_gene_table <- marker_gene_table %>% filter(marker_gene_table$on_cell_surface =="TRUE")%>%
       arrange(desc(avg_log2FC))
@@ -262,7 +276,6 @@ server <- function(input, output, update_gene_list=F) {
       }else if(sample_types()[1] =="adjacent normal"){
         song_2019_selected <- song_split[["adjacent normal"]]
       }
-      
       song_2019_selected_1 <- subset(x = song_2019_selected, subset = split2 == plot_marker()[4])
       
       VlnPlot(song_2019_selected_1,marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols,
@@ -286,7 +299,6 @@ server <- function(input, output, update_gene_list=F) {
       }else if(sample_types()[1] =="adjacent normal"){
         song_2019_selected <- song_split[["adjacent normal"]]
       }
-      
       song_2019_selected_1 <- subset(x = song_2019_selected, subset = split3 == plot_marker()[6])
       
       VlnPlot(song_2019_selected_1,marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols,
@@ -336,6 +348,7 @@ server <- function(input, output, update_gene_list=F) {
   d2 <- eventReactive(input$levelplot,{
     if(datasets() == "song_2019"){
       song_2019_selected <- song_split[[sample_types()]]
+      
       ob1_1 <- subset(x = song_2019_selected, subset = split2 == plot_marker()[3])
       if(input$testDGE){ 
       cell_types2 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
@@ -363,6 +376,7 @@ server <- function(input, output, update_gene_list=F) {
   d3 <- eventReactive(input$levelplot,{
     if(datasets() == "song_2019"){
       song_2019_selected <- song_split[[sample_types()]]
+      
       ob1_1 <- subset(x = song_2019_selected, subset = split3 == plot_marker()[5])
       if(input$testDGE){
         cell_types3 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
@@ -391,6 +405,7 @@ server <- function(input, output, update_gene_list=F) {
     if(datasets() == "song_2019"){
       song_2019_selected <- song_split[[sample_types()]]
       ob1_1 <- subset(x = song_2019_selected, subset = split3 == plot_marker()[6])
+      
       if(input$testDGE){
         cell_types4 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
         marker_gene_table <- marker_gene_table()

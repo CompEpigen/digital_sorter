@@ -43,6 +43,13 @@ ui <-dashboardPage(
                               value = FALSE, width = NULL),
                 actionBttn("levelplot", "Plots for each level!", 
                            style = "jelly", color = "success", size = "sm"),
+                checkboxInput(inputId= "cellMark", 
+                              label="Automatically select top markers of specific cell type!", 
+                              value = FALSE, width = NULL),
+                uiOutput("celltype"),
+                
+                actionBttn("changefeature", "Change X axis for each dot plot!", 
+                           style = "jelly", color = "warning", size = "sm"),
                 menuSubItem('Level 1', tabName = "result1"),
                 menuSubItem('Level 2', tabName = "result2"),
                 menuSubItem('Level 3', tabName = "result3"),

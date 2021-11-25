@@ -2,19 +2,20 @@ wd = "/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/dirty_scripts
 setwd(wd)
 
 library(Seurat)
-#library(SeuratDisk)
 library(dplyr)
 library(cerebroApp)
 library(grid)
 library(gridExtra)
 library(ggplot2)
+library(DESeq2)
 
 ob = readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019_addsplits.rds")
 ob_split <- SplitObject(ob, split.by = "split1.1")
 
-##1
+## Level 1 ####
 ob_split_PTPRC = ob_split$`PTPRC+`
-seurat <- getMarkerGenes(
+
+seurat <- cerebroApp::getMarkerGenes(
   ob_split_PTPRC,assay = 'RNA',
     organism = 'hg',
     groups = c('annotation.l2'),
@@ -23,30 +24,64 @@ seurat <- getMarkerGenes(
     min_pct = 0.7,
     thresh_logFC = 0.25,
     thresh_p_val = 0.01,
-    test = 'wilcox',
+    test = 'wilcox', #DESeq2 no markers found
     verbose = TRUE
   )
-  marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]]
-  marker_gene_table <- marker_gene_table %>% filter(marker_gene_table$on_cell_surface =="TRUE")%>%
-    arrange(desc(avg_log2FC))
+marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]] #3708
+marker_gene_table <- marker_gene_table %>% 
+  filter(marker_gene_table$on_cell_surface =="TRUE")#280
+
+# step 0: filter for FDR < 0.05
+marker_gene_table <- marker_gene_table %>%
+  filter(marker_gene_table$p_val_adj<0.05)%>% #224
+  arrange(desc(avg_log2FC))
   
 saveRDS(marker_gene_table,"marker_level1_CD45pos.rds")
 
-table(marker_gene_table$annotation.l2)
-length(table(marker_gene_table$annotation.l2)) #18
-#16 cell types has marker
-repeat_genes <- as.data.frame(table(marker_gene_table$gene) <3 )
-colnames(repeat_genes) <- "repeat3"
-repeat_genes$gene <- row.names(repeat_genes)
-marker_gene_table <- merge(marker_gene_table,repeat_genes,by = "gene", all.x = T) 
-marker_gene_table <- marker_gene_table[marker_gene_table$repeat3,]
-marker_gene_table <- marker_gene_table %>% 
-  arrange(annotation.l2,desc(avg_log2FC)) 
-marker_gene_table <- marker_gene_table[!duplicated(marker_gene_table$"annotation.l2"),]%>% 
-  arrange(desc(avg_log2FC)) 
-saveRDS(marker_gene_table,"marker_level1_CD45pos_selected.rds")
+features <- unique(sort(marker_gene_table$gene))
 
-##2
+# plot the initial dot plot
+pdf("Dotplot_level1.pdf", width=14, height=6)
+d <- DotPlot(ob_split_PTPRC, features = features, group.by = "annotation.l2") + RotatedAxis()
+d
+dev.off()
+
+# step 1: filter for the average expression > 1
+exp_data <- d[["data"]]
+exp_data$mergeID <- paste(exp_data$features.plot,exp_data$id)
+exp_data <- exp_data[,c(1,2,5,6)]
+marker_gene_table$mergeID <- paste(marker_gene_table$gene, marker_gene_table$annotation.l2)
+marker_gene_table2 <- merge(marker_gene_table, exp_data, by = "mergeID")
+
+marker_gene_table2 <- marker_gene_table2 %>%
+  filter(marker_gene_table2$avg.exp >1)   #222
+
+# step 1.5: filter out frequently appearing markers
+table(marker_gene_table2$annotation.l2)
+length(table(marker_gene_table2$annotation.l2)) #18
+table(marker_gene_table2$gene)
+repeat_genes <- as.data.frame(table(marker_gene_table2$gene) <=5 )
+colnames(repeat_genes) <- "repeat5"
+repeat_genes$gene <- row.names(repeat_genes)
+marker_gene_table3 <- merge(marker_gene_table2,repeat_genes,by = "gene", all.x = T) 
+marker_gene_table3 <- marker_gene_table3[marker_gene_table3$repeat5,] #51
+
+# step 2: arrange according to abs(log2FC)
+marker_gene_table3 <- marker_gene_table3 %>% 
+  arrange(annotation.l2,desc(abs(avg_log2FC)))
+
+marker_gene_table3$mergeID <- NULL
+
+
+# step 3: select top 10 for each cell type
+library(data.table)
+subset_marker_gene <- data.table(marker_gene_table3, key="annotation.l2")
+subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2]
+
+saveRDS(subset_marker_gene,"marker_level1_CD45pos_selected.rds")
+
+## Level 2 ####
+ob = ob_split$`PTPRC-`
 ob2 <- SplitObject(ob, split.by = "split2")
 ob_split_PTPRC0 = ob2$`EPCAM+`
 
@@ -59,31 +94,64 @@ seurat <- getMarkerGenes(
   min_pct = 0.7,
   thresh_logFC = 0.25,
   thresh_p_val = 0.01,
-  test = 'wilcox',
+  test = 'wilcox', #DESeq2 no markers found
   verbose = TRUE
 )
-#marker_gene <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]][["gene"]]
 marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]]
-marker_gene_table <- marker_gene_table %>% filter(marker_gene_table$on_cell_surface =="TRUE")%>%
+marker_gene_table <- marker_gene_table %>% 
+  filter(marker_gene_table$on_cell_surface =="TRUE") #267
+
+# step 0: filter for FDR < 0.05
+marker_gene_table <- marker_gene_table %>%
+  filter(marker_gene_table$p_val_adj<0.05)%>% #201
   arrange(desc(avg_log2FC))
 
 saveRDS(marker_gene_table,"marker_level2_CD45neg.rds")
-table(marker_gene_table$annotation.l2)
-length(table(marker_gene_table$annotation.l2)) #8
-#16 cell types has marker
-table(marker_gene_table$gene)
-repeat_genes <- as.data.frame(table(marker_gene_table$gene) <3 )
-colnames(repeat_genes) <- "repeat3"
-repeat_genes$gene <- row.names(repeat_genes)
-marker_gene_table <- merge(marker_gene_table,repeat_genes,by = "gene", all.x = T) 
-marker_gene_table <- marker_gene_table[marker_gene_table$repeat3,]
-marker_gene_table <- marker_gene_table %>% 
-  arrange(annotation.l2,desc(avg_log2FC)) 
-marker_gene_table <- marker_gene_table[!duplicated(marker_gene_table$"annotation.l2"),]%>% 
-  arrange(desc(avg_log2FC)) 
-saveRDS(marker_gene_table,"marker_level2_CD45neg_selected.rds")
+features <- unique(sort(marker_gene_table$gene))
 
-##3
+# plot the initial dot plot
+pdf("Dotplot_level2.pdf", width=20, height=6)
+d <- DotPlot(ob_split_PTPRC0, features = features, group.by = "annotation.l2") + RotatedAxis()
+d
+dev.off()
+
+# step 1: filter for the average expression > 1
+exp_data <- d[["data"]]
+exp_data$mergeID <- paste(exp_data$features.plot,exp_data$id)
+exp_data <- exp_data[,c(1,2,5,6)]
+marker_gene_table$mergeID <- paste(marker_gene_table$gene, marker_gene_table$annotation.l2)
+marker_gene_table2 <- merge(marker_gene_table, exp_data, by = "mergeID")
+
+marker_gene_table2 <- marker_gene_table2 %>%
+  filter(marker_gene_table2$avg.exp >1)   #182
+
+# step 1.5: filter out frequently appearing markers
+table(marker_gene_table2$annotation.l2)
+length(table(marker_gene_table2$annotation.l2)) #11
+table(marker_gene_table2$gene)
+repeat_genes <- as.data.frame(table(marker_gene_table2$gene) <=5 )
+colnames(repeat_genes) <- "repeat5"
+repeat_genes$gene <- row.names(repeat_genes)
+marker_gene_table3 <- merge(marker_gene_table2,repeat_genes,by = "gene", all.x = T) 
+marker_gene_table3 <- marker_gene_table3[marker_gene_table3$repeat5,] #150
+
+# step 2: arrange according to abs(log2FC)
+marker_gene_table3 <- marker_gene_table3 %>% 
+  arrange(annotation.l2,desc(abs(avg_log2FC)))
+
+marker_gene_table3$mergeID <- NULL
+
+
+# step 3: select top 10 for each cell type
+library(data.table)
+subset_marker_gene <- data.table(marker_gene_table3, key="annotation.l2") #150
+subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2] #89
+
+saveRDS(subset_marker_gene,"marker_level2_CD45neg_selected.rds")
+
+
+## Level 3 ####
+ob = ob2$`EPCAM-`
 ob3 <- SplitObject(ob, split.by = "split3")
 ob_split_EPCAM0 = ob3$`PECAM1+` #EPCAM-
 seurat <- getMarkerGenes(
@@ -95,31 +163,66 @@ seurat <- getMarkerGenes(
   min_pct = 0.7,
   thresh_logFC = 0.25,
   thresh_p_val = 0.01,
-  test = 'wilcox',
+  test = 'wilcox', 
   verbose = TRUE
 )
 marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]]
-marker_gene_table <- marker_gene_table %>% filter(marker_gene_table$on_cell_surface =="TRUE")%>%
+marker_gene_table <- marker_gene_table %>% 
+  filter(marker_gene_table$on_cell_surface =="TRUE") #46
+
+# step 0: filter for FDR < 0.05
+marker_gene_table <- marker_gene_table %>%
+  #filter(marker_gene_table$p_val_adj<0.1)%>% 
   arrange(desc(avg_log2FC))
 
-saveRDS(marker_gene_table,"marker_level3_EPCAMneg.rds")
-table(marker_gene_table$annotation.l2)
-length(table(marker_gene_table$annotation.l2)) #8
-#16 cell types has marker
-table(marker_gene_table$gene)
-repeat_genes <- as.data.frame(table(marker_gene_table$gene) <3 )
-colnames(repeat_genes) <- "repeat3"
+saveRDS(marker_gene_table,"marker_level3_EPCAMneg_noFDR.rds")
+
+features <- unique(sort(marker_gene_table$gene))
+# plot the initial dot plot
+pdf("Dotplot_level3_noFDR.pdf", width=11, height=6)
+d <- DotPlot(ob_split_EPCAM0, features = features, group.by = "annotation.l2") + RotatedAxis()
+d
+dev.off()
+
+# step 1: filter for the average expression > 1
+exp_data <- d[["data"]]
+exp_data$mergeID <- paste(exp_data$features.plot,exp_data$id)
+exp_data <- exp_data[,c(1,2,5,6)]
+marker_gene_table$mergeID <- paste(marker_gene_table$gene, marker_gene_table$annotation.l2)
+marker_gene_table2 <- merge(marker_gene_table, exp_data, by = "mergeID")
+
+marker_gene_table2 <- marker_gene_table2 %>%
+  filter(marker_gene_table2$avg.exp >1)   #51
+
+# step 1.5: filter out frequently appearing markers
+table(marker_gene_table2$annotation.l2)
+length(table(marker_gene_table2$annotation.l2)) #6
+table(marker_gene_table2$gene)
+repeat_genes <- as.data.frame(table(marker_gene_table2$gene) <=5 )
+colnames(repeat_genes) <- "repeat5"
 repeat_genes$gene <- row.names(repeat_genes)
-marker_gene_table <- merge(marker_gene_table,repeat_genes,by = "gene", all.x = T) 
-marker_gene_table <- marker_gene_table[marker_gene_table$repeat3,]
-marker_gene_table <- marker_gene_table %>% 
-  arrange(annotation.l2,desc(avg_log2FC)) 
-marker_gene_table <- marker_gene_table[!duplicated(marker_gene_table$"annotation.l2"),]%>% 
-  arrange(desc(avg_log2FC)) 
-saveRDS(marker_gene_table,"marker_level3_EPCAMneg_selected.rds")
-##4
-ob4 <- SplitObject(ob, split.by = "split3")
-ob_split_PECAM1 = ob4$`PECAM1-`
+marker_gene_table3 <- merge(marker_gene_table2,repeat_genes,by = "gene", all.x = T) 
+marker_gene_table3 <- marker_gene_table3[marker_gene_table3$repeat5,] #51
+
+# step 2: arrange according to abs(log2FC)
+marker_gene_table3 <- marker_gene_table3 %>% 
+  arrange(annotation.l2,desc(abs(avg_log2FC)))
+
+marker_gene_table3$mergeID <- NULL
+
+
+# step 3: select top 10 for each cell type
+library(data.table)
+subset_marker_gene <- data.table(marker_gene_table3, key="annotation.l2") #51
+subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2] #47
+
+saveRDS(marker_gene_table,"marker_level3_EPCAMneg_selected_noFDR.rds")
+
+
+
+## Level 4 ####
+ob_split_PECAM1 = ob3$`PECAM1-`
+
 seurat <- getMarkerGenes(
   ob_split_PECAM1,assay = 'RNA',
   organism = 'hg',
@@ -133,27 +236,60 @@ seurat <- getMarkerGenes(
   verbose = TRUE
 )
 marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]]
-marker_gene_table <- marker_gene_table %>% filter(marker_gene_table$on_cell_surface =="TRUE")%>%
+marker_gene_table <- marker_gene_table %>% 
+  filter(marker_gene_table$on_cell_surface =="TRUE") #90
+
+# step 0: filter for FDR < 0.05
+marker_gene_table <- marker_gene_table %>%
+  filter(marker_gene_table$p_val_adj<0.05)%>% #47
   arrange(desc(avg_log2FC))
 
 saveRDS(marker_gene_table,"marker_level4_PECAM1neg.rds")
-table(marker_gene_table$annotation.l2)
-length(table(marker_gene_table$annotation.l2)) #20
-#18 cell types has marker
-table(marker_gene_table$gene)
-repeat_genes <- as.data.frame(table(marker_gene_table$gene) <3 )
-colnames(repeat_genes) <- "repeat3"
+features <- unique(sort(marker_gene_table$gene))
+
+# plot the initial dot plot
+pdf("Dotplot_level4.pdf", width=18, height=6)
+d <- DotPlot(ob_split_PECAM1, features = features, group.by = "annotation.l2") + RotatedAxis()
+d
+dev.off()
+
+# step 1: filter for the average expression > 1
+exp_data <- d[["data"]]
+exp_data$mergeID <- paste(exp_data$features.plot,exp_data$id)
+exp_data <- exp_data[,c(1,2,5,6)]
+marker_gene_table$mergeID <- paste(marker_gene_table$gene, marker_gene_table$annotation.l2)
+marker_gene_table2 <- merge(marker_gene_table, exp_data, by = "mergeID")
+
+marker_gene_table2 <- marker_gene_table2 %>%
+  filter(marker_gene_table2$avg.exp >1)   #35
+
+# step 1.5: filter out frequently appearing markers
+table(marker_gene_table2$annotation.l2)
+length(table(marker_gene_table2$annotation.l2)) #5
+table(marker_gene_table2$gene)
+repeat_genes <- as.data.frame(table(marker_gene_table2$gene) <=5 )
+colnames(repeat_genes) <- "repeat5"
 repeat_genes$gene <- row.names(repeat_genes)
-marker_gene_table <- merge(marker_gene_table,repeat_genes,by = "gene", all.x = T) 
-marker_gene_table <- marker_gene_table[marker_gene_table$repeat3,]
-marker_gene_table <- marker_gene_table %>% 
-  arrange(annotation.l2,desc(avg_log2FC)) 
-marker_gene_table <- marker_gene_table[!duplicated(marker_gene_table$"annotation.l2"),]%>% 
-  arrange(desc(avg_log2FC)) 
+marker_gene_table3 <- merge(marker_gene_table2,repeat_genes,by = "gene", all.x = T) 
+marker_gene_table3 <- marker_gene_table3[marker_gene_table3$repeat5,] #35
+
+# step 2: arrange according to abs(log2FC)
+marker_gene_table3 <- marker_gene_table3 %>% 
+  arrange(annotation.l2,desc(abs(avg_log2FC)))
+
+marker_gene_table3$mergeID <- NULL
+
+
+# step 3: select top 10 for each cell type
+library(data.table)
+subset_marker_gene <- data.table(marker_gene_table3, key="annotation.l2") #35
+subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2] #31
 saveRDS(marker_gene_table,"marker_level4_PECAM1neg_selected.rds")
 
-if(F){ 
+
 ## extract top 10 gene depends on logFC ####
+if(F){ 
+
 level1 <- readRDS("marker_level1_CD45pos_selected.rds")
 gene_dge <- unique(level1$gene)[1:10]
 #by logFC
