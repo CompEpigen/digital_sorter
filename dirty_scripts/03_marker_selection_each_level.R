@@ -73,9 +73,10 @@ marker_gene_table3 <- marker_gene_table3 %>%
 marker_gene_table3$mergeID <- NULL
 
 
-# step 3: select top 10 for each cell type
+# step 3: select top 10 for each cell type (exclude HLA related)
 library(data.table)
-subset_marker_gene <- data.table(marker_gene_table3, key="annotation.l2")
+subset_marker_gene <- data.table(marker_gene_table3, key="annotation.l2") #51
+subset_marker_gene=subset_marker_gene[-1*grep("HLA",subset_marker_gene$gene),] #41
 subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2]
 
 saveRDS(subset_marker_gene,"marker_level1_CD45pos_selected.rds")
@@ -145,7 +146,8 @@ marker_gene_table3$mergeID <- NULL
 # step 3: select top 10 for each cell type
 library(data.table)
 subset_marker_gene <- data.table(marker_gene_table3, key="annotation.l2") #150
-subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2] #89
+subset_marker_gene=subset_marker_gene[-1*grep("HLA",subset_marker_gene$gene),] #127
+subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2] #86
 
 saveRDS(subset_marker_gene,"marker_level2_CD45neg_selected.rds")
 
@@ -168,7 +170,7 @@ seurat <- getMarkerGenes(
 )
 marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]]
 marker_gene_table <- marker_gene_table %>% 
-  filter(marker_gene_table$on_cell_surface =="TRUE") #46
+  filter(marker_gene_table$on_cell_surface =="TRUE") #71
 
 # step 0: filter for FDR < 0.05
 marker_gene_table <- marker_gene_table %>%
@@ -192,17 +194,17 @@ marker_gene_table$mergeID <- paste(marker_gene_table$gene, marker_gene_table$ann
 marker_gene_table2 <- merge(marker_gene_table, exp_data, by = "mergeID")
 
 marker_gene_table2 <- marker_gene_table2 %>%
-  filter(marker_gene_table2$avg.exp >1)   #51
+  filter(marker_gene_table2$avg.exp >1)   #65
 
 # step 1.5: filter out frequently appearing markers
 table(marker_gene_table2$annotation.l2)
-length(table(marker_gene_table2$annotation.l2)) #6
+length(table(marker_gene_table2$annotation.l2)) #7
 table(marker_gene_table2$gene)
 repeat_genes <- as.data.frame(table(marker_gene_table2$gene) <=5 )
 colnames(repeat_genes) <- "repeat5"
 repeat_genes$gene <- row.names(repeat_genes)
 marker_gene_table3 <- merge(marker_gene_table2,repeat_genes,by = "gene", all.x = T) 
-marker_gene_table3 <- marker_gene_table3[marker_gene_table3$repeat5,] #51
+marker_gene_table3 <- marker_gene_table3[marker_gene_table3$repeat5,] #65
 
 # step 2: arrange according to abs(log2FC)
 marker_gene_table3 <- marker_gene_table3 %>% 
@@ -213,16 +215,15 @@ marker_gene_table3$mergeID <- NULL
 
 # step 3: select top 10 for each cell type
 library(data.table)
-subset_marker_gene <- data.table(marker_gene_table3, key="annotation.l2") #51
-subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2] #47
+subset_marker_gene <- data.table(marker_gene_table3, key="annotation.l2") #65
+subset_marker_gene=subset_marker_gene[-1*grep("HLA",subset_marker_gene$gene),] #48
+subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2] #45
 
 saveRDS(marker_gene_table,"marker_level3_EPCAMneg_selected_noFDR.rds")
 
-
-
 ## Level 4 ####
 ob_split_PECAM1 = ob3$`PECAM1-`
-
+ob4 <- SplitObject(ob_split_PECAM1, split.by = "split4")
 seurat <- getMarkerGenes(
   ob_split_PECAM1,assay = 'RNA',
   organism = 'hg',
@@ -237,11 +238,11 @@ seurat <- getMarkerGenes(
 )
 marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]]
 marker_gene_table <- marker_gene_table %>% 
-  filter(marker_gene_table$on_cell_surface =="TRUE") #90
+  filter(marker_gene_table$on_cell_surface =="TRUE") #76
 
 # step 0: filter for FDR < 0.05
 marker_gene_table <- marker_gene_table %>%
-  filter(marker_gene_table$p_val_adj<0.05)%>% #47
+  filter(marker_gene_table$p_val_adj<0.05)%>% #41
   arrange(desc(avg_log2FC))
 
 saveRDS(marker_gene_table,"marker_level4_PECAM1neg.rds")
@@ -261,17 +262,17 @@ marker_gene_table$mergeID <- paste(marker_gene_table$gene, marker_gene_table$ann
 marker_gene_table2 <- merge(marker_gene_table, exp_data, by = "mergeID")
 
 marker_gene_table2 <- marker_gene_table2 %>%
-  filter(marker_gene_table2$avg.exp >1)   #35
+  filter(marker_gene_table2$avg.exp >1)   #29
 
 # step 1.5: filter out frequently appearing markers
 table(marker_gene_table2$annotation.l2)
-length(table(marker_gene_table2$annotation.l2)) #5
+length(table(marker_gene_table2$annotation.l2)) #3
 table(marker_gene_table2$gene)
 repeat_genes <- as.data.frame(table(marker_gene_table2$gene) <=5 )
 colnames(repeat_genes) <- "repeat5"
 repeat_genes$gene <- row.names(repeat_genes)
 marker_gene_table3 <- merge(marker_gene_table2,repeat_genes,by = "gene", all.x = T) 
-marker_gene_table3 <- marker_gene_table3[marker_gene_table3$repeat5,] #35
+marker_gene_table3 <- marker_gene_table3[marker_gene_table3$repeat5,] #29
 
 # step 2: arrange according to abs(log2FC)
 marker_gene_table3 <- marker_gene_table3 %>% 
@@ -282,8 +283,9 @@ marker_gene_table3$mergeID <- NULL
 
 # step 3: select top 10 for each cell type
 library(data.table)
-subset_marker_gene <- data.table(marker_gene_table3, key="annotation.l2") #35
-subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2] #31
+subset_marker_gene <- data.table(marker_gene_table3, key="annotation.l2") #29
+subset_marker_gene=subset_marker_gene[-1*grep("HLA",subset_marker_gene$gene),] #28
+subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2] #20
 saveRDS(marker_gene_table,"marker_level4_PECAM1neg_selected.rds")
 
 

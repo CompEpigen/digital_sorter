@@ -37,19 +37,20 @@ ui <-dashboardPage(
       menuItem( "Results", tabName = "results", icon = icon('barcode'), startExpanded = F,
                 h4("Input section for results"),
                 uiOutput("sample_se"),
-                uiOutput("gene"),
+                
                 checkboxInput(inputId= "testDGE", 
-                              label="Automatically select top 10 differentially expressed genes (Warning! It takes time!!)", 
+                              label="Automatically select differentially expressed genes (Warning! It takes time!!)", 
                               value = FALSE, width = NULL),
-                actionBttn("levelplot", "Plots for each level!", 
+                uiOutput("gene"),
+                actionBttn("levelplot", "Violin plots for each level!", 
                            style = "jelly", color = "success", size = "sm"),
                 checkboxInput(inputId= "cellMark", 
                               label="Automatically select top markers of specific cell type!", 
                               value = FALSE, width = NULL),
                 uiOutput("celltype"),
                 
-                actionBttn("changefeature", "Change X axis for each dot plot!", 
-                           style = "jelly", color = "warning", size = "sm"),
+                actionBttn("changefeature", "Dot plots for each level!", 
+                           style = "jelly", color = "warning", size = "xs"),
                 menuSubItem('Level 1', tabName = "result1"),
                 menuSubItem('Level 2', tabName = "result2"),
                 menuSubItem('Level 3', tabName = "result3"),
@@ -215,7 +216,8 @@ ui <-dashboardPage(
       tabItem( tabName = 'result5',
                
                fluidRow(style = "height:300px;",
-                        h3("Level 5 Violin plot is the same as Level 4")
+                        h2("Level 5 Violin plot is the same as Level 4")
+                        #plotlyOutput("plotv4")
                         
                ),#fluid row end
                fluidRow(#dot plot
@@ -224,12 +226,10 @@ ui <-dashboardPage(
                  h4(textOutput("dotplot_title5")),
                  
                  column(width=6, style = "height:200px;",
-                        #plotOutput("plotd5")
-                        h3("t.b.c")
+                        plotOutput("plotd5")
                  ),
                  column(width=4,
-                        #dataTableOutput("table5")
-                        h3("t.b.c")
+                        dataTableOutput("table5")
                         
                  )      
                )#fluid row end

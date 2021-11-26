@@ -15,7 +15,6 @@ source("R/util.R")
 #To-do: loading a data automatically (for loop?)
 song_2019 <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019_addsplits.rds")
 #nsclc <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/nsclc_primary.rds")
-
 song_split <- SplitObject(song_2019, split.by = "disease")
 
 genelist <-readRDS("R/cell.surface.marker.rds") 
@@ -31,6 +30,7 @@ server <- function(input, output, update_gene_list=F) {
     genelist <- get_cell_markers()
   }
   ##interactive markers####  
+  
   output$master_markers <- renderUI({
     if(input$cancer == "Lung") myMarkers <-  c("PTPRC","EPCAM","PECAM1","MME")
     
@@ -89,7 +89,7 @@ server <- function(input, output, update_gene_list=F) {
     selectizeInput(inputId = "celltype", label= "Select cell types for automatically choose the features of dot plots:",
                    choices = celltypes,
                    selected = NULL,
-                   multiple = TRUE
+                   multiple = F
     )
   })
   
@@ -116,9 +116,13 @@ server <- function(input, output, update_gene_list=F) {
     paste(input$gene[1:length(input$gene)])
   })
   
+  cell_chosen <- eventReactive(input$changefeature, { 
+    paste(input$celltype[1:length(input$celltype)])
+  })
+
 
   marker_gene_table <- eventReactive(input$testDGE,{
-    
+    if(F){ 
     seurat <- getMarkerGenes(
       song_2019,
       assay = 'RNA',
@@ -133,9 +137,39 @@ server <- function(input, output, update_gene_list=F) {
       verbose = TRUE
     )
     marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]]
-    marker_gene_table <- marker_gene_table %>% filter(marker_gene_table$on_cell_surface =="TRUE")%>%
+    marker_gene_table <- marker_gene_table %>% 
+      filter(marker_gene_table$on_cell_surface =="TRUE") #770
+    
+    marker_gene_table <- marker_gene_table %>%
+      filter(marker_gene_table$p_val_adj<0.05)%>% #562
       arrange(desc(avg_log2FC))
-    return(marker_gene_table)
+    
+    features <- unique(sort(marker_gene_table$gene))
+    d <- DotPlot(song_2019, features = features, group.by = "annotation.l2") + RotatedAxis()
+    exp_data <- d[["data"]]
+    exp_data$mergeID <- paste(exp_data$features.plot,exp_data$id)
+    exp_data <- exp_data[,c(1,2,5,6)]
+    marker_gene_table$mergeID <- paste(marker_gene_table$gene, marker_gene_table$annotation.l2)
+    marker_gene_table2 <- merge(marker_gene_table, exp_data, by = "mergeID")
+    
+    marker_gene_table2 <- marker_gene_table2 %>%
+      filter(marker_gene_table2$avg.exp >1)   #545
+    
+    #skip the deletion of repeat genes
+    
+    marker_gene_table2 <- marker_gene_table2 %>% 
+      arrange(annotation.l2,desc(abs(avg_log2FC)))
+    
+    marker_gene_table2$mergeID <- NULL
+  
+    subset_marker_gene <- data.table::data.table(marker_gene_table2, key="annotation.l2") #545
+    subset_marker_gene=subset_marker_gene[-1*grep("HLA",subset_marker_gene$gene),] #441 #excluded HLA
+    subset_marker_gene <- subset_marker_gene[, head(.SD, 10), by=annotation.l2] #312
+    saveRDS(subset_marker_gene,"digital_sorter/R/marker_selected.rds")
+    }
+    subset_marker_gene <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/digital_sorter/R/marker_selected.rds")
+    
+    return(subset_marker_gene)
   })
   
   
@@ -317,21 +351,25 @@ server <- function(input, output, update_gene_list=F) {
   ## Dot plot ####
   
   ## draw dot plot and save as png
-  d1 <- eventReactive(input$levelplot,{
+  d1 <- eventReactive(c(input$levelplot, input$changefeature),ignoreInit = T,{
     if(datasets() == "song_2019"){
       song_2019_selected <- song_split[[sample_types()]]
       ob1_1 <- subset(x = song_2019_selected, subset = split1 == plot_marker()[1])
-      if (input$testDGE){
+      if(input$testDGE){
         cell_types1 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
         marker_gene_table <- marker_gene_table()
         marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types1,]
         gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
-        #gene_dge <- c("AREG","HLA-DPB1","HLA-DRB1","HLA-DPA1","HLA-DRA","CD74","PLAUR","MRC1", "TYROBP","FCER1G-E") 
-        DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
-                                                                                                 axis.text=element_text(size=12),
-                                                                                                 axis.title=element_text(size=14),
-                                                                                                 legend.title=element_text(size=12))
-        
+        if(input$cellMark){
+          marker_gene_table <- marker_gene_table()
+          marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
+          gene_dge <- unique(marker_gene_table_sub$gene)
+        }                                                                                        
+      DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                             axis.text=element_text(size=12),
+                                                                                             axis.title=element_text(size=14),
+                                                                                             legend.title=element_text(size=12))
+                                                                                               
       }else{
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
                                                                                               axis.text=element_text(size=12),
@@ -345,7 +383,7 @@ server <- function(input, output, update_gene_list=F) {
       }
   })
   
-  d2 <- eventReactive(input$levelplot,{
+  d2 <- eventReactive(c(input$levelplot, input$changefeature),{
     if(datasets() == "song_2019"){
       song_2019_selected <- song_split[[sample_types()]]
       
@@ -355,7 +393,11 @@ server <- function(input, output, update_gene_list=F) {
       marker_gene_table <- marker_gene_table()
       marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types2,]
       gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
-      #gene_dge <- c("SPARC","EGFL7","HYAL2","VAMP5","CLU","C3","HLA-E", "BST2","CD24","TFPI")  
+      if(input$cellMark){
+        marker_gene_table <- marker_gene_table()
+        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
+        gene_dge <- unique(marker_gene_table_sub$gene)
+      } 
       DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
                                                                                              axis.text=element_text(size=12),
                                                                                              axis.title=element_text(size=14),
@@ -373,7 +415,7 @@ server <- function(input, output, update_gene_list=F) {
     }
   })
   
-  d3 <- eventReactive(input$levelplot,{
+  d3 <- eventReactive(c(input$levelplot, input$changefeature),{
     if(datasets() == "song_2019"){
       song_2019_selected <- song_split[[sample_types()]]
       
@@ -383,7 +425,11 @@ server <- function(input, output, update_gene_list=F) {
         marker_gene_table <- marker_gene_table()
         marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types3,]
         gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
-        #gene_dge <- c("SPARC","CLU","TFPI","CD59","HYAL2","TGFBR2", "APP", "ENG","LGALS1" ,"CD9") 
+        if(input$cellMark){
+          marker_gene_table <- marker_gene_table()
+          marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
+          gene_dge <- unique(marker_gene_table_sub$gene)
+        } 
         DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
                                                                                                axis.text=element_text(size=12),
                                                                                                axis.title=element_text(size=14),
@@ -401,17 +447,55 @@ server <- function(input, output, update_gene_list=F) {
       
     }
   })
-  d4 <- eventReactive(input$levelplot,{
+  d4 <- eventReactive(c(input$levelplot, input$changefeature),{
     if(datasets() == "song_2019"){
       song_2019_selected <- song_split[[sample_types()]]
-      ob1_1 <- subset(x = song_2019_selected, subset = split3 == plot_marker()[6])
+      ob1_1 <- subset(x = song_2019_selected, subset = split4 == plot_marker()[7])
       
       if(input$testDGE){
         cell_types4 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
         marker_gene_table <- marker_gene_table()
         marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types4,]
+        
         gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
-        #gene_dge <- c("SPARC","SDC2","CD59","LGALS1","TFPI","ITGB1","CD63","CALR", "BST2","TIMP2") 
+        if(input$cellMark){
+          marker_gene_table <- marker_gene_table()
+          marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
+          gene_dge <- unique(marker_gene_table_sub$gene)
+        } 
+         DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                               axis.text=element_text(size=12),
+                                                                                               axis.title=element_text(size=14),
+                                                                                               legend.title=element_text(size=12))
+        
+      }else{
+        DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
+                                                                                              axis.text=element_text(size=12),
+                                                                                              axis.title=element_text(size=14),
+                                                                                              legend.title=element_text(size=12))
+      }
+    }else if(datasets() == "nsclc_primary") {#not yet finished
+      
+      DotPlot(nsclc$`PTPRC+`, features = genes(), group.by = "annotation.l2") + RotatedAxis()+ theme(axis.text=element_text(size=12))
+      
+    }
+  })
+  
+  d5 <- eventReactive(c(input$levelplot, input$changefeature),{
+    if(datasets() == "song_2019"){
+      song_2019_selected <- song_split[[sample_types()]]
+      ob1_1 <- subset(x = song_2019_selected, subset = split4 == plot_marker()[8])
+      
+      if(input$testDGE){
+        cell_types5 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
+        marker_gene_table <- marker_gene_table()
+        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types5,]
+        gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+        if(input$cellMark){
+          marker_gene_table <- marker_gene_table()
+          marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
+          gene_dge <- unique(marker_gene_table_sub$gene)
+        } 
         DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
                                                                                                axis.text=element_text(size=12),
                                                                                                axis.title=element_text(size=14),
@@ -434,6 +518,7 @@ server <- function(input, output, update_gene_list=F) {
   output$plotd2 <- renderPlot(d2())
   output$plotd3 <- renderPlot(d3())
   output$plotd4 <- renderPlot(d4())
+  output$plotd5 <- renderPlot(d5())
   
   
   ## table next to the dot plot #### 
@@ -447,6 +532,9 @@ server <- function(input, output, update_gene_list=F) {
                                    options = list(pageLength = 5)
   )
   output$table4 <- renderDataTable(d4()[["data"]], 
+                                   options = list(pageLength = 5)
+  )
+  output$table5 <- renderDataTable(d5()[["data"]], 
                                    options = list(pageLength = 5)
   )
   
