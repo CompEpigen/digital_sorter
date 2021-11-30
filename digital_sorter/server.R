@@ -522,23 +522,22 @@ server <- function(input, output, update_gene_list=F) {
   
   
   ## table next to the dot plot #### 
-  output$table1 <- renderDataTable(d1()[["data"]], 
+  output$table1 <- renderDataTable(d1()[["data"]][, c(3,4,1,2,5)], 
                                      options = list(pageLength = 5)
   )
-  output$table2 <- renderDataTable(d2()[["data"]], 
+  output$table2 <- renderDataTable(d2()[["data"]][, c(3,4,1,2,5)], 
                                    options = list(pageLength = 5)
   )
-  output$table3 <- renderDataTable(d3()[["data"]], 
+  output$table3 <- renderDataTable(d3()[["data"]][, c(3,4,1,2,5)], 
                                    options = list(pageLength = 5)
   )
-  output$table4 <- renderDataTable(d4()[["data"]], 
+  output$table4 <- renderDataTable(d4()[["data"]][, c(3,4,1,2,5)], 
                                    options = list(pageLength = 5)
   )
-  output$table5 <- renderDataTable(d5()[["data"]], 
+  output$table5 <- renderDataTable(d5()[["data"]][, c(3,4,1,2,5)], 
                                    options = list(pageLength = 5)
   )
   
   
 }
-
 
