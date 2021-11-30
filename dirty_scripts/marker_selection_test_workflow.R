@@ -5,6 +5,7 @@ library(reshape2)
 library(ggplot2)
 library(grid)
 library(gridExtra)
+library(cerebroApp)
 
 # Set working directory ####
 wd = "/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter"
@@ -225,7 +226,7 @@ for(i in 1:length(filename)){
       ob22 <- SplitObject(ob2, split.by = "split2")
       ob_split_PTPRC0 = ob22$`EPCAM+`
       
-      seurat <- getMarkerGenes(
+      seurat <- cerebroApp::getMarkerGenes(
         ob_split_PTPRC0,assay = 'RNA',
         organism = 'hg',
         groups = c('annotation.l2'),
@@ -291,7 +292,7 @@ for(i in 1:length(filename)){
       ob3 = ob22$`EPCAM-`
       ob3 <- SplitObject(ob3, split.by = "split3")
       ob_split_EPCAM0 = ob3$`PECAM1+` #EPCAM-
-      seurat <- getMarkerGenes(
+      seurat <- cerebroApp::getMarkerGenes(
         ob_split_EPCAM0,assay = 'RNA',
         organism = 'hg',
         groups = c('annotation.l2'),
@@ -355,7 +356,7 @@ for(i in 1:length(filename)){
       ## Level 4 ####
       ob_split_PECAM1 = ob3$`PECAM1-`
       ob4 <- SplitObject(ob_split_PECAM1, split.by = "split4")
-      seurat <- getMarkerGenes(
+      seurat <- cerebroApp::getMarkerGenes(
         ob_split_PECAM1,assay = 'RNA',
         organism = 'hg',
         groups = c('annotation.l2'),
@@ -498,7 +499,7 @@ for(i in 1:length(filename)){
       ob22 <- SplitObject(ob2, split.by = "split2")
       ob_split_PTPRC0 = ob22$`EPCAM+`
       
-      seurat <- getMarkerGenes(
+      seurat <- cerebroApp::getMarkerGenes(
         ob_split_PTPRC0,assay = 'RNA',
         organism = 'hg',
         groups = c('annotation.l2'),
@@ -564,7 +565,7 @@ for(i in 1:length(filename)){
       ob3 = ob22$`EPCAM-`
       ob3 <- SplitObject(ob3, split.by = "split3")
       ob_split_EPCAM0 = ob3$`PECAM1+` #EPCAM-
-      seurat <- getMarkerGenes(
+      seurat <- cerebroApp::getMarkerGenes(
         ob_split_EPCAM0,assay = 'RNA',
         organism = 'hg',
         groups = c('annotation.l2'),
@@ -628,7 +629,7 @@ for(i in 1:length(filename)){
       ## Level 4 ####
       ob_split_PECAM1 = ob3$`PECAM1-`
       ob4 <- SplitObject(ob_split_PECAM1, split.by = "split4")
-      seurat <- getMarkerGenes(
+      seurat <- cerebroApp::getMarkerGenes(
         ob_split_PECAM1,assay = 'RNA',
         organism = 'hg',
         groups = c('annotation.l2'),
