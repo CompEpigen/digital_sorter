@@ -9,7 +9,7 @@ library(gridExtra)
 library(ggplot2)
 library(DESeq2)
 
-ob = readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019_addsplits.rds")
+ob = readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata_addsplits/song_2019_addsplits.rds")
 ob_split <- SplitObject(ob, split.by = "split1.1")
 
 ## Level 1 ####
@@ -299,10 +299,11 @@ gene_dge <- unique(level1$gene)[1:10]
 level1 <- level1 %>% arrange(p_val)
 gene_dge <- unique(level1$gene)[1:10]
 #by p-value 
-DotPlot(ob_split_PTPRC, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
-                                                                                       axis.text=element_text(size=12),
-                                                                                       axis.title=element_text(size=14),
-                                                                                       legend.title=element_text(size=12))
+DotPlot(ob_split_PTPRC, features = gene_dge, group.by = "annotation.l2") + 
+  RotatedAxis()+ theme(legend.text=element_text(size=12),
+                  axis.text=element_text(size=12),
+                  axis.title=element_text(size=14),
+                  legend.title=element_text(size=12))
 level2 <- readRDS("marker_level2_CD45neg_selected.rds")
 gene_dge <- unique(level2$gene)[1:10]
 #by logFC 
@@ -310,10 +311,11 @@ gene_dge <- unique(level2$gene)[1:10]
 level2 <- level2 %>% arrange(p_val)
 gene_dge <- unique(level2$gene)[1:10]
 #by p-value
-DotPlot(ob_split_PTPRC0, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
-                                                                                                axis.text=element_text(size=12),
-                                                                                                axis.title=element_text(size=14),
-                                                                                                legend.title=element_text(size=12))
+DotPlot(ob_split_PTPRC0, features = gene_dge, group.by = "annotation.l2") + 
+  RotatedAxis()+ theme(legend.text=element_text(size=12),
+                       axis.text=element_text(size=12),
+                       axis.title=element_text(size=14),
+                       legend.title=element_text(size=12))
 
 
 level3 <- readRDS("marker_level3_EPCAMneg_selected.rds")
@@ -323,10 +325,11 @@ gene_dge <- unique(level3$gene)[1:10]
 level3 <- level3 %>% arrange(p_val)
 gene_dge <- unique(level3$gene)[1:10]
 #by p-value
-DotPlot(ob_split_EPCAM0, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
-                                                                                                 axis.text=element_text(size=12),
-                                                                                                 axis.title=element_text(size=14),
-                                                                                                 legend.title=element_text(size=12))
+DotPlot(ob_split_EPCAM0, features = gene_dge, group.by = "annotation.l2") + 
+  RotatedAxis()+ theme(legend.text=element_text(size=12),
+                        axis.text=element_text(size=12),
+                        axis.title=element_text(size=14),
+                        legend.title=element_text(size=12))
 
 level4 <- readRDS("marker_level4_PECAM1neg_selected.rds")
 gene_dge <- unique(level4$gene)[1:10]
@@ -335,8 +338,9 @@ gene_dge <- unique(level4$gene)[1:10]
 level4 <- level4 %>% arrange(p_val)
 gene_dge <- unique(level4$gene)[1:10]
 #by p-value 
-DotPlot(ob_split_PECAM1, features = gene_dge, group.by = "annotation.l2") + RotatedAxis()+ theme(legend.text=element_text(size=12),
-                                                                                                 axis.text=element_text(size=12),
-                                                                                                 axis.title=element_text(size=14),
-                                                                                                 legend.title=element_text(size=12))
+DotPlot(ob_split_PECAM1, features = gene_dge, group.by = "annotation.l2") +
+  RotatedAxis()+ theme(legend.text=element_text(size=12),
+                       axis.text=element_text(size=12),
+                      axis.title=element_text(size=14),
+                      legend.title=element_text(size=12))
 }

@@ -154,8 +154,6 @@ ob <- AddMetaData(object = ob, metadata = meta, col.name = "split4")
 
 
 saveRDS(ob,"/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/song_2019_addsplits.rds")
-
 normal$X <- NULL
-
 write.csv(normal,"procdata/maker_gene_expression_in_normal_lung_add_groups.csv")
 

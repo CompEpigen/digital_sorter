@@ -10,9 +10,7 @@ setwd(wd)
 ob = readRDS("/omics/groups/OE0219/internal/MJMC/P01_NSCLC/P01.2_enriched_cell_components/analysis/azimuth-meta-analysis/human_lung/cellxgene/lung_mapped_cellxgene.rds")
 ob@meta.data$disease[!(ob@meta.data$disease=="adjacent normal"|ob@meta.data$disease=="normal"|ob@meta.data$disease=="nsclc")]="nsclc_meta"
 table(ob@meta.data$disease)
-
 table(ob@meta.data$donor)
- 
 ob@meta.data$dataset_origin = factor(ob@meta.data$dataset_origin, levels = c('song_2019','travaglini_2020','kim_2020'))
 
 # CD45 (PTPRC)
