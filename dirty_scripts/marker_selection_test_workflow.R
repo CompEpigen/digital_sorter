@@ -1,4 +1,24 @@
+#!/usr/bin/env Rscript
 # Dummy workflow of marker selection for lung sc-RNA data ####
+## Example commands
+# Rscript marker_selection_test_workflow.R /omics/groups/OE0219/internal/MJMC/P01_NSCLC/P01.2_enriched_cell_components/analysis/azimuth-meta-analysis/human_lung/results /omics/groups/OE0219/internal/MJMC/P01_NSCLC/P01.2_enriched_cell_components/analysis/azimuth-meta-analysis/human_lung/results/by_cohorts /omics/groups/OE0219/internal/MJMC/P01_NSCLC/P01.2_enriched_cell_components/analysis/azimuth-meta-analysis/human_lung/results/by_cohorts_addsplits /omics/groups/OE0219/internal/MJMC/P01_NSCLC/P01.4_digital_sorter/digital_sorter/dirty_scripts
+args <- commandArgs(trailingOnly = TRUE)
+# args = c("/omics/groups/OE0219/internal/MJMC/P01_NSCLC/P01.2_enriched_cell_components/analysis/azimuth-meta-analysis/human_lung/results", 
+#          "/omics/groups/OE0219/internal/MJMC/P01_NSCLC/P01.2_enriched_cell_components/analysis/azimuth-meta-analysis/human_lung/results/by_cohorts", 
+#          "/omics/groups/OE0219/internal/MJMC/P01_NSCLC/P01.2_enriched_cell_components/analysis/azimuth-meta-analysis/human_lung/results/by_cohorts_addsplits",
+#          "/omics/groups/OE0219/internal/MJMC/P01_NSCLC/P01.4_digital_sorter/digital_sorter/dirty_scripts")
+
+
+# Auto-check package dependancy
+# R version: R4.1.0
+checkPkg <- function(pkg){
+  return(requireNamespace(pkg, quietly = TRUE))
+}
+if(!checkPkg("BiocManager")) install.packages("BiocManager")
+if(!checkPkg("devtools")) install.packages("devtools")
+if(!checkPkg("cerebroApp")) BiocManager::install('romanhaa/cerebroApp')
+
+# Load libraries
 library(Seurat)
 library(dplyr)
 library(reshape2)
@@ -8,11 +28,11 @@ library(gridExtra)
 library(cerebroApp)
 
 # Set working directory ####
-wd = "/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter"
+wd = args[1]
 setwd(wd)
-rawdir = "/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata"
+rawdir = args[2]
 #dir.create(paste0(rawdir,"_addsplits"))
-outdir = "/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata_addsplits"
+outdir = args[3]
 
 # Load functions
 if(T){ 
@@ -51,7 +71,7 @@ GetfileNames <- function(fileDir, pattern = ".rds"){
 filename <- GetfileNames(rawdir, pattern = ".rds")
 filename <- filename[!grepl("*_addsplits",filename)]
 ## cell types grouped by master markers' expression created in 01_marker_expression_jessie.R
-cell_group <- read.csv("procdata/maker_gene_expression_in_normal_lung_add_groups.csv")
+cell_group <- read.csv(file.path(args[4],"maker_gene_expression_in_normal_lung_add_groups.csv"))
   
 
 
@@ -168,7 +188,7 @@ for(i in 1:length(filename)){
         organism = 'hg',
         groups = c('annotation.l2'),
         name = 'cerebro_seurat',
-        only_pos = F,
+        only_pos = T,
         min_pct = 0.7,
         thresh_logFC = 0.25,
         thresh_p_val = 0.01,
@@ -231,7 +251,7 @@ for(i in 1:length(filename)){
         organism = 'hg',
         groups = c('annotation.l2'),
         name = 'cerebro_seurat',
-        only_pos = F,
+        only_pos = T,
         min_pct = 0.7,
         thresh_logFC = 0.25,
         thresh_p_val = 0.01,
@@ -297,7 +317,7 @@ for(i in 1:length(filename)){
         organism = 'hg',
         groups = c('annotation.l2'),
         name = 'cerebro_seurat',
-        only_pos = F,
+        only_pos = T,
         min_pct = 0.7,
         thresh_logFC = 0.25,
         thresh_p_val = 0.01,
@@ -361,7 +381,7 @@ for(i in 1:length(filename)){
         organism = 'hg',
         groups = c('annotation.l2'),
         name = 'cerebro_seurat',
-        only_pos = F,
+        only_pos = T,
         min_pct = 0.7,
         thresh_logFC = 0.25,
         thresh_p_val = 0.01,
@@ -441,7 +461,7 @@ for(i in 1:length(filename)){
         organism = 'hg',
         groups = c('annotation.l2'),
         name = 'cerebro_seurat',
-        only_pos = F,
+        only_pos = T,
         min_pct = 0.7,
         thresh_logFC = 0.25,
         thresh_p_val = 0.01,
@@ -504,7 +524,7 @@ for(i in 1:length(filename)){
         organism = 'hg',
         groups = c('annotation.l2'),
         name = 'cerebro_seurat',
-        only_pos = F,
+        only_pos = T,
         min_pct = 0.7,
         thresh_logFC = 0.25,
         thresh_p_val = 0.01,
@@ -570,7 +590,7 @@ for(i in 1:length(filename)){
         organism = 'hg',
         groups = c('annotation.l2'),
         name = 'cerebro_seurat',
-        only_pos = F,
+        only_pos = T,
         min_pct = 0.7,
         thresh_logFC = 0.25,
         thresh_p_val = 0.01,
@@ -634,7 +654,7 @@ for(i in 1:length(filename)){
         organism = 'hg',
         groups = c('annotation.l2'),
         name = 'cerebro_seurat',
-        only_pos = F,
+        only_pos = T,
         min_pct = 0.7,
         thresh_logFC = 0.25,
         thresh_p_val = 0.01,
