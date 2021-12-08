@@ -26,10 +26,10 @@ GetfileNames <- function(fileDir, pattern = ".rds"){
 # Read files ####
 #ReadRDSFiles(rawdir, envir = .GlobalEnv)
 filename <- GetfileNames(rawdir, pattern = ".rds")
-filename <- filename[grepl("*gene_addsplits",filename)]
+filename <- filename[grepl("*fixed_addsplits",filename)]
 
 
-ob <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/lung_mapped_cellxgene_addsplits.rds")
+ob <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/lung_mapped_cellxgene_fixed_addsplits.rds")
   
 #dir.create(paste0(outdir,"/",filename))
 split <- as.character(unique(sort(ob@meta.data$disease)))
@@ -42,8 +42,8 @@ features <- c("SCGB1A1","UPK3A","SCGB3A2","MET","MGP","IVL","UPK2","CTSW", #Poss
               "RTKN2","PDPN","HOPX","AGER","IGFBP2" #AT1
 )
 
-k <- 7L
-for(k in c(1,3,4,5,6,7)){
+k <- 10L
+for(k in c(1,3,4,5,6,7,8,9,10)){
 print(split[k])      
 ob_split2 = ob_split[[split[k]]]
 ob_split2 <- SplitObject(ob_split2, split.by = "split1")
