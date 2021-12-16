@@ -188,7 +188,7 @@ for(c in 1:length(cell_in_interesed)){
   
   a <- pheatmap::pheatmap(heatmap,
                           color = colorRampPalette(c("white", "red"))(50),
-                     main = "Markers chosed by at least 2 cohorts",
+                     main = "Markers chosen by at least 2 cohorts",
                      annotation = annotation,
                      annotation_colors = ann_colors, 
                      cluster_rows = T,
@@ -197,6 +197,85 @@ for(c in 1:length(cell_in_interesed)){
   
   dev.off()
 }
+
+
+# drawing dotplots for CD45- EPCAM+ cells ####
+library(Seurat)
+library(dplyr)
+library(reshape2)
+library(ggplot2)
+library(grid)
+library(gridExtra)
+
+
+# Set working directory ####
+wd = "/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter"
+setwd(wd)
+rawdir = "/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata_each_dataset"
+outdir = "/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata_addsplits/lung_mapped_cellxgene_fixed_addsplits/1216Dotplots"
+
+
+# Load functions
+GetfileNames <- function(fileDir, pattern = ".rds"){
+  filenames <- list.files(fileDir, pattern= pattern, full.names=TRUE)
+  filename <- sub(paste0(".*",fileDir,"/"), "", filenames)
+  filename <- sub(pattern, "", filename)  
+  return(filename)
+}
+
+
+# Read files ####
+cell.surface.marker <-readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/digital_sorter/R/cell.surface.marker.rds")
+#according to heatmap
+features <- c("B2M", "BCAM" ,"CEACAM6","EPCAM","KRT18", "SDC4", #shared markers
+              "AQP4","CLU","FOLR1" ,"LMO7", #shared markers (not shared in many sample types)
+              "MMP7" ,"ADGRF5" ,"C3","CTSB","LGALS1","SDC1","EMP2" ,"TFPI" , #shared (not shared in normal)
+              "HHIP" , "PLA2G1B" ,"WIF1","CSF3R", "SERPINF2",  #AT2
+              "AGER" ,"ANXA2","HPN"  #club  
+              )
+
+filename <- GetfileNames(rawdir, pattern = ".rds")
+
+#f <- 4L
+for( f in 1:length(filename)){
+  print(filename[f])
+  ob <- readRDS(paste0(rawdir,"/",filename[f],".rds"))
+  
+  #dir.create(paste0(outdir,"/",filename))
+  split <- as.character(unique(sort(ob@meta.data$disease)))
+  ob_split <- SplitObject(ob, split.by = "disease")
+  length(split)
+  
+  #k <- 1L
+  for(k in 1:length(split)){
+    print(split[k])      
+    ob_split2 = ob_split[[split[k]]]
+    ob_split2 <- SplitObject(ob_split2, split.by = "split1")
+    
+    ob2 = ob_split2$`PTPRC-`
+    ob22 <- SplitObject(ob2, split.by = "split2")
+    ob_split_PTPRC0 = ob22$`EPCAM+`
+    
+    # plot dot plot
+    ob_split_PTPRC0@meta.data[["annotation.l2"]] <- factor(ob_split_PTPRC0@meta.data[["annotation.l2"]], 
+                                                           levels=c("Signaling Alveolar Epithelial Type 2", "Alveolar Epithelial Type 2",
+                                                                    "Club" ,"Alveolar Epithelial Type 1",
+                                                                    "Mucous" , "Goblet" ,"Basal", "Differentiating Basal", "Proximal Basal" ,"Proliferating Basal", 
+                                                                    "Ionocyte" ,"Neuroendocrine" ,
+                                                                    "Ciliated", "Proximal Ciliated" ,"Serous"))
+    
+    pdf(paste0(outdir,"/Dotplot_",filename[f],"_",split[k],"_CD45-EPCAM+_Genes2.pdf"), width=20, height=6)
+    a <- DotPlot(ob_split_PTPRC0, features = features, group.by = "annotation.l2") + 
+      RotatedAxis()+  labs(title=paste0(filename[f],": ",split[k]))+
+      theme(plot.title = element_text(hjust = 0.5)) 
+    print(a)
+    dev.off()
+    rm(ob_split_PTPRC0)
+    rm(ob2) 
+    rm(ob22)
+  }  
+  
+}   
 
 
 
