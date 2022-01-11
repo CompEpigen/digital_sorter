@@ -10,42 +10,73 @@ library(grid)
 library(gridExtra)
 library(shinyjs)
 library(cerebroApp)
+library(RColorBrewer)
 
 
-source("R/util.R")
+source("util.R")
 
 
 #server.R
 server <- function(input, output, update_gene_list=F) {
+ 
+  shinybusy::show_modal_spinner(text = "Loading datasets...") # show the modal window
+  
+  if(F){ 
+    # read me
+    # the dataset put in R should be a SplitObject of seurat.
+    # Create split object (split by datasets)
+    # use separated R script 20211208_merge_seuratobject_addsplits_inspect.R
+    dataset <- readRDS("data/NEW_datasets.rds")
+    split <- as.character(unique(sort(dataset@meta.data$dataset_origin)))
+    ob_all <- SplitObject(dataset, split.by = "dataset_origin")
+    saveRDS(ob_all,"data/datasets.rds")
+  }
+  if(F){ 
+    # read me
+    # the markerlist.rds put in R should be a list including master markers of interested cancer type.
+    markerlist <- list("Lung"=c("PTPRC","EPCAM","PECAM1","MME"),
+                       "t.b.c."=c("t.b.c."))
+    saveRDS(markerlist,"digital_sorter/data/markerlist.rds")
+  }
+  ## read datasets ####
+  ob_all <- readRDS("data/datasets.rds")
+  
+  markerlist <- readRDS("data/markerlist.rds")
+  
+  list_samples_disease <- reactive({
+    list_samples_disease <- list()
+    for(i in 1: length(ob_all)){
+      new_list <- list(as.character(unique(sort(ob_all[[i]]@meta.data[["disease"]]))))
+      list_samples_disease <- c(list_samples_disease,new_list)
+    }
+    names(list_samples_disease) <- names(ob_all)
+    return(list_samples_disease)})
+
+  
+  ## cell-surface marker list ####
+  genelist <- readRDS("data/cell.surface.marker.rds")
+
+  
   ## update cell surface marker genes or not
   if(update_gene_list){
     genelist <- get_cell_markers()
   }
-  shinybusy::show_modal_spinner(text = "Loading datasets...") # show the modal window
+  ## settings for plots ####
+  cols <- reactive(RColorBrewer::brewer.pal(length(levels(ob_all[[1]]@meta.data[["disease"]])), name="Paired"))
   
-  if(F){ 
-    ## Create split object (split by datasets)
-    # use separated R script 20211208_merge_seuratobject_inspect.R
-    dataset <- readRDS("rawdata/lung_mapped_cellxgene_fixed_addsplits.rds")
-    split <- as.character(unique(sort(dataset@meta.data$dataset_origin)))
-    ob_all <- SplitObject(dataset, split.by = "dataset_origin")
-    saveRDS(ob_all,"rawdata/lung_mapped_cellxgene_seuratsplit_fixed_7datasets.rds")
-  }
-  ob_all <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/lung_mapped_cellxgene_seuratsplit_fixed_7datasets.rds")
-  
-  list_samples_disease <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/LIST_lung_seuratsplit_7datasets_samples_disease.rds")
-  
-  
-  genelist <-readRDS("R/cell.surface.marker.rds")
-  #cell-surface marker list 
-  cols = c("steelblue","darkred","gold","violet","blue","yellowgreen","darkgreen","coral2","pink","orange1")
-  
+  aes_list <- reactive({theme(legend.text=element_text(size=12),
+                   axis.text=element_text(size=12),
+                   axis.title=element_text(size=14),
+                   legend.title=element_text(size=12))
+  })
+
   shinybusy::remove_modal_spinner() # remove it when done
   
-  ##interactive markers####  
+  
+  ##interactive markers#### 
+  
   output$master_markers <- renderUI({
-    if(input$cancer == "Lung"){ myMarkers <-  c("PTPRC","EPCAM","PECAM1","MME")} 
-    else{myMarkers <- c("t.b.c.")} 
+    myMarkers <- markerlist[[input$cancer]]
     selectizeInput(inputId = "marker", label= "Select master markers (default selected):",
                    choices = myMarkers,
                    selected = myMarkers,
@@ -56,25 +87,24 @@ server <- function(input, output, update_gene_list=F) {
   ## select cohort #### 
   output$cohort <- renderUI({
     if(input$cancer == "Lung"){ 
-      #myCohort <-as.character(unique(sort(ob_all@meta.data$dataset_origin)))
-      myCohort <-c("bischoff_2021","kim_2020","lambrechts_2018","song_2019","travaglini_2020","wu_2021","zilionis_2019")
+      myCohort <- as.character(names(ob_all))
       } 
     else{myCohort <- c("t.b.c.")} 
    
     selectizeInput(inputId = "cohort", label= "Select dataset of interest:", choices = myCohort, 
                    selected = NULL)
   })
-  
+
   output$cohort2 <- renderUI({
     if(input$cancer == "Lung"){ 
-      myDataset <-c("bischoff_2021","kim_2020","lambrechts_2018","song_2019","travaglini_2020","wu_2021","zilionis_2019")
-    } 
+      myDataset <-as.character(names(ob_all))
+      } 
     else{myDataset <- c("t.b.c.")} 
     
     selectizeInput(inputId = "cohort2", label= "Select dataset of interest:", choices = myDataset, 
                    selected = NULL)
   })
-  
+
   ## Event reactive objects after cohort selected #### 
   #for plots in home section
   dataset_reactive <- reactive({
@@ -92,10 +122,10 @@ server <- function(input, output, update_gene_list=F) {
   #for plots in results section
   ob_reactive2 <- reactive({
     ob_reactive2 <- ob_all[[dataset_reactive2()]]
-    
+    ob_reactive2@meta.data$annotation.l1=factor(ob_reactive2@meta.data$annotation.l1,levels=unique(sort(ob_all[[1]]@meta.data$annotation.l1)))
     return(ob_reactive2)
   })
-  
+
   #for plots in results section
   ob_reactive_split<- reactive({
     ob_reactive_split <- SplitObject(ob_reactive2(), split.by = "disease")
@@ -104,7 +134,7 @@ server <- function(input, output, update_gene_list=F) {
   })
   ## select sample ####  
   output$sample_se <- renderUI({
-    mySample <- list_samples_disease[[dataset_reactive2()]]
+    mySample <- list_samples_disease()[[dataset_reactive2()]]
     
     selectizeInput(inputId = "sample","Select sample types:",
                    choices <- mySample, selected = NULL,
@@ -134,12 +164,10 @@ server <- function(input, output, update_gene_list=F) {
       shinyjs::disable(id="celltype") 
     } 
   })
-  
+
   ## Select cell types for selecting markers ####
-  
-  celltypes <- readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/digital_sorter/R/cell_types.rds")
-  
   output$celltype <- renderUI({
+    celltypes <- as.character(unique(sort(ob_all[[1]]@meta.data[["annotation.l2"]])))
     selectizeInput(inputId = "celltype", label= "Select cell types for automatically choose the features of dot plots:",
                    choices = celltypes,
                    selected = NULL,
@@ -152,17 +180,21 @@ server <- function(input, output, update_gene_list=F) {
   })
   
 
-  
   ## Event reactive objects #### 
   
   marker_list <- reactive({ 
-    #should also be reactive (by create a text file and the following vectors could be extracted from the file)
-    #or should be user defined (haven't work on it)
-    #marker_list <- eventReactive(input$cancer == "Lung", c("PTPRC","EPCAM","PECAM1","MME"))
       paste(input$marker[1:length(input$marker)])
   })
   
-  plot_marker <- eventReactive(input$cancer == "Lung", c("PTPRC+","PTPRC-","EPCAM+","EPCAM-","PECAM1+","PECAM1-","MME+","MME-"))
+  
+  plot_marker <- eventReactive(input$cancer == "Lung", {
+    plot_marker <- c()
+    for(i in 1:length(markerlist[[input$cancer]])){
+      markers <- c(paste0(markerlist[[input$cancer]][i],"+"),  paste0(markerlist[[input$cancer]][i],"-"))
+      plot_marker <- c(plot_marker,markers)
+                               }
+                                 
+       return(plot_marker)})
   
   
   sample_types <- reactive({input$sample})
@@ -184,52 +216,49 @@ server <- function(input, output, update_gene_list=F) {
     return(subset_marker_gene)
   })
   
+  lapply(1:5, function(i) {
+    outputId <- paste0("dotplot_title", i)
+    output[[outputId]] <- renderText({
+      title <- list(1,
+                    c(2,3),
+                    c(2,4,5),
+                    c(2,4,6,7),
+                    c(2,4,6,8))
+      if(input$cancer == "Lung"){plot_marker()[title[[i]]]}else {"to be continued"}
+    })
+  })
   
-  output$dotplot_title1 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[1]}else {"to be continued"}
-  })
-  output$dotplot_title2 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[c(2,3)]}else {"to be continued"}
-  })
-  output$dotplot_title3 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[c(2,4,5)]}else {"to be continued"}
-  })
-  output$dotplot_title4 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[c(2,4,6,7)]}else {"to be continued"}
-  })
-  output$dotplot_title5 <- renderText({
-    if(input$cancer == "Lung"){plot_marker()[c(2,4,6,8)]}else {"to be continued"}
-  })
   
   ## Violin Plot #### 
   ### home ####
   
   v_h1<-eventReactive(input$go,{
-      VlnPlot(ob_reactive(),marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols,
+      VlnPlot(ob_reactive(),marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
   })
   v_h2 <-eventReactive(input$go,{
-     VlnPlot(ob_reactive(),marker_list()[2], split.by = "disease", group.by = "annotation.l2", cols=cols,
+     VlnPlot(ob_reactive(),marker_list()[2], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
   })
   v_h3 <-eventReactive(input$go,{
-    VlnPlot(ob_reactive(),marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols,
+    VlnPlot(ob_reactive(),marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
   })
   v_h4 <-eventReactive(input$go,{
-    VlnPlot(ob_reactive(),marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols,
+    VlnPlot(ob_reactive(),marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
   })
-  output$plotv_h1 <- renderPlot(v_h1())  
-  output$plotv_h2 <- renderPlot(v_h2()) 
-  output$plotv_h3 <- renderPlot(v_h3())
-  output$plotv_h4 <- renderPlot(v_h4()) 
-  
+ 
+  hvlist <- reactive(list(v_h1(),v_h2(),v_h3(),v_h4()))
+  lapply(1:4, function(i) {
+    outputId <- paste0("plotv_h", i)
+    output[[outputId]] <- renderPlot(hvlist()[[i]])  
+  })
   
   #Level1: CD45 (PTPRC) 
   output$plotv1 <- renderPlotly({
     ob_selected <- ob_reactive_split()[[sample_types()]]
-    VlnPlot(ob_selected, marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols,
+    VlnPlot(ob_selected, marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
     ggplotly(ggplot2::last_plot())
   }) 
@@ -238,7 +267,7 @@ server <- function(input, output, update_gene_list=F) {
     ob_selected <- ob_reactive_split()[[sample_types()]]
     ob_selected_1 <- subset(x = ob_selected, subset = split1 == plot_marker()[2])
       
-      VlnPlot(ob_selected_1, marker_list()[2], split.by = "disease", group.by = "annotation.l2", cols=cols,
+      VlnPlot(ob_selected_1, marker_list()[2], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE, pt.size = 0, combine = FALSE)
       ggplotly(ggplot2::last_plot())
   }) 
@@ -249,7 +278,7 @@ server <- function(input, output, update_gene_list=F) {
     ob_selected <- ob_reactive_split()[[sample_types()]]
     ob_selected_1 <- subset(x = ob_selected, subset = split2 == plot_marker()[4])
       
-      VlnPlot(ob_selected_1, marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols,
+      VlnPlot(ob_selected_1, marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
       ggplotly(ggplot2::last_plot()) 
   }) 
@@ -259,7 +288,7 @@ server <- function(input, output, update_gene_list=F) {
     ob_selected <- ob_reactive_split()[[sample_types()]]
     ob_selected_1 <- subset(x = ob_selected, subset = split3 == plot_marker()[6])
       
-      VlnPlot(ob_selected_1, marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols,
+      VlnPlot(ob_selected_1, marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
       ggplotly(ggplot2::last_plot()) 
    
@@ -271,12 +300,7 @@ server <- function(input, output, update_gene_list=F) {
   
   d1 <- eventReactive(input$dplot,ignoreInit = T,{
     ob_selected <- ob_reactive_split()[[sample_types()]]
-    ob_selected@meta.data[["annotation.l2"]] <- factor(ob_selected@meta.data[["annotation.l2"]], 
-                                                        levels=c("Natural Killer","Natural Killer T","Proliferating NK/T","CD8+ Memory/Effector T","CD8+ Naive T",
-                                                                 "CD4+ Memory/Effector T","CD4+ Naive T","B", "Basophil/Mast 1","Basophil/Mast 2", "Plasmacytoid Dendritic",
-                                                                 "Classical Monocyte","OLR1+ Classical Monocyte","Intermediate Monocyte","Nonclassical Monocyte",
-                                                                 "TREM2+ Dendritic","EREG+ Dendritic","IGSF21+ Dendritic","Myeloid Dendritic Type 1","Myeloid Dendritic Type 2",
-                                                                 "Macrophage","Proliferating Macrophage"))
+    
     ob1_1 <- subset(x = ob_selected, subset = split1 == plot_marker()[1])
       if(input$cellMark){
         cell_types1 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
@@ -289,27 +313,16 @@ server <- function(input, output, update_gene_list=F) {
           gene_dge <- unique(marker_gene_table_sub$gene)
                                                                                             
       DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
-        RotatedAxis()+ theme(legend.text=element_text(size=12),
-                        axis.text=element_text(size=12),
-                        axis.title=element_text(size=14),
-                        legend.title=element_text(size=12))
+        RotatedAxis()+ aes_list() 
       }else{
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
-          RotatedAxis()+ theme(legend.text=element_text(size=12),
-                               axis.text=element_text(size=12),
-                               axis.title=element_text(size=14),
-                               legend.title=element_text(size=12))
+          RotatedAxis()+ aes_list()
         }
   })
   
   d2 <- eventReactive(input$dplot,{
     ob_selected <- ob_reactive_split()[[sample_types()]]
-    ob_selected@meta.data[["annotation.l2"]] <- factor(ob_selected@meta.data[["annotation.l2"]], 
-                                                       levels=c("Signaling Alveolar Epithelial Type 2", "Alveolar Epithelial Type 2", 
-                                                                "Club" ,"Alveolar Epithelial Type 1",
-                                                                "Mucous" , "Goblet" ,"Basal", "Differentiating Basal", "Proximal Basal" ,"Proliferating Basal", 
-                                                                "Ionocyte" ,"Neuroendocrine" ,
-                                                                "Ciliated", "Proximal Ciliated" ,"Serous"))
+    
     ob1_1 <- subset(x = ob_selected, subset = split2 == plot_marker()[3])
       if(input$cellMark){ 
       cell_types2 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
@@ -322,25 +335,16 @@ server <- function(input, output, update_gene_list=F) {
         gene_dge <- unique(marker_gene_table_sub$gene)
      
       DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
-        RotatedAxis()+ theme(legend.text=element_text(size=12),
-                             axis.text=element_text(size=12),
-                             axis.title=element_text(size=14),
-                             legend.title=element_text(size=12))
+        RotatedAxis()+ aes_list()
       }else{
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
-          RotatedAxis()+ theme(legend.text=element_text(size=12),
-                               axis.text=element_text(size=12),
-                               axis.title=element_text(size=14),
-                               legend.title=element_text(size=12))
+          RotatedAxis()+ aes_list()
         }
   })
   
   d3 <- eventReactive(input$dplot,{
     ob_selected <- ob_reactive_split()[[sample_types()]]
-    ob_selected@meta.data[["annotation.l2"]] <- factor(ob_selected@meta.data[["annotation.l2"]], 
-                                                       levels=c(#Level3
-                                                                "Vein","Bronchial Vessel 1","Bronchial Vessel 2","Artery","Capillary",
-                                                                "Capillary Intermediate 1","Capillary Intermediate 2","Capillary Aerocyte","Lymphatic"))
+    
     ob1_1 <- subset(x = ob_selected, subset = split3 == plot_marker()[5])
       if(input$cellMark){
         cell_types3 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
@@ -353,23 +357,15 @@ server <- function(input, output, update_gene_list=F) {
           gene_dge <- unique(marker_gene_table_sub$gene)
        
         DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
-          RotatedAxis()+ theme(legend.text=element_text(size=12),
-                               axis.text=element_text(size=12),
-                               axis.title=element_text(size=14),
-                               legend.title=element_text(size=12))
+          RotatedAxis()+ aes_list()
       }else{
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
-          RotatedAxis()+ theme(legend.text=element_text(size=12),
-                               axis.text=element_text(size=12),
-                               axis.title=element_text(size=14),
-                               legend.title=element_text(size=12))
+          RotatedAxis()+ aes_list()
         }
   })
   d4 <- eventReactive(input$dplot,{
     ob_selected <- ob_reactive_split()[[sample_types()]]
-    ob_selected@meta.data[["annotation.l2"]] <- factor(ob_selected@meta.data[["annotation.l2"]], 
-                                                       levels=c(#Level 4&5
-                                                                "Platelet/Megakaryocyte","Adventitial Fibroblast","Alveolar Fibroblast"))
+    
     ob1_1 <- subset(x = ob_selected,subset = split4 == plot_marker()[7])
       
       if(input$cellMark){
@@ -384,24 +380,16 @@ server <- function(input, output, update_gene_list=F) {
           gene_dge <- unique(marker_gene_table_sub$gene)
         
          DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
-           RotatedAxis()+ theme(legend.text=element_text(size=12),
-                                axis.text=element_text(size=12),
-                                axis.title=element_text(size=14),
-                                legend.title=element_text(size=12))
+           RotatedAxis()+aes_list()
       }else{
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
-          RotatedAxis()+ theme(legend.text=element_text(size=12),
-                               axis.text=element_text(size=12),
-                               axis.title=element_text(size=14),
-                               legend.title=element_text(size=12))
+          RotatedAxis()+ aes_list()
       }
   })
   
   d5 <- eventReactive(input$dplot,{
     ob_selected <- ob_reactive_split()[[sample_types()]]
-    ob_selected@meta.data[["annotation.l2"]] <- factor(ob_selected@meta.data[["annotation.l2"]], 
-                                                       levels=c("Mesothelial","Lipofibroblast",
-                                                                "Myofibroblast","Fibromyocyte","Airway Smooth Muscle","Vascular Smooth Muscle","Pericyte","Plasma"))
+    
     ob1_1 <- subset(x = ob_selected, subset = split4 == plot_marker()[8])
       
       if(input$cellMark){
@@ -415,43 +403,25 @@ server <- function(input, output, update_gene_list=F) {
           gene_dge <- unique(marker_gene_table_sub$gene)
        
         DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
-          RotatedAxis()+ theme(legend.text=element_text(size=12),
-                               axis.text=element_text(size=12),
-                               axis.title=element_text(size=14),
-                               legend.title=element_text(size=12))
+          RotatedAxis()+ aes_list()
       }else{
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
-          RotatedAxis()+ theme(legend.text=element_text(size=12),
-                               axis.text=element_text(size=12),
-                               axis.title=element_text(size=14),
-                               legend.title=element_text(size=12))
+          RotatedAxis()+aes_list()
       }
   })
   
-  output$plotd1 <- renderPlot(d1())
-  output$plotd2 <- renderPlot(d2())
-  output$plotd3 <- renderPlot(d3())
-  output$plotd4 <- renderPlot(d4())
-  output$plotd5 <- renderPlot(d5())
+  dlist <- reactive(list(d1(),d2(),d3(),d4(),d5()))
 
+  lapply(1:5, function(i) {
+    outputId <- paste0("plotd", i)
+    output[[outputId]] <- renderPlot(dlist()[[i]])
+  })
   
-  ## table next to the dot plot #### 
-  output$table1 <- renderDataTable(d1()[["data"]][, c(3,4,1,2,5)], 
-                                     options = list(pageLength = 5)
-  )
-  output$table2 <- renderDataTable(d2()[["data"]][, c(3,4,1,2,5)], 
-                                   options = list(pageLength = 5)
-  )
-  output$table3 <- renderDataTable(d3()[["data"]][, c(3,4,1,2,5)], 
-                                   options = list(pageLength = 5)
-  )
-  output$table4 <- renderDataTable(d4()[["data"]][, c(3,4,1,2,5)], 
-                                   options = list(pageLength = 5)
-  )
-  output$table5 <- renderDataTable(d5()[["data"]][, c(3,4,1,2,5)], 
-                                   options = list(pageLength = 5)
-  )
-  
-  
+  ## table next to the dot plot ####
+  lapply(1:5, function(i) {
+    outputId <- paste0("table", i)
+    output[[outputId]] <- renderDataTable(dlist()[[i]][["data"]][, c(3,4,1,2,5)], 
+                                          options = list(pageLength = 5))
+  })
 }
 

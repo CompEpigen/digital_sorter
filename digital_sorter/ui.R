@@ -41,7 +41,9 @@ ui <-dashboardPage(
                 menuSubItem('Level 3', tabName = "result3"),
                 menuSubItem('Level 4', tabName = "result4"),
                 menuSubItem('Level 5', tabName = "result5"),
-                
+                #lapply(1:5, function(i) {
+                #  menuSubItem(paste0("Level ",i), tabName = paste0("result",i))
+                #})
                 h4("Input section for each level"),
                 #select dataset (choices depends on cancer)                 
                 uiOutput("cohort2"),
@@ -118,6 +120,9 @@ ui <-dashboardPage(
                                  withSpinner(plotOutput("plotv_h3") )),
                         tabPanel("Marker 4", 
                                  withSpinner(plotOutput("plotv_h4") ))
+                        #lapply(1:4, function(i) {
+                        #  tabPanel(paste0("Marker ",i), withSpinner(plotOutput(paste0("plotv_h",i))))
+                        #}) 
                  )
                )#fluid row end
       ), #tab1 end
