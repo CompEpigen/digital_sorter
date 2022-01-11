@@ -23,7 +23,7 @@ server <- function(input, output, update_gene_list=F) {
   
   if(F){ 
     # read me
-    # the dataset put in R should be a SplitObject of seurat.
+    # the dataset put infolder data/should be a SplitObject of seurat.
     # Create split object (split by datasets)
     # use separated R script 20211208_merge_seuratobject_addsplits_inspect.R
     dataset <- readRDS("data/NEW_datasets.rds")
@@ -33,7 +33,7 @@ server <- function(input, output, update_gene_list=F) {
   }
   if(F){ 
     # read me
-    # the markerlist.rds put in R should be a list including master markers of interested cancer type.
+    # The markerlist.rds in folder data/ should be a list including master markers of interested cancer types.
     markerlist <- list("Lung"=c("PTPRC","EPCAM","PECAM1","MME"),
                        "t.b.c."=c("t.b.c."))
     saveRDS(markerlist,"digital_sorter/data/markerlist.rds")
@@ -73,7 +73,7 @@ server <- function(input, output, update_gene_list=F) {
   shinybusy::remove_modal_spinner() # remove it when done
   
   
-  ##interactive markers#### 
+  ## interactive markers #### 
   
   output$master_markers <- renderUI({
     myMarkers <- markerlist[[input$cancer]]
@@ -84,6 +84,27 @@ server <- function(input, output, update_gene_list=F) {
     )
   })
   
+  ## interactive UI layout ####
+  marker_num <- reactive({
+    length(input$marker)
+  })
+  ### home violinplot tabPanel ####
+  output$ui_tabBox <- renderUI({
+    lapply(1:(marker_num()), function(i){
+      tabPanel(paste0("Marker ",i), 
+               withSpinner(plotOutput(paste0("plotv_h",i))))
+        }) 
+      
+    })
+  
+  ### sidebar Results- menuSubItem ####
+  output$ui_menuSubItem <- renderUI({
+    lapply(1:(marker_num()+1), function(i){
+      menuSubItem(paste0("Level ",i), tabName = paste0("result",i))
+    }) 
+    #format would be different
+  })
+   
   ## select cohort #### 
   output$cohort <- renderUI({
     if(input$cancer == "Lung"){ 
@@ -186,7 +207,6 @@ server <- function(input, output, update_gene_list=F) {
       paste(input$marker[1:length(input$marker)])
   })
   
-  
   plot_marker <- eventReactive(input$cancer == "Lung", {
     plot_marker <- c()
     for(i in 1:length(markerlist[[input$cancer]])){
@@ -232,7 +252,7 @@ server <- function(input, output, update_gene_list=F) {
   ## Violin Plot #### 
   ### home ####
   
-  v_h1<-eventReactive(input$go,{
+  v_h1 <-eventReactive(input$go,{
       VlnPlot(ob_reactive(),marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
   })
@@ -295,8 +315,6 @@ server <- function(input, output, update_gene_list=F) {
   }) 
   
   ## Dot plot ####
-  
-  ## draw dot plot and save as png?
   
   d1 <- eventReactive(input$dplot,ignoreInit = T,{
     ob_selected <- ob_reactive_split()[[sample_types()]]
