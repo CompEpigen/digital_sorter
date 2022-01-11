@@ -1,6 +1,6 @@
 # digital_sorter
 1. The _datasets.rds_ put in folder data/ should be a SplitObject of seurat.
-   - Could use a separated R script 20211208_merge_seuratobject_addsplits_inspect.R to create the split object (split by datasets) 
+   - Could use a separated R script **merge_seuratobject_addsplits_inspect.R** to create the split object (split by datasets) 
       and add **"split1", "split2", "split3", "split4"** based on the expression of master markers.
    - In the metadata, the annotation of cohort origins should be **"dataset_origin"**,
                        sample types should be **"disease"**.
