@@ -12,7 +12,9 @@ ui <-dashboardPage(
   
   #1. header
   dashboardHeader(
-    title = HTML("Digital Cell Sorter"), 
+    title = tags$b(tags$img(src = "digital_sorter.png", width=80, height=50),
+                   " Digital Sorter"), 
+    
     disable = FALSE, 
     titleWidth  = 300,
     dropdownMenu( type = "notifications", badgeStatus = NULL, icon = icon('comment'), headerText = NULL,

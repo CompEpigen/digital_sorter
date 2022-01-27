@@ -6,14 +6,9 @@ library(dplyr)
 library(reshape2)
 library(ggplot2)
 library(plotly)
-library(grid)
 library(gridExtra)
 library(shinyjs)
-library(cerebroApp)
 library(RColorBrewer)
-
-
-source("util.R")
 
 
 #server.R
@@ -230,8 +225,24 @@ server <- function(input, output, update_gene_list=F) {
   #could pre-run this function for all the datasets/splits to save user's time
   marker_gene_table <- eventReactive(input$cellMark,{
     shinybusy::show_modal_spinner(text = "Get marker genes...") # show the modal window
+    seurat <- getMarkers(
+      ob_reactive2(),
+      assay = 'RNA',
+      organism = 'hg',
+      groups = c('annotation.l2'),
+      name = 'cerebro_seurat',
+      only_pos = F,
+      min_pct = 0.5,
+      thresh_logFC = 1,
+      thresh_p_val = 0.05,
+      test = 'wilcox', 
+      verbose = TRUE
+    )
+    marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]] #3708
     
-    subset_marker_gene <- readRDS(paste0("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata_addsplits/lung_mapped_cellxgene_fixed_addsplits/",dataset_reactive2(),"/",sample_types(),"_marker_gene_table_subset_arranged50_exp.rds"))
+    subset_marker_gene <- marker_gene_table %>% 
+      filter(marker_gene_table$gene %in% genelist)
+      
     shinybusy::remove_modal_spinner()
     return(subset_marker_gene)
   })
