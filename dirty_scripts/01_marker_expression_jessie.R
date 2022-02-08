@@ -9,6 +9,8 @@ library(gridExtra)
 wd = "/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter"
 setwd(wd)
 ob = readRDS("/omics/groups/OE0219/internal/MJMC/P01_NSCLC/P01.2_enriched_cell_components/analysis/azimuth-meta-analysis/human_lung/cellxgene/lung_mapped_cellxgene_fixed.rds")
+#ob = readRDS("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/rawdata/lung_mapped_cellxgene_fixed_addsplits.rds")
+
 
 ## deal with normal table
 #normal = read.csv("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter/procdata/maker_gene_expression_in_normal_lung.csv")
