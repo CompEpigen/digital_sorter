@@ -7,7 +7,7 @@ get_cell_markers = function(dataset="hsapiens_gene_ensembl", GO = 'GO:0009986'){
   ensembl = biomaRt::useMart("ensembl",dataset="hsapiens_gene_ensembl", 
                        host = "http://www.ensembl.org") #uses human ensembl annotations
   #gets gene symbol, transcript_id and go_id for all genes annotated with GO:0009986
-  gene.data <- getBM(attributes=c('hgnc_symbol', 'ensembl_gene_id', 'go_id'),
+  gene.data <- biomaRt::getBM(attributes=c('hgnc_symbol', 'ensembl_gene_id', 'go_id'),
                      filters = 'go_parent_term', values = 'GO:0009986', mart = ensembl)
   
   gene.data.unique <- gene.data[!duplicated(gene.data$hgnc_symbol),]

@@ -23,8 +23,8 @@ server <- function(input, output, update_gene_list=F) {
     # use separated R script 20211208_merge_seuratobject_addsplits_inspect.R
     dataset <- readRDS("data/NEW_datasets.rds")
     split <- as.character(unique(sort(dataset@meta.data$dataset_origin)))
-    ob_all <- SplitObject(dataset, split.by = "dataset_origin")
-    saveRDS(ob_all,"data/datasets.rds")
+    datasets <- SplitObject(dataset, split.by = "dataset_origin")
+    saveRDS(datasets,"data/datasets.rds")
   }
   if(F){ 
     # read me
@@ -34,30 +34,31 @@ server <- function(input, output, update_gene_list=F) {
     saveRDS(markerlist,"digital_sorter/data/markerlist.rds")
   }
   ## read datasets ####
-  ob_all <- readRDS("data/datasets.rds")
+  ReadRDSFiles("data")
   
-  markerlist <- readRDS("data/markerlist.rds")
+  markerlist <- markerlist
+  genelist <- Union.cell.surface.marker
   
   list_samples_disease <- reactive({
     list_samples_disease <- list()
-    for(i in 1: length(ob_all)){
-      new_list <- list(as.character(unique(sort(ob_all[[i]]@meta.data[["disease"]]))))
+    for(i in 1: length(datasets)){
+      new_list <- list(as.character(unique(sort(datasets[[i]]@meta.data[["disease"]]))))
       list_samples_disease <- c(list_samples_disease,new_list)
     }
-    names(list_samples_disease) <- names(ob_all)
+    names(list_samples_disease) <- names(datasets)
     return(list_samples_disease)})
 
   
-  ## cell-surface marker list ####
-  genelist <- readRDS("data/cell.surface.marker.rds")
 
   
   ## update cell surface marker genes or not
   if(update_gene_list){
-    genelist <- get_cell_markers()
+    cell.surface.marker <- get_cell_markers()
+    new_cell_marker_gene <- SurfaceGenie.cell.surface.marker
+    genelist <- union(new_cell_marker_gene,cell.surface.marker) 
   }
   ## settings for plots ####
-  cols <- reactive(RColorBrewer::brewer.pal(length(levels(ob_all[[1]]@meta.data[["disease"]])), name="Paired"))
+  cols <- reactive(RColorBrewer::brewer.pal(length(levels(datasets[[1]]@meta.data[["disease"]])), name="Paired"))
   
   aes_list <- reactive({theme(legend.text=element_text(size=12),
                    axis.text=element_text(size=12),
@@ -103,7 +104,7 @@ server <- function(input, output, update_gene_list=F) {
   ## select cohort #### 
   output$cohort <- renderUI({
     if(input$cancer == "Lung"){ 
-      myCohort <- as.character(names(ob_all))
+      myCohort <- as.character(names(datasets))
       } 
     else{myCohort <- c("t.b.c.")} 
    
@@ -113,7 +114,7 @@ server <- function(input, output, update_gene_list=F) {
 
   output$cohort2 <- renderUI({
     if(input$cancer == "Lung"){ 
-      myDataset <-as.character(names(ob_all))
+      myDataset <-as.character(names(datasets))
       } 
     else{myDataset <- c("t.b.c.")} 
     
@@ -132,13 +133,13 @@ server <- function(input, output, update_gene_list=F) {
   })
   #for plots in home section
   ob_reactive <- reactive({
-    ob_reactive <- ob_all[[dataset_reactive()]]
+    ob_reactive <- datasets[[dataset_reactive()]]
     return(ob_reactive)
   })
   #for plots in results section
   ob_reactive2 <- reactive({
-    ob_reactive2 <- ob_all[[dataset_reactive2()]]
-    ob_reactive2@meta.data$annotation.l1=factor(ob_reactive2@meta.data$annotation.l1,levels=unique(sort(ob_all[[1]]@meta.data$annotation.l1)))
+    ob_reactive2 <- datasets[[dataset_reactive2()]]
+    ob_reactive2@meta.data$annotation.l1=factor(ob_reactive2@meta.data$annotation.l1,levels=unique(sort(datasets[[1]]@meta.data$annotation.l1)))
     return(ob_reactive2)
   })
 
@@ -183,7 +184,7 @@ server <- function(input, output, update_gene_list=F) {
 
   ## Select cell types for selecting markers ####
   output$celltype <- renderUI({
-    celltypes <- as.character(unique(sort(ob_all[[1]]@meta.data[["annotation.l2"]])))
+    celltypes <- as.character(unique(sort(datasets[[1]]@meta.data[["annotation.l2"]])))
     selectizeInput(inputId = "celltype", label= "Select cell types for automatically choose the features of dot plots:",
                    choices = celltypes,
                    selected = NULL,
