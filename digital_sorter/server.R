@@ -241,8 +241,9 @@ server <- function(input, output, update_gene_list=F) {
     marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]] #3708
     
     subset_marker_gene <- marker_gene_table %>% 
-      filter(marker_gene_table$gene %in% genelist)%>%
-      filter(marker_gene_table$p_val_adj<1)%>% 
+      filter(marker_gene_table$gene %in% genelist)
+    subset_marker_gene <- subset_marker_gene %>%
+      filter(subset_marker_gene$p_val_adj<1)%>% 
       arrange(annotation.l2,p_val)
       
     shinybusy::remove_modal_spinner()
