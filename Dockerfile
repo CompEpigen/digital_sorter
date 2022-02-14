@@ -32,5 +32,5 @@ WORKDIR /app
 COPY app .
 RUN chown app:app -R /app
 USER app
-EXPOSE 3838
-CMD ["R", "-e", "shiny::runApp('/app', host='0.0.0.0', port=3838)"]
+EXPOSE 3939
+CMD ["R", "-e", "shiny::runApp('/app', host='0.0.0.0', port=3939)"]

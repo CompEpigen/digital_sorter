@@ -9,7 +9,7 @@ library(plotly)
 library(gridExtra)
 library(shinyjs)
 library(RColorBrewer)
-
+ReadRDSFiles("data")
 
 #server.R
 server <- function(input, output, update_gene_list=F) {
@@ -34,7 +34,6 @@ server <- function(input, output, update_gene_list=F) {
     saveRDS(markerlist,"digital_sorter/data/markerlist.rds")
   }
   ## read datasets ####
-  ReadRDSFiles("data")
   
   markerlist <- markerlist
   genelist <- Union.cell.surface.marker
@@ -242,7 +241,9 @@ server <- function(input, output, update_gene_list=F) {
     marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]] #3708
     
     subset_marker_gene <- marker_gene_table %>% 
-      filter(marker_gene_table$gene %in% genelist)
+      filter(marker_gene_table$gene %in% genelist)%>%
+      filter(marker_gene_table$p_val_adj<1)%>% 
+      arrange(annotation.l2,p_val)
       
     shinybusy::remove_modal_spinner()
     return(subset_marker_gene)
@@ -333,14 +334,14 @@ server <- function(input, output, update_gene_list=F) {
     
     ob1_1 <- subset(x = ob_selected, subset = split1 == plot_marker()[1])
       if(input$cellMark){
-        cell_types1 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
-        marker_gene_table <- marker_gene_table()
-        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types1,]
-        gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+        #cell_types1 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
+        #marker_gene_table <- marker_gene_table()
+        #marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types1,]
+        #gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
         
-          marker_gene_table <- marker_gene_table()
-          marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-          gene_dge <- unique(marker_gene_table_sub$gene)
+        marker_gene_table <- marker_gene_table()
+        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
+        gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
                                                                                             
       DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
         RotatedAxis()+ aes_list() 
@@ -355,14 +356,9 @@ server <- function(input, output, update_gene_list=F) {
     
     ob1_1 <- subset(x = ob_selected, subset = split2 == plot_marker()[3])
       if(input$cellMark){ 
-      cell_types2 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
-      marker_gene_table <- marker_gene_table()
-      marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types2,]
-      gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
-      
         marker_gene_table <- marker_gene_table()
         marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-        gene_dge <- unique(marker_gene_table_sub$gene)
+        gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
      
       DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
         RotatedAxis()+ aes_list()
@@ -377,14 +373,9 @@ server <- function(input, output, update_gene_list=F) {
     
     ob1_1 <- subset(x = ob_selected, subset = split3 == plot_marker()[5])
       if(input$cellMark){
-        cell_types3 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
         marker_gene_table <- marker_gene_table()
-        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types3,]
+        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
         gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
-        
-          marker_gene_table <- marker_gene_table()
-          marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-          gene_dge <- unique(marker_gene_table_sub$gene)
        
         DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
           RotatedAxis()+ aes_list()
@@ -399,15 +390,9 @@ server <- function(input, output, update_gene_list=F) {
     ob1_1 <- subset(x = ob_selected,subset = split4 == plot_marker()[7])
       
       if(input$cellMark){
-        cell_types4 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
         marker_gene_table <- marker_gene_table()
-        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types4,]
-        
+        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
         gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
-        
-          marker_gene_table <- marker_gene_table()
-          marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-          gene_dge <- unique(marker_gene_table_sub$gene)
         
          DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
            RotatedAxis()+aes_list()
@@ -423,15 +408,10 @@ server <- function(input, output, update_gene_list=F) {
     ob1_1 <- subset(x = ob_selected, subset = split4 == plot_marker()[8])
       
       if(input$cellMark){
-        cell_types5 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
         marker_gene_table <- marker_gene_table()
-        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_types5,]
+        marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
         gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
         
-          marker_gene_table <- marker_gene_table()
-          marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-          gene_dge <- unique(marker_gene_table_sub$gene)
-       
         DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
           RotatedAxis()+ aes_list()
       }else{
