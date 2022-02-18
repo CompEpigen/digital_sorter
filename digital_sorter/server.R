@@ -268,6 +268,13 @@ server <- function(input, output, update_gene_list=F) {
       write.csv(marker_gene_table(), file)
     })
   
+  ##Change the selected tab on the client ####
+  observeEvent(input$go_level1, {
+    updateTabItems( session = getDefaultReactiveDomain(), "sidebar",
+                      selected = "result1"
+    )
+  })
+  
   ## Violin Plot #### 
   ### home ####
   

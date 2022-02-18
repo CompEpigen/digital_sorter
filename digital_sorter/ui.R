@@ -55,10 +55,15 @@ ui <-dashboardPage(
                 checkboxInput(inputId= "cellMark", 
                               label="Automatically select top markers of specific cell type!", 
                               value = FALSE, width = NULL),
-                downloadButton('download_marker_csv', 'Download Marker Selection Results'),
+                fluidRow(
+                  column(width=4,offset=1,
+                         downloadButton('download_marker_csv', 'Download Marker Selection Results')
+                  ),
+                ),
                 uiOutput("celltype"),
-                
-                actionBttn("dplot", "Plot/ Renew plots!", 
+                actionBttn("go_level1", "Go! (to Level 1)", 
+                           style = "jelly", color = "success", size = "sm"), 
+                actionBttn("dplot", "Plot/ Renew Dot Plots!", 
                            style = "jelly", color = "warning", size = "sm"), 
                 h5("Go to each level and check out the results!")
                 
