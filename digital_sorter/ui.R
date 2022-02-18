@@ -55,6 +55,7 @@ ui <-dashboardPage(
                 checkboxInput(inputId= "cellMark", 
                               label="Automatically select top markers of specific cell type!", 
                               value = FALSE, width = NULL),
+                downloadButton('download_marker_csv', 'Download Marker Selection Results'),
                 uiOutput("celltype"),
                 
                 actionBttn("dplot", "Plot/ Renew plots!", 

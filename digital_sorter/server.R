@@ -262,6 +262,11 @@ server <- function(input, output, update_gene_list=F) {
     })
   })
   
+  output$download_marker_csv <- downloadHandler(
+    filename = "Marker_selection_table.csv",
+    content = function(file) {
+      write.csv(marker_gene_table(), file)
+    })
   
   ## Violin Plot #### 
   ### home ####
