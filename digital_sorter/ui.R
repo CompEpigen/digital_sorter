@@ -9,7 +9,7 @@ library(shinycssloaders)
 ui <-dashboardPage(
   
   skin = "blue",
-  
+  title= "Digital Sorter",
   #1. header
   dashboardHeader(
     title = tags$b(tags$img(src = "digital_sorter.png", width=80, height=50),
@@ -34,9 +34,11 @@ ui <-dashboardPage(
     useShinyjs(),
     sidebarMenu(
       id = 'sidebar',
-      ## 1st tab show the Main dashboard -----------
+      ## 1st tab show the preprocessing dashboard  Main dashboard -----------
+      menuItem( "Pre-processing", tabName = 'processing', icon = icon('refresh')),
+      ## 2st tab show the Main dashboard-----------
       menuItem( "Main Dashboard", tabName = 'dashboard', icon = icon('tachometer-alt')),
-      ## 2nd tab shows results ----------
+      ## 3nd tab shows results ----------
       menuItem( "Results", tabName = "results", icon = icon('barcode'), startExpanded = F,
                 
                 lapply(1:5, function(i){
@@ -82,35 +84,64 @@ ui <-dashboardPage(
     
     ## 3.1 Dashboard body --------------
     tabItems(
+      ## 3.1.0 Pre-processing dashboard ----------------------------------------------------------
+      tabItem( tabName = 'processing',
+               fluidRow(
+                 column(width=4,
+                        box(title = "Datasets stratified with default master markers", status= "success", solidHeader = TRUE, width = NULL,
+                            #cancer
+                            selectizeInput(inputId ="cancer", label= "Select cancer types:", choices = c("Lung","t.b.c."), selected = "Lung"),
+                            #show master markers after selecting cancer type
+                            uiOutput("master_markers"),
+                            #select dataset (choices depends on cancer)                 
+                            uiOutput("cohort")
+                        ),# box end
+                        box(title = "Define your own master markers", status= "warning", solidHeader = TRUE, width = NULL,
+                            uiOutput("own_markers"),
+                            textInput(inputId="own_markers_name", label="Name your own master markers (e.g. Lung1)", value = "", width = NULL, placeholder = NULL),
+                            actionBttn("update_marker", "Update marker list and tree plot!", style = "jelly", color = "warning",size = "sm"),
+                            h4("This is the panel for user to define their own master markers."),
+                            h4("If the cancer type is not",span(" Lung", style = "color:blue") ,", user should upload the reference expression data to define the levels.")
+                        ),# box end
+                       
+                        ),#column end
+                 column(width=8,
+                        box(title = "The structure of the embedded data", status="success", solidHeader = TRUE, width = NULL,
+                            h5("The results shown in this app will be based on the cell groups/levels shown here."),
+                            
+                            h5("If you want to change the stratifying structure, please use the panel below. 
+                        Otherwise, you can go to the ",span("Main Dashboard", style = "color:blue")," for the following visualization."),
+                            
+                            #Tree plot
+                            conditionalPanel(
+                              condition = "input.cancer == 'Lung'",
+                              img(src = "tree.PNG", width=550, height=480)  
+                            ),
+                            conditionalPanel(
+                              condition = "input.cancer == 't.b.c.'",
+                              h4("Tree plot t.b.c.")
+                            ),
+                            
+                            actionBttn("go", "Confirm & Go!", style = "jelly", color = "success",size = "sm")
+                        ),#box end
+                 ),#column end
+               ), #fluidRow end
+              
+               
+                
+            
+               
+      ), #tab1 end
+      
       ## 3.1.1 Main dashboard ----------------------------------------------------------
       tabItem( tabName = 'dashboard',
                
                fluidRow(
-                 box(title = "Inputs", status= "success", solidHeader = TRUE, width=4,
-                        #cancer
-                        selectizeInput(inputId ="cancer", label= "Select cancer types:", choices = c("Lung","t.b.c."), selected = "Lung"),
-                        
-                        #show master markers after selecting cancer type
-                        uiOutput("master_markers"),
-                        
-                        
-                        #select dataset (choices depends on cancer)                 
-                        uiOutput("cohort"),
-                        
-                        
-                        actionBttn("go", "Select & Go!", style = "jelly", color = "success",size = "sm")
-                  ),
-                 box(title = "Tree plot", status="warning", solidHeader = TRUE, width=8,
-                        
+                 
+                 box(title = "Updating Tree Plot", status="warning", solidHeader = TRUE, width=8,
+                        h5("The results shown in this app were the analysis done within the cell groups shown here."),
                         #Tree plot
-                        conditionalPanel(
-                          condition = "input.cancer == 'Lung'",
-                          img(src = "tree.PNG", width=550, height=480)  
-                        ),
-                        conditionalPanel(
-                          condition = "input.cancer == 't.b.c.'",
-                          h4("Tree plot t.b.c.")
-                        )
+                        h3("Should be the updating tree plot")
                   )
                  ), #fluid row end
                
