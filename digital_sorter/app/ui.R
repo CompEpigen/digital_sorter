@@ -1,17 +1,28 @@
-
 library(shiny)
+library(shinybusy)
 library(shinythemes)
+library(Seurat)
+#library(SeuratDisk) #for saving file
+library(dplyr)
+library(reshape2)
+library(ggplot2)
+library(plotly)
+library(gridExtra)
+library(shinyjs)
 library(shinydashboard)
-library(shinycssloaders)
-
+library(shinyWidgets)
 
 # Define UI
 ui <-dashboardPage(
   
   skin = "blue",
   title= "Digital Sorter",
+  
+  
   #1. header
   dashboardHeader(
+    
+    
     title = tags$b(tags$img(src = "digital_sorter.png", width=80, height=50),
                    " Digital Sorter"), 
     
@@ -26,7 +37,6 @@ ui <-dashboardPage(
             )
   ), #header end
   
-
   
   #2. side bar
   dashboardSidebar(
@@ -81,6 +91,7 @@ ui <-dashboardPage(
   
   #3. body
   dashboardBody( 
+    
     
     ## 3.1 Dashboard body --------------
     tabItems(

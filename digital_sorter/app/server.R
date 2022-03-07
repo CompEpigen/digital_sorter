@@ -11,11 +11,14 @@ library(shinyjs)
 library(RColorBrewer)
 
 
+
+ReadRDSFiles("data")
 #server.R
 server <- function(input, output, session,update_gene_list=F) {
- 
+
+  
   shinybusy::show_modal_spinner(text = "Loading datasets...") # show the modal window
-  ReadRDSFiles("data")
+  
   if(F){ 
     # read me
     # the dataset put infolder data/should be a SplitObject of seurat.
@@ -37,6 +40,7 @@ server <- function(input, output, session,update_gene_list=F) {
   
   markerlist <- markerlist
   genelist <- Union.cell.surface.marker
+  genelist2 <- genelist
   
   list_samples_disease <- reactive({
     list_samples_disease <- list()
@@ -160,7 +164,7 @@ server <- function(input, output, session,update_gene_list=F) {
   ## Select Section-genes ####  
   output$gene <- renderUI({
     selectizeInput(inputId = "gene", label= "Select cell surface marker genes for the dot plots:",
-                   choices = '',
+                   choices = genelist,
                    selected = NULL,
                    multiple = TRUE,
                    options = list(
@@ -169,21 +173,12 @@ server <- function(input, output, session,update_gene_list=F) {
                    )
     )
   })
-  updateSelectizeInput(
-    session,
-    inputId = 'gene',
-    label   = 'Select cell surface marker genes for the dot plots:',
-    choices = genelist,
-    selected =NULL,
-    options = list(
-      placeholder = 'Type to search for file name',
-      onInitialize = I('function() { this.setValue(""); }'))
-  )
+  
   
   ## Select self defined master markers ####  
   output$own_markers <- renderUI({
     selectizeInput(inputId = "own_markers", label= "Select cell surface marker genes for stratification:",
-                   choices = '',
+                   choices = genelist2,
                    selected = NULL,
                    multiple = TRUE,
                    options = list(
@@ -193,16 +188,6 @@ server <- function(input, output, session,update_gene_list=F) {
     )
   })
   
-  updateSelectizeInput(
-    session,
-    inputId = 'own_markers',
-    label   = 'Select cell surface marker genes for stratification:',
-    choices = genelist,
-    selected =NULL,
-    options = list(
-      placeholder = 'Type to search for file name',
-      onInitialize = I('function() { this.setValue(""); }'))
-  )
   
   observeEvent(input$cellMark,{
     if (input$cellMark){
@@ -479,6 +464,8 @@ server <- function(input, output, session,update_gene_list=F) {
     outputId <- paste0("plotd", i)
     output[[outputId]] <- renderPlot(dlist()[[i]])
   })
+  
+ 
   
   ## table next to the dot plot ####
   lapply(1:5, function(i) {
