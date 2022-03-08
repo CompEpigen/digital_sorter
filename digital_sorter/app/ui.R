@@ -27,14 +27,7 @@ ui <-dashboardPage(
                    " Digital Sorter"), 
     
     disable = FALSE, 
-    titleWidth  = 300,
-    dropdownMenu( type = "notifications", badgeStatus = NULL, icon = icon('comment'), headerText = NULL,
-              messageItem("Feedback and suggestions",
-                          "",
-                          time = NULL,
-                          icon = icon("envelope"),
-                          href = "mailto:c.lee@dkfz-heidelberg.de")
-            )
+    titleWidth  = 300
   ), #header end
   
   
@@ -45,11 +38,11 @@ ui <-dashboardPage(
     sidebarMenu(
       id = 'sidebar',
       ## 1st tab show the preprocessing dashboard  Main dashboard -----------
-      menuItem( "Pre-processing", tabName = 'processing', icon = icon('refresh')),
+      menuItem( "Define My Own Master Markers", tabName = 'processing', icon = icon('tachometer-alt')),
       ## 2st tab show the Main dashboard-----------
-      menuItem( "Main Dashboard", tabName = 'dashboard', icon = icon('tachometer-alt')),
+      menuItem( "Tree Plot & Violin Plot", tabName = 'dashboard', icon = icon('tree')),
       ## 3nd tab shows results ----------
-      menuItem( "Results", tabName = "results", icon = icon('barcode'), startExpanded = F,
+      menuItem( "Visualization (gene of interest)", tabName = "results", icon = icon('list'), startExpanded = F,
                 
                 lapply(1:5, function(i){
                   menuSubItem(paste0("Level ",i), tabName = paste0("result",i))
@@ -58,24 +51,42 @@ ui <-dashboardPage(
                 
                 h4("Input section for each level"),
                 #select dataset (choices depends on cancer)                 
-                uiOutput("cohort2"),
+                uiOutput("cohort1"),
                 
-                uiOutput("sample_se"),
+                uiOutput("sample_se1"),
               
                 uiOutput("gene"),
                 
-                checkboxInput(inputId= "cellMark", 
-                              label="Automatically select top markers of specific cell type!", 
-                              value = FALSE, width = NULL),
+                
+                
+                actionBttn("dplot", "Plot/ Renew Dot Plots!", 
+                           style = "jelly", color = "warning", size = "sm"), 
+                h5("Go to each level and check out the results!")
+                
+                
+      ),
+      
+      menuItem( "Visualization (marker selection)", tabName = "results2", icon = icon('brain'), startExpanded = F,
+                
+                lapply(1:5, function(i){
+                  menuSubItem(paste0("Level ",i), tabName = paste0("2result",i))
+                }),
+                #uiOutput("ui_menuSubItem"), #format would be different
+                
+                h4("Input section for each level"),
+                #select dataset (choices depends on cancer)                 
+                uiOutput("cohort2"),
+                
+                uiOutput("sample_se2"),
+                
                 fluidRow(
                   column(width=4,offset=1,
                          downloadButton('download_marker_csv', 'Download Marker Selection Results')
                   ),
                 ),
                 uiOutput("celltype"),
-                actionBttn("go_level1", "Go! (to Level 1)", 
-                           style = "jelly", color = "success", size = "sm"), 
-                actionBttn("dplot", "Plot/ Renew Dot Plots!", 
+                
+                actionBttn("dplot2", "Plot/ Renew Dot Plots!", 
                            style = "jelly", color = "warning", size = "sm"), 
                 h5("Go to each level and check out the results!")
                 
@@ -105,7 +116,9 @@ ui <-dashboardPage(
                             #show master markers after selecting cancer type
                             uiOutput("master_markers"),
                             #select dataset (choices depends on cancer)                 
-                            uiOutput("cohort")
+                            uiOutput("cohort_h"),
+                            
+                            actionBttn("go", "Confirm & Go!", style = "jelly", color = "success",size = "sm")
                         ),# box end
                         box(title = "Define your own master markers", status= "warning", solidHeader = TRUE, width = NULL,
                             uiOutput("own_markers"),
@@ -120,8 +133,9 @@ ui <-dashboardPage(
                         box(title = "The structure of the embedded data", status="success", solidHeader = TRUE, width = NULL,
                             h5("The results shown in this app will be based on the cell groups/levels shown here."),
                             
-                            h5("If you want to change the stratifying structure, please use the panel below. 
-                        Otherwise, you can go to the ",span("Main Dashboard", style = "color:blue")," for the following visualization."),
+                            h5("If you want to change the stratifying structure, please use the",
+                            span(" yellow ", style = "color:orange") , "panel. Otherwise, you can go to the ",
+                            span("Tree Plot & Violin Plot", style = "color:green")," for the following visualization."),
                             
                             #Tree plot
                             conditionalPanel(
@@ -131,9 +145,7 @@ ui <-dashboardPage(
                             conditionalPanel(
                               condition = "input.cancer == 't.b.c.'",
                               h4("Tree plot t.b.c.")
-                            ),
-                            
-                            actionBttn("go", "Confirm & Go!", style = "jelly", color = "success",size = "sm")
+                            )
                         ),#box end
                  ),#column end
                ), #fluidRow end
@@ -168,11 +180,7 @@ ui <-dashboardPage(
                                  withSpinner(plotOutput("plotv_h3") )),
                         tabPanel("Marker 4", 
                                  withSpinner(plotOutput("plotv_h4") ))
-                        # error will appear
-                        #lapply(1:4, function(i){ 
-                        #  tabPanel(paste0("Marker ",i), 
-                        #           withSpinner(plotOutput(paste0("plotv_h",i))))
-                        #})
+                        
                         
                  )
                )#fluid row end
@@ -312,6 +320,110 @@ ui <-dashboardPage(
                  )      
                )#fluid row end
       ), #tab5 end
+      
+      ## 3.2.1 Result1 ----------------------------------------------------------
+      tabItem( tabName = '2result1',
+               
+               fluidRow(#dot plot
+                 tags$hr(),
+                 h3("Level 1 Dot plot"),
+                 h4(textOutput("dotplot2_title1")),
+                 column(width=6, style = "height:200px;",
+                        withSpinner(plotOutput("plotd_cellMark1") )
+                        
+                        
+                 ),
+                 column(width=4,
+                        withSpinner(dataTableOutput("table_cellMark1") )
+                        
+                 )
+                 
+               )#fluid row end
+      ), #tab2 end
+      
+      ## 3.2.2 Result2 ----------------------------------------------------------
+      
+      tabItem( tabName = '2result2',
+              
+               fluidRow(#dot plot
+                 tags$hr(),
+                 h3("Level 2 Dot plot"),
+                 h4(textOutput("dotplot2_title2")),
+                 column(width=6, style = "height:200px;",
+                        withSpinner(plotOutput("plotd_cellMark2") )
+                        
+                 ),
+                 column(width=4,
+                        withSpinner(dataTableOutput("table_cellMark2") )
+                        
+                 )
+                 
+               )#fluid row end
+      ), #tab3 end
+      
+      ## 3.2.3 Result3 ----------------------------------------------------------
+      
+      tabItem( tabName = '2result3',
+               
+               fluidRow(#dot plot
+                 tags$hr(),
+                 h3("Level 3 Dot plot"),
+                 h4(textOutput("dotplot2_title3")),
+                 
+                 column(width=6, style = "height:200px;",
+                        
+                        withSpinner( plotOutput("plotd_cellMark3") )
+                        
+                 ),
+                 column(width=4,
+                        withSpinner(dataTableOutput("table_cellMark3") )
+                        
+                 )
+                 
+               )#fluid row end
+      ), #tab4 end
+      
+      ## 3.2.4 Result4 ----------------------------------------------------------
+      
+      tabItem( tabName = '2result4',
+               
+               fluidRow(#dot plot
+                 tags$hr(),
+                 h3("Level 4 Dot plot"),
+                 h4(textOutput("dotplot2_title4")),
+                 
+                 column(width=6, style = "height:200px;",
+                        withSpinner(plotOutput("plotd_cellMark4")  )
+                        
+                 ),
+                 column(width=4,
+                        withSpinner(dataTableOutput("table_cellMark4") )
+                        
+                        
+                 )      
+               )#fluid row end
+      ), #tab5 end
+      ## 3.2.5 Result5 ----------------------------------------------------------
+      tabItem( tabName = '2result5',
+               
+            
+               fluidRow(#dot plot
+                 tags$hr(),
+                 h3("Level 5 Dot plot"),
+                 h4(textOutput("dotplot2_title5")),
+                 
+                 column(width=6, style = "height:200px;",
+                        withSpinner(plotOutput("plotd_cellMark5") )
+                        
+                 ),
+                 column(width=4,
+                        withSpinner(dataTableOutput("table_cellMark5") )
+                        
+                        
+                 )      
+               )#fluid row end
+      ), #tab5 end
+      
       ## 3.1.6 FAQs ----------------------------------------------------------
       
       tabItem( tabName = 'help',

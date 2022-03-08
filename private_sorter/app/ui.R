@@ -14,7 +14,7 @@ library(shinyWidgets)
 #library(shinyauthr)
 
 library(DT)
-
+library(sodium)
 
 
 
@@ -35,4 +35,4 @@ sidebar <- dashboardSidebar(width = 300,
 
 body <- dashboardBody( uiOutput("body"))
 ui<-dashboardPage(header, sidebar, body, skin = "blue",
-                  title= "Digital Sorter")
+                  title= "Private Sorter")
