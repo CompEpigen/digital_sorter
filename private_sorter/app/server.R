@@ -739,7 +739,7 @@ server <- function(input, output, session){
   })
   
   #could pre-run this function for all the datasets/splits to save user's time
-  marker_gene_table <- eventReactive(input$cellMark,{
+  marker_gene_table <- eventReactive(input$dplot2,{
     shinybusy::show_modal_spinner(text = "Get marker genes...") # show the modal window
     seurat <- getMarkers(
       ob_reactive2(),
