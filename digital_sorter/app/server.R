@@ -21,11 +21,10 @@ server <- function(input, output, session){
   
   if(F){ 
     # read me
-    # the dataset put infolder data/should be a SplitObject of seurat.
+    # the dataset put in folder data/should be a SplitObject of seurat.
     # Create split object (split by datasets)
     # use separated R script 20211208_merge_seuratobject_addsplits_inspect.R
     dataset <- readRDS("data/NEW_datasets.rds")
-    split <- as.character(unique(sort(dataset@meta.data$dataset_origin)))
     datasets <- SplitObject(dataset, split.by = "dataset_origin")
     saveRDS(datasets,"data/datasets.rds")
   }
@@ -136,13 +135,18 @@ server <- function(input, output, session){
     paste(input$cohort[1:length(input$cohort)])
   })
   
+  output$dataset_h <-  renderText({input$cohort })
+  output$cancer_type <-  renderText({input$cancer })
+  
   #for plots in home section
   ob_reactive_h <- reactive({
     ob_reactive <- datasets[[dataset_reactive_h()]]
+    ob_reactive@meta.data$annotation.l1=factor(ob_reactive@meta.data$annotation.l1,levels=unique(sort(datasets[[1]]@meta.data$annotation.l1)))
+    ob_reactive@meta.data$disease=factor(ob_reactive@meta.data$disease,levels=unique(sort(ob_reactive@meta.data$disease)))
+    
     return(ob_reactive)
   })
   
-
   
   #for plots in results section
   ob_reactive1 <- reactive({
@@ -156,6 +160,13 @@ server <- function(input, output, session){
     
     return(ob_reactive_split1)
   })
+  ob_selected1 <- reactive({
+    ob_selected1 <- ob_reactive_split1()[[input$sample1]]
+    
+    return(ob_selected1)
+  })
+  
+  
   #for plots in results2 section
   ob_reactive2 <- reactive({
     ob_reactive2 <- datasets[[input$cohort2]]
@@ -168,7 +179,16 @@ server <- function(input, output, session){
     return(ob_reactive_split2)
   })
   
+  ob_selected2<- reactive({
+    ob_selected2 <- ob_reactive_split2()[[input$sample2]]
+    
+    return(ob_selected2)
+  })
+  
+  
+  
   ## select sample ####  
+  
   output$sample_se1 <- renderUI({
     mySample <- list_samples_disease()[[input$cohort1]]
     
@@ -216,16 +236,18 @@ server <- function(input, output, session){
 
   ## Select cell types for selecting markers ####
   output$celltype <- renderUI({
-    celltypes <- as.character(unique(sort(datasets[[1]]@meta.data[["annotation.l2"]])))
-    selectizeInput(inputId = "celltype", label= "Select cell types for automatically choose the features of dot plots:",
+    if (!is.null(marker_gene_table())){  
+    celltypes <- as.character(unique(sort(marker_gene_table()$annotation.l2)))
+    selectizeInput(inputId = "celltype", label= "Select cell types for the features of dot plots:",
                    choices = celltypes,
-                   selected = NULL,
+                   selected = celltypes[1],
                    multiple = F,
                    options = list(
-                     placeholder = 'Type to search for cell types',
+                     placeholder = 'Type to search for cell types whose markers were found',
                      onInitialize = I('function() { this.setValue(""); }')
                    )
     )
+   }
   })
   
 
@@ -251,15 +273,15 @@ server <- function(input, output, session){
     paste(input$gene[1:length(input$gene)])
   })
   
-  cell_chosen <- eventReactive(input$dplot2, { 
+  cell_chosen <- reactive({ 
     paste(input$celltype[1:length(input$celltype)])
   })
 
   #could pre-run this function for all the datasets/splits to save user's time
-  marker_gene_table <- eventReactive(input$dplot2,{
+  marker_gene_table <- eventReactive(input$dplot2, { 
     shinybusy::show_modal_spinner(text = "Get marker genes...") # show the modal window
     seurat <- getMarkers(
-      ob_reactive2(),
+      ob_selected2(),
       assay = 'RNA',
       organism = 'hg',
       groups = c('annotation.l2'),
@@ -276,8 +298,8 @@ server <- function(input, output, session){
     subset_marker_gene <- marker_gene_table %>% 
       filter(marker_gene_table$gene %in% genelist())
     subset_marker_gene <- subset_marker_gene %>%
-      filter(subset_marker_gene$p_val_adj<1)%>% 
-      arrange(annotation.l2,p_val)
+      filter(subset_marker_gene$p_val_adj<2)%>% 
+      arrange(annotation.l2,desc(abs(avg_log2FC)),p_val)
       
     shinybusy::remove_modal_spinner()
     return(subset_marker_gene)
@@ -314,21 +336,21 @@ server <- function(input, output, session){
     })
   
   ##Change the selected tab on the client ####
-  observeEvent(input$dplot, {
+  observeEvent(input$go, {
     updateTabItems( session = getDefaultReactiveDomain(), "sidebar",
-                      selected = "result2"
+                    selected = "dashboard"
+    )
+  })
+  
+  observeEvent(input$plotv, {
+    updateTabsetPanel(session, "vplots",
+                      selected = "Marker 1"
     )
   })
   
   observeEvent(input$dplot2, {
     updateTabItems( session = getDefaultReactiveDomain(), "sidebar",
-                    selected = "2result2"
-    )
-  })
-  
-  observeEvent(input$go, {
-    updateTabItems( session = getDefaultReactiveDomain(), "sidebar",
-                    selected = "dashboard"
+                    selected = "2result1"
     )
   })
   
@@ -341,19 +363,27 @@ server <- function(input, output, session){
   ## Violin Plot #### 
   ### home ####
   
-  v_h1 <-eventReactive(input$go,{
+  v_h1 <-eventReactive(input$plotv,{
+    #ob_selected <- subset(x = ob_reactive_h(), subset = dataset_origin == input$cohort)
+    
       VlnPlot(ob_reactive_h(),marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
   })
-  v_h2 <-eventReactive(input$go,{
+  v_h2 <-eventReactive(input$plotv,{
+    #ob_selected <- subset(x = ob_reactive_h(), subset = dataset_origin == input$cohort)
+    
      VlnPlot(ob_reactive_h(),marker_list()[2], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
   })
-  v_h3 <-eventReactive(input$go,{
+  v_h3 <-eventReactive(input$plotv,{
+    #ob_selected <- subset(x = ob_reactive_h(), subset = dataset_origin == input$cohort)
+    
     VlnPlot(ob_reactive_h(),marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
   })
-  v_h4 <-eventReactive(input$go,{
+  v_h4 <-eventReactive(input$plotv,{
+    #ob_selected <- subset(x = ob_reactive_h(), subset = dataset_origin == input$cohort)
+   
     VlnPlot(ob_reactive_h(),marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols(),
               sort = TRUE,pt.size = 0, combine = FALSE)
   })
@@ -364,80 +394,35 @@ server <- function(input, output, session){
     output[[outputId]] <- renderPlot(hvlist()[[i]])  
   })
   
-  #Level1: CD45 (PTPRC) 
-  output$plotv1 <- renderPlotly({
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    VlnPlot(ob_selected, marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols(),
-              sort = TRUE,pt.size = 0, combine = FALSE)
-    ggplotly(ggplot2::last_plot())
-  }) 
-  #Level2: EPCAM
-  output$plotv2 <- renderPlotly({
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    ob_selected_1 <- subset(x = ob_selected, subset = split1 == plot_marker()[2])
-      
-      VlnPlot(ob_selected_1, marker_list()[2], split.by = "disease", group.by = "annotation.l2", cols=cols(),
-              sort = TRUE, pt.size = 0, combine = FALSE)
-      ggplotly(ggplot2::last_plot())
-  }) 
-  
-  
-  #Level3: PECAM1 (CD31)
-  output$plotv3 <- renderPlotly({
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    ob_selected_1 <- subset(x = ob_selected, subset = split2 == plot_marker()[4])
-      
-      VlnPlot(ob_selected_1, marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols(),
-              sort = TRUE,pt.size = 0, combine = FALSE)
-      ggplotly(ggplot2::last_plot()) 
-  }) 
-  
-  #Level4: MME (CD10)
-  output$plotv4 <- renderPlotly({
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    ob_selected_1 <- subset(x = ob_selected, subset = split3 == plot_marker()[6])
-      
-      VlnPlot(ob_selected_1, marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols(),
-              sort = TRUE,pt.size = 0, combine = FALSE)
-      ggplotly(ggplot2::last_plot()) 
-   
-  }) 
+ 
   
   ## Dot plot ####
   
-  d1 <- eventReactive(input$dplot,ignoreInit = T,{
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split1 == plot_marker()[1])
+  d1 <- reactive({
+    ob1_1 <- subset(x = ob_selected1(), subset = split1 == plot_marker()[1])
       
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
           RotatedAxis()+ aes_list()
        
   })
   
-  d2 <- eventReactive(input$dplot,{
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split2 == plot_marker()[3])
+  d2 <- reactive({
+    ob1_1 <- subset(x = ob_selected1(), subset = split2 == plot_marker()[3])
       
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
           RotatedAxis()+ aes_list()
         
   })
   
-  d3 <- eventReactive(input$dplot,{
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split3 == plot_marker()[5])
+  d3 <- reactive({
+    ob1_1 <- subset(x = ob_selected1(), subset = split3 == plot_marker()[5])
       
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
           RotatedAxis()+ aes_list()
        
   })
-  d4 <- eventReactive(input$dplot,{
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    
-    ob1_1 <- subset(x = ob_selected,subset = split4 == plot_marker()[7])
+  d4 <- reactive({
+    ob1_1 <- subset(x = ob_selected1(),subset = split4 == plot_marker()[7])
       
       
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
@@ -445,10 +430,8 @@ server <- function(input, output, session){
      
   })
   
-  d5 <- eventReactive(input$dplot,{
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split4 == plot_marker()[8])
+  d5 <- reactive({
+    ob1_1 <- subset(x = ob_selected1(), subset = split4 == plot_marker()[8])
       
       
         DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
@@ -474,10 +457,8 @@ server <- function(input, output, session){
   
   ## Dot plot2 for marker selection ####
   
-  d1_cellMark <- eventReactive(input$dplot2,ignoreInit = T,{
-    ob_selected <- ob_reactive_split2()[[input$sample2]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split1 == plot_marker()[1])
+  d1_cellMark <- reactive({
+    ob1_1 <- subset(x = ob_selected2(), subset = split1 == plot_marker()[1])
    
       #cell_types1 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
       #marker_gene_table <- marker_gene_table()
@@ -493,10 +474,8 @@ server <- function(input, output, session){
     
   })
   
-  d2_cellMark <- eventReactive(input$dplot2,{
-    ob_selected <- ob_reactive_split2()[[input$sample2]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split2 == plot_marker()[3])
+  d2_cellMark <-reactive({
+    ob1_1 <- subset(x = ob_selected2(), subset = split2 == plot_marker()[3])
     
       marker_gene_table <- marker_gene_table()
       marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
@@ -507,10 +486,8 @@ server <- function(input, output, session){
     
   })
   
-  d3_cellMark <- eventReactive(input$dplot2,{
-    ob_selected <- ob_reactive_split2()[[input$sample2]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split3 == plot_marker()[5])
+  d3_cellMark <- reactive({
+    ob1_1 <- subset(x = ob_selected2(), subset = split3 == plot_marker()[5])
    
       marker_gene_table <- marker_gene_table()
       marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
@@ -521,10 +498,8 @@ server <- function(input, output, session){
     
   })
   
-  d4_cellMark <- eventReactive(input$dplot2,{
-    ob_selected <- ob_reactive_split2()[[input$sample2]]
-    
-    ob1_1 <- subset(x = ob_selected,subset = split4 == plot_marker()[7])
+  d4_cellMark <- reactive({
+    ob1_1 <- subset(x = ob_selected2(),subset = split4 == plot_marker()[7])
     
     
       marker_gene_table <- marker_gene_table()
@@ -536,10 +511,8 @@ server <- function(input, output, session){
     
   })
   
-  d5_cellMark <- eventReactive(input$dplot2,{
-    ob_selected <- ob_reactive_split2()[[input$sample2]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split4 == plot_marker()[8])
+  d5_cellMark <- reactive({
+    ob1_1 <- subset(x = ob_selected2(), subset = split4 == plot_marker()[8])
     
    
       marker_gene_table <- marker_gene_table()

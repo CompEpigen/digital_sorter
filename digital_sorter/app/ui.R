@@ -44,10 +44,6 @@ ui <-dashboardPage(
       ## 3nd tab shows results ----------
       menuItem( "Visualization (gene of interest)", tabName = "results", icon = icon('list'), startExpanded = F,
                 
-                lapply(1:5, function(i){
-                  menuSubItem(paste0("Level ",i), tabName = paste0("result",i))
-                }),
-                #uiOutput("ui_menuSubItem"), #format would be different
                 
                 h4("Input section for each level"),
                 #select dataset (choices depends on cancer)                 
@@ -58,26 +54,28 @@ ui <-dashboardPage(
                 uiOutput("gene"),
                 
                 
+                h5("Go to each level and check out the results!"),
+                lapply(1:5, function(i){
+                  menuSubItem(paste0("Level ",i), tabName = paste0("result",i))
+                })
+                #uiOutput("ui_menuSubItem"), #format would be different
                 
-                actionBttn("dplot", "Plot/ Renew Dot Plots!", 
-                           style = "jelly", color = "warning", size = "sm"), 
-                h5("Go to each level and check out the results!")
                 
                 
       ),
       
       menuItem( "Visualization (marker selection)", tabName = "results2", icon = icon('brain'), startExpanded = F,
                 
-                lapply(1:5, function(i){
-                  menuSubItem(paste0("Level ",i), tabName = paste0("2result",i))
-                }),
-                #uiOutput("ui_menuSubItem"), #format would be different
-                
+               
                 h4("Input section for each level"),
                 #select dataset (choices depends on cancer)                 
                 uiOutput("cohort2"),
                 
                 uiOutput("sample_se2"),
+                
+                h6("Warning! Marker selection function takes quite some time!"),
+                actionBttn("dplot2", "Do marker selection", style = "jelly", color = "warning",size = "sm"),
+                
                 
                 fluidRow(
                   column(width=4,offset=1,
@@ -86,9 +84,13 @@ ui <-dashboardPage(
                 ),
                 uiOutput("celltype"),
                 
-                actionBttn("dplot2", "Plot/ Renew Dot Plots!", 
-                           style = "jelly", color = "warning", size = "sm"), 
-                h5("Go to each level and check out the results!")
+                
+                h5("Go to each level and check out the results!"),
+                lapply(1:5, function(i){
+                  menuSubItem(paste0("Level ",i), tabName = paste0("2result",i))
+                })
+                #uiOutput("ui_menuSubItem"), #format would be different
+                
                 
                 
       ),
@@ -115,8 +117,7 @@ ui <-dashboardPage(
                             selectizeInput(inputId ="cancer", label= "Select cancer types:", choices = c("Lung","t.b.c."), selected = "Lung"),
                             #show master markers after selecting cancer type
                             uiOutput("master_markers"),
-                            #select dataset (choices depends on cancer)                 
-                            uiOutput("cohort_h"),
+                            
                             
                             actionBttn("go", "Confirm & Go!", style = "jelly", color = "success",size = "sm")
                         ),# box end
@@ -124,8 +125,9 @@ ui <-dashboardPage(
                             uiOutput("own_markers"),
                             textInput(inputId="own_markers_name", label="Name your own master markers (e.g. Lung1)", value = "", width = NULL, placeholder = NULL),
                             actionBttn("update_marker", "Update marker list and tree plot!", style = "jelly", color = "warning",size = "sm"),
-                            h4("This is the panel for user to define their own master markers."),
-                            h4("If the cancer type is not",span(" Lung", style = "color:blue") ,", user should upload the reference expression data to define the levels.")
+                            h6(span("Function not yet finished", style = "color:orange")),
+                            h5("This is the panel for user to define their own master markers."),
+                            h5("If the cancer type is not",span(" Lung", style = "color:blue") ,", user should upload the reference expression data to define the levels.")
                         ),# box end
                        
                         ),#column end
@@ -172,6 +174,19 @@ ui <-dashboardPage(
                  tabBox(title = "Violin plots of all cell types", 
                         id="vplots", 
                         width=12, side= "left",
+                        tabPanel("Description", 
+                                 #select dataset (choices depends on cancer)                 
+                                 uiOutput("cohort_h"),
+                                 
+                                 h4("Showing cancer type:",textOutput("cancer_type")),
+                                
+                                 
+                                 h5("If you want to change the cancer type, go to panel ", span("Define My Own Master Markers.", style = "color:orange") ),
+                                 h4("Otherwise, press",span(" Plot! ", style = "color:green")),
+                                 actionBttn("plotv", "Plot!", style = "jelly", color = "success",size = "sm")
+                                 
+                                
+                                 ),
                         tabPanel("Marker 1", 
                                  withSpinner(plotOutput("plotv_h1"))),
                         tabPanel("Marker 2", 
@@ -190,15 +205,10 @@ ui <-dashboardPage(
  
       tabItem( tabName = 'result1',
       
-               fluidRow(#violin plot
-                 h3("Level 1 Violin plot"),
-                 tags$hr(),
-                 withSpinner(plotlyOutput("plotv1") )
-                        
-                 ),#fluid row end
+               
                fluidRow(#dot plot
-                 tags$hr(),
-                 h3("Level 1 Dot plot"),
+      
+                 h3("Level 1 Dot plot with genes of interest"),
                  h4(textOutput("dotplot_title1")),
                  column(width=6, style = "height:200px;",
                         withSpinner(plotOutput("plotd1") )
@@ -216,17 +226,9 @@ ui <-dashboardPage(
       ## 3.1.3 Result2 ----------------------------------------------------------
       
       tabItem( tabName = 'result2',
-               
-               
-               fluidRow(
-                 h3("Level 2 Violin plot"),
-                 withSpinner(plotlyOutput("plotv2") ) 
-                 
-                 
-               ),#fluid row end
+              
                fluidRow(#dot plot
-                 tags$hr(),
-                 h3("Level 2 Dot plot"),
+                 h3("Level 2 Dot plot with genes of interest"),
                  h4(textOutput("dotplot_title2")),
                  column(width=6, style = "height:200px;",
                         withSpinner(plotOutput("plotd2") )
@@ -243,16 +245,10 @@ ui <-dashboardPage(
       ## 3.1.4 Result3 ----------------------------------------------------------
       
       tabItem( tabName = 'result3',
-               fluidRow(
-                 h3("Level 3 Violin plot"),
-                 withSpinner(plotlyOutput("plotv3") ) 
-                 
-                 
-               ),#fluid row end
+              
                
                fluidRow(#dot plot
-                 tags$hr(),
-                 h3("Level 3 Dot plot"),
+                 h3("Level 3 Dot plot with genes of interest"),
                  h4(textOutput("dotplot_title3")),
                  
                  column(width=6, style = "height:200px;",
@@ -272,15 +268,9 @@ ui <-dashboardPage(
       
       tabItem( tabName = 'result4',
                
-               fluidRow(
-                 h3("Level 4 Violin plot"),
-                 withSpinner(plotlyOutput("plotv4") )
-                 
-          
-               ),#fluid row end
+               
                fluidRow(#dot plot
-                 tags$hr(),
-                 h3("Level 4 Dot plot"),
+                 h3("Level 4 Dot plot with genes of interest"),
                  h4(textOutput("dotplot_title4")),
                  
                  column(width=6, style = "height:200px;",
@@ -297,16 +287,9 @@ ui <-dashboardPage(
       ## 3.1.6 Result5 ----------------------------------------------------------
       tabItem( tabName = 'result5',
                
-               fluidRow(style = "height:200px;",
-                        h3("Level 5 Violin plot"),
-                        tags$hr(),
-                        h3("Level 5 Violin plot is the same as Level 4"),
-                        #plotlyOutput("plotv4")
-                        
-               ),#fluid row end
-               fluidRow(#dot plot
-                 tags$hr(),
-                 h3("Level 5 Dot plot"),
+              
+             fluidRow(#dot plot
+               h3("Level 5 Dot plot with genes of interest"),
                  h4(textOutput("dotplot_title5")),
                  
                  column(width=6, style = "height:200px;",
@@ -325,8 +308,7 @@ ui <-dashboardPage(
       tabItem( tabName = '2result1',
                
                fluidRow(#dot plot
-                 tags$hr(),
-                 h3("Level 1 Dot plot"),
+                 h3("Level 1 Dot plot with specific cell surface markers"),
                  h4(textOutput("dotplot2_title1")),
                  column(width=6, style = "height:200px;",
                         withSpinner(plotOutput("plotd_cellMark1") )
@@ -346,8 +328,7 @@ ui <-dashboardPage(
       tabItem( tabName = '2result2',
               
                fluidRow(#dot plot
-                 tags$hr(),
-                 h3("Level 2 Dot plot"),
+                h3("Level 2 Dot plot with specific cell surface markers"),
                  h4(textOutput("dotplot2_title2")),
                  column(width=6, style = "height:200px;",
                         withSpinner(plotOutput("plotd_cellMark2") )
@@ -366,8 +347,8 @@ ui <-dashboardPage(
       tabItem( tabName = '2result3',
                
                fluidRow(#dot plot
-                 tags$hr(),
-                 h3("Level 3 Dot plot"),
+                 
+                 h3("Level 3 Dot plot with specific cell surface markers"),
                  h4(textOutput("dotplot2_title3")),
                  
                  column(width=6, style = "height:200px;",
@@ -388,8 +369,8 @@ ui <-dashboardPage(
       tabItem( tabName = '2result4',
                
                fluidRow(#dot plot
-                 tags$hr(),
-                 h3("Level 4 Dot plot"),
+                 
+                 h3("Level 4 Dot plot with specific cell surface markers"),
                  h4(textOutput("dotplot2_title4")),
                  
                  column(width=6, style = "height:200px;",
@@ -408,8 +389,8 @@ ui <-dashboardPage(
                
             
                fluidRow(#dot plot
-                 tags$hr(),
-                 h3("Level 5 Dot plot"),
+                
+                 h3("Level 5 Dot plot with specific cell surface markers"),
                  h4(textOutput("dotplot2_title5")),
                  
                  column(width=6, style = "height:200px;",
