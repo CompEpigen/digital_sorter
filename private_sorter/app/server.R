@@ -96,10 +96,6 @@ server <- function(input, output, session){
       ## 3nd tab shows results ----------
       menuItem( "Visualization (gene of interest)", tabName = "results", icon = icon('list'), startExpanded = F,
                 
-                lapply(1:5, function(i){
-                  menuSubItem(paste0("Level ",i), tabName = paste0("result",i))
-                }),
-                #uiOutput("ui_menuSubItem"), #format would be different
                 
                 h4("Input section for each level"),
                 #select dataset (choices depends on cancer)                 
@@ -110,26 +106,28 @@ server <- function(input, output, session){
                 uiOutput("gene"),
                 
                 
+                h5("Go to each level and check out the results!"),
+                lapply(1:5, function(i){
+                  menuSubItem(paste0("Level ",i), tabName = paste0("result",i))
+                })
+                #uiOutput("ui_menuSubItem"), #format would be different
                 
-                actionBttn("dplot", "Plot/ Renew Dot Plots!", 
-                           style = "jelly", color = "warning", size = "sm"), 
-                h5("Go to each level and check out the results!")
                 
                 
       ),
       
       menuItem( "Visualization (marker selection)", tabName = "results2", icon = icon('brain'), startExpanded = F,
                 
-                lapply(1:5, function(i){
-                  menuSubItem(paste0("Level ",i), tabName = paste0("2result",i))
-                }),
-                #uiOutput("ui_menuSubItem"), #format would be different
                 
                 h4("Input section for each level"),
                 #select dataset (choices depends on cancer)                 
                 uiOutput("cohort2"),
                 
                 uiOutput("sample_se2"),
+                
+                h6("Warning! Marker selection function takes quite some time!"),
+                actionBttn("dplot2", "Do marker selection", style = "jelly", color = "warning",size = "sm"),
+                
                 
                 fluidRow(
                   column(width=4,offset=1,
@@ -138,18 +136,17 @@ server <- function(input, output, session){
                 ),
                 uiOutput("celltype"),
                 
-                actionBttn("dplot2", "Plot/ Renew Dot Plots!", 
-                           style = "jelly", color = "warning", size = "sm"), 
-                h5("Go to each level and check out the results!")
                 
-                
+                h5("Go to each level and check out the results!"),
+                lapply(1:5, function(i){
+                  menuSubItem(paste0("Level ",i), tabName = paste0("2result",i))
+                })
+                #uiOutput("ui_menuSubItem"), #format would be different
+                 
       ),
-      
-      
-      
       ## 3rd tab Data source, definition , i.e., help ---------------
       menuItem( "FAQs", tabName = 'help', icon = icon('question-circle') )
-    )
+    )#sidebarMenu end
   })
     
   output$body <- renderUI({
@@ -166,8 +163,7 @@ server <- function(input, output, session){
                               selectizeInput(inputId ="cancer", label= "Select cancer types:", choices = c("Lung","t.b.c."), selected = "Lung"),
                               #show master markers after selecting cancer type
                               uiOutput("master_markers"),
-                              #select dataset (choices depends on cancer)                 
-                              uiOutput("cohort_h"),
+                              
                               
                               actionBttn("go", "Confirm & Go!", style = "jelly", color = "success",size = "sm")
                           ),# box end
@@ -175,8 +171,9 @@ server <- function(input, output, session){
                               uiOutput("own_markers"),
                               textInput(inputId="own_markers_name", label="Name your own master markers (e.g. Lung1)", value = "", width = NULL, placeholder = NULL),
                               actionBttn("update_marker", "Update marker list and tree plot!", style = "jelly", color = "warning",size = "sm"),
-                              h4("This is the panel for user to define their own master markers."),
-                              h4("If the cancer type is not",span(" Lung", style = "color:blue") ,", user should upload the reference expression data to define the levels.")
+                              h6(span("Function not yet finished", style = "color:orange")),
+                              h5("This is the panel for user to define their own master markers."),
+                              h5("If the cancer type is not",span(" Lung", style = "color:blue") ,", user should upload the reference expression data to define the levels.")
                           ),# box end
                           
                    ),#column end
@@ -223,6 +220,19 @@ server <- function(input, output, session){
                    tabBox(title = "Violin plots of all cell types", 
                           id="vplots", 
                           width=12, side= "left",
+                          tabPanel("Description", 
+                                   #select dataset (choices depends on cancer)                 
+                                   uiOutput("cohort_h"),
+                                   
+                                   h4("Showing cancer type:",textOutput("cancer_type")),
+                                   
+                                   
+                                   h5("If you want to change the cancer type, go to panel ", span("Define My Own Master Markers.", style = "color:orange") ),
+                                   h4("Otherwise, press",span(" Plot! ", style = "color:green")),
+                                   actionBttn("plotv", "Plot!", style = "jelly", color = "success",size = "sm")
+                                   
+                                   
+                          ),
                           tabPanel("Marker 1", 
                                    withSpinner(plotOutput("plotv_h1"))),
                           tabPanel("Marker 2", 
@@ -241,15 +251,10 @@ server <- function(input, output, session){
         
         tabItem( tabName = 'result1',
                  
-                 fluidRow(#violin plot
-                   h3("Level 1 Violin plot"),
-                   tags$hr(),
-                   withSpinner(plotlyOutput("plotv1") )
-                   
-                 ),#fluid row end
+                 
                  fluidRow(#dot plot
-                   tags$hr(),
-                   h3("Level 1 Dot plot"),
+                   
+                   h3("Level 1 Dot plot with genes of interest"),
                    h4(textOutput("dotplot_title1")),
                    column(width=6, style = "height:200px;",
                           withSpinner(plotOutput("plotd1") )
@@ -268,16 +273,8 @@ server <- function(input, output, session){
         
         tabItem( tabName = 'result2',
                  
-                 
-                 fluidRow(
-                   h3("Level 2 Violin plot"),
-                   withSpinner(plotlyOutput("plotv2") ) 
-                   
-                   
-                 ),#fluid row end
                  fluidRow(#dot plot
-                   tags$hr(),
-                   h3("Level 2 Dot plot"),
+                   h3("Level 2 Dot plot with genes of interest"),
                    h4(textOutput("dotplot_title2")),
                    column(width=6, style = "height:200px;",
                           withSpinner(plotOutput("plotd2") )
@@ -294,16 +291,10 @@ server <- function(input, output, session){
         ## 3.1.4 Result3 ----------------------------------------------------------
         
         tabItem( tabName = 'result3',
-                 fluidRow(
-                   h3("Level 3 Violin plot"),
-                   withSpinner(plotlyOutput("plotv3") ) 
-                   
-                   
-                 ),#fluid row end
+                 
                  
                  fluidRow(#dot plot
-                   tags$hr(),
-                   h3("Level 3 Dot plot"),
+                   h3("Level 3 Dot plot with genes of interest"),
                    h4(textOutput("dotplot_title3")),
                    
                    column(width=6, style = "height:200px;",
@@ -323,15 +314,9 @@ server <- function(input, output, session){
         
         tabItem( tabName = 'result4',
                  
-                 fluidRow(
-                   h3("Level 4 Violin plot"),
-                   withSpinner(plotlyOutput("plotv4") )
-                   
-                   
-                 ),#fluid row end
+                 
                  fluidRow(#dot plot
-                   tags$hr(),
-                   h3("Level 4 Dot plot"),
+                   h3("Level 4 Dot plot with genes of interest"),
                    h4(textOutput("dotplot_title4")),
                    
                    column(width=6, style = "height:200px;",
@@ -348,16 +333,9 @@ server <- function(input, output, session){
         ## 3.1.6 Result5 ----------------------------------------------------------
         tabItem( tabName = 'result5',
                  
-                 fluidRow(style = "height:200px;",
-                          h3("Level 5 Violin plot"),
-                          tags$hr(),
-                          h3("Level 5 Violin plot is the same as Level 4"),
-                          #plotlyOutput("plotv4")
-                          
-                 ),#fluid row end
+                 
                  fluidRow(#dot plot
-                   tags$hr(),
-                   h3("Level 5 Dot plot"),
+                   h3("Level 5 Dot plot with genes of interest"),
                    h4(textOutput("dotplot_title5")),
                    
                    column(width=6, style = "height:200px;",
@@ -376,8 +354,7 @@ server <- function(input, output, session){
         tabItem( tabName = '2result1',
                  
                  fluidRow(#dot plot
-                   tags$hr(),
-                   h3("Level 1 Dot plot"),
+                   h3("Level 1 Dot plot with specific cell surface markers"),
                    h4(textOutput("dotplot2_title1")),
                    column(width=6, style = "height:200px;",
                           withSpinner(plotOutput("plotd_cellMark1") )
@@ -397,8 +374,7 @@ server <- function(input, output, session){
         tabItem( tabName = '2result2',
                  
                  fluidRow(#dot plot
-                   tags$hr(),
-                   h3("Level 2 Dot plot"),
+                   h3("Level 2 Dot plot with specific cell surface markers"),
                    h4(textOutput("dotplot2_title2")),
                    column(width=6, style = "height:200px;",
                           withSpinner(plotOutput("plotd_cellMark2") )
@@ -417,8 +393,8 @@ server <- function(input, output, session){
         tabItem( tabName = '2result3',
                  
                  fluidRow(#dot plot
-                   tags$hr(),
-                   h3("Level 3 Dot plot"),
+                   
+                   h3("Level 3 Dot plot with specific cell surface markers"),
                    h4(textOutput("dotplot2_title3")),
                    
                    column(width=6, style = "height:200px;",
@@ -439,8 +415,8 @@ server <- function(input, output, session){
         tabItem( tabName = '2result4',
                  
                  fluidRow(#dot plot
-                   tags$hr(),
-                   h3("Level 4 Dot plot"),
+                   
+                   h3("Level 4 Dot plot with specific cell surface markers"),
                    h4(textOutput("dotplot2_title4")),
                    
                    column(width=6, style = "height:200px;",
@@ -459,8 +435,8 @@ server <- function(input, output, session){
                  
                  
                  fluidRow(#dot plot
-                   tags$hr(),
-                   h3("Level 5 Dot plot"),
+                   
+                   h3("Level 5 Dot plot with specific cell surface markers"),
                    h4(textOutput("dotplot2_title5")),
                    
                    column(width=6, style = "height:200px;",
@@ -508,13 +484,12 @@ server <- function(input, output, session){
   
   if(F){ 
     # read me
-    # the dataset put infolder data/should be a SplitObject of seurat.
+    # the dataset put in folder data/should be a SplitObject of seurat.
     # Create split object (split by datasets)
     # use separated R script 20211208_merge_seuratobject_addsplits_inspect.R
-    dataset <- readRDS("private_sorter/data/NEW_datasets.rds")
-    split <- as.character(unique(sort(dataset@meta.data$dataset_origin)))
+    dataset <- readRDS("data/NEW_datasets.rds")
     datasets <- SplitObject(dataset, split.by = "dataset_origin")
-    saveRDS(datasets,"private_sorter/data/datasets.rds")
+    saveRDS(datasets,"data/datasets.rds")
   }
   if(F){ 
     # read me
@@ -528,6 +503,7 @@ server <- function(input, output, session){
   markerlist <- markerlist
   genelist <- reactive({return(Union.cell.surface.marker)})
   
+  
   list_samples_disease <- reactive({
     list_samples_disease <- list()
     for(i in 1: length(datasets)){
@@ -536,7 +512,10 @@ server <- function(input, output, session){
     }
     names(list_samples_disease) <- names(datasets)
     return(list_samples_disease)})
-
+  
+  
+  
+  
   ## settings for plots ####
   cols <- reactive(RColorBrewer::brewer.pal(length(levels(datasets[[1]]@meta.data[["disease"]])), name="Paired"))
   
@@ -619,12 +598,17 @@ server <- function(input, output, session){
     paste(input$cohort[1:length(input$cohort)])
   })
   
+  output$dataset_h <-  renderText({input$cohort })
+  output$cancer_type <-  renderText({input$cancer })
+  
   #for plots in home section
   ob_reactive_h <- reactive({
     ob_reactive <- datasets[[dataset_reactive_h()]]
+    ob_reactive@meta.data$annotation.l1=factor(ob_reactive@meta.data$annotation.l1,levels=unique(sort(datasets[[1]]@meta.data$annotation.l1)))
+    ob_reactive@meta.data$disease=factor(ob_reactive@meta.data$disease,levels=unique(sort(ob_reactive@meta.data$disease)))
+    
     return(ob_reactive)
   })
-  
   
   
   #for plots in results section
@@ -639,6 +623,13 @@ server <- function(input, output, session){
     
     return(ob_reactive_split1)
   })
+  ob_selected1 <- reactive({
+    ob_selected1 <- ob_reactive_split1()[[input$sample1]]
+    
+    return(ob_selected1)
+  })
+  
+  
   #for plots in results2 section
   ob_reactive2 <- reactive({
     ob_reactive2 <- datasets[[input$cohort2]]
@@ -651,7 +642,16 @@ server <- function(input, output, session){
     return(ob_reactive_split2)
   })
   
+  ob_selected2<- reactive({
+    ob_selected2 <- ob_reactive_split2()[[input$sample2]]
+    
+    return(ob_selected2)
+  })
+  
+  
+  
   ## select sample ####  
+  
   output$sample_se1 <- renderUI({
     mySample <- list_samples_disease()[[input$cohort1]]
     
@@ -699,16 +699,18 @@ server <- function(input, output, session){
   
   ## Select cell types for selecting markers ####
   output$celltype <- renderUI({
-    celltypes <- as.character(unique(sort(datasets[[1]]@meta.data[["annotation.l2"]])))
-    selectizeInput(inputId = "celltype", label= "Select cell types for automatically choose the features of dot plots:",
-                   choices = celltypes,
-                   selected = NULL,
-                   multiple = F,
-                   options = list(
-                     placeholder = 'Type to search for cell types',
-                     onInitialize = I('function() { this.setValue(""); }')
-                   )
-    )
+    if (!is.null(marker_gene_table())){  
+      celltypes <- as.character(unique(sort(marker_gene_table()$annotation.l2)))
+      selectizeInput(inputId = "celltype", label= "Select cell types for the features of dot plots:",
+                     choices = celltypes,
+                     selected = celltypes[1],
+                     multiple = F,
+                     options = list(
+                       placeholder = 'Type to search for cell types whose markers were found',
+                       onInitialize = I('function() { this.setValue(""); }')
+                     )
+      )
+    }
   })
   
   
@@ -734,15 +736,15 @@ server <- function(input, output, session){
     paste(input$gene[1:length(input$gene)])
   })
   
-  cell_chosen <- eventReactive(input$dplot2, { 
+  cell_chosen <- reactive({ 
     paste(input$celltype[1:length(input$celltype)])
   })
   
   #could pre-run this function for all the datasets/splits to save user's time
-  marker_gene_table <- eventReactive(input$dplot2,{
+  marker_gene_table <- eventReactive(input$dplot2, { 
     shinybusy::show_modal_spinner(text = "Get marker genes...") # show the modal window
     seurat <- getMarkers(
-      ob_reactive2(),
+      ob_selected2(),
       assay = 'RNA',
       organism = 'hg',
       groups = c('annotation.l2'),
@@ -759,8 +761,8 @@ server <- function(input, output, session){
     subset_marker_gene <- marker_gene_table %>% 
       filter(marker_gene_table$gene %in% genelist())
     subset_marker_gene <- subset_marker_gene %>%
-      filter(subset_marker_gene$p_val_adj<1)%>% 
-      arrange(annotation.l2,p_val)
+      filter(subset_marker_gene$p_val_adj<2)%>% 
+      arrange(annotation.l2,desc(abs(avg_log2FC)),p_val)
     
     shinybusy::remove_modal_spinner()
     return(subset_marker_gene)
@@ -797,21 +799,21 @@ server <- function(input, output, session){
     })
   
   ##Change the selected tab on the client ####
-  observeEvent(input$dplot, {
+  observeEvent(input$go, {
     updateTabItems( session = getDefaultReactiveDomain(), "sidebar",
-                    selected = "result2"
+                    selected = "dashboard"
+    )
+  })
+  
+  observeEvent(input$plotv, {
+    updateTabsetPanel(session, "vplots",
+                      selected = "Marker 1"
     )
   })
   
   observeEvent(input$dplot2, {
     updateTabItems( session = getDefaultReactiveDomain(), "sidebar",
-                    selected = "2result2"
-    )
-  })
-  
-  observeEvent(input$go, {
-    updateTabItems( session = getDefaultReactiveDomain(), "sidebar",
-                    selected = "dashboard"
+                    selected = "2result1"
     )
   })
   
@@ -824,19 +826,27 @@ server <- function(input, output, session){
   ## Violin Plot #### 
   ### home ####
   
-  v_h1 <-eventReactive(input$go,{
+  v_h1 <-eventReactive(input$plotv,{
+    #ob_selected <- subset(x = ob_reactive_h(), subset = dataset_origin == input$cohort)
+    
     VlnPlot(ob_reactive_h(),marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols(),
             sort = TRUE,pt.size = 0, combine = FALSE)
   })
-  v_h2 <-eventReactive(input$go,{
+  v_h2 <-eventReactive(input$plotv,{
+    #ob_selected <- subset(x = ob_reactive_h(), subset = dataset_origin == input$cohort)
+    
     VlnPlot(ob_reactive_h(),marker_list()[2], split.by = "disease", group.by = "annotation.l2", cols=cols(),
             sort = TRUE,pt.size = 0, combine = FALSE)
   })
-  v_h3 <-eventReactive(input$go,{
+  v_h3 <-eventReactive(input$plotv,{
+    #ob_selected <- subset(x = ob_reactive_h(), subset = dataset_origin == input$cohort)
+    
     VlnPlot(ob_reactive_h(),marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols(),
             sort = TRUE,pt.size = 0, combine = FALSE)
   })
-  v_h4 <-eventReactive(input$go,{
+  v_h4 <-eventReactive(input$plotv,{
+    #ob_selected <- subset(x = ob_reactive_h(), subset = dataset_origin == input$cohort)
+    
     VlnPlot(ob_reactive_h(),marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols(),
             sort = TRUE,pt.size = 0, combine = FALSE)
   })
@@ -847,80 +857,35 @@ server <- function(input, output, session){
     output[[outputId]] <- renderPlot(hvlist()[[i]])  
   })
   
-  #Level1: CD45 (PTPRC) 
-  output$plotv1 <- renderPlotly({
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    VlnPlot(ob_selected, marker_list()[1], split.by = "disease", group.by = "annotation.l2", cols=cols(),
-            sort = TRUE,pt.size = 0, combine = FALSE)
-    ggplotly(ggplot2::last_plot())
-  }) 
-  #Level2: EPCAM
-  output$plotv2 <- renderPlotly({
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    ob_selected_1 <- subset(x = ob_selected, subset = split1 == plot_marker()[2])
-    
-    VlnPlot(ob_selected_1, marker_list()[2], split.by = "disease", group.by = "annotation.l2", cols=cols(),
-            sort = TRUE, pt.size = 0, combine = FALSE)
-    ggplotly(ggplot2::last_plot())
-  }) 
   
-  
-  #Level3: PECAM1 (CD31)
-  output$plotv3 <- renderPlotly({
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    ob_selected_1 <- subset(x = ob_selected, subset = split2 == plot_marker()[4])
-    
-    VlnPlot(ob_selected_1, marker_list()[3], split.by = "disease", group.by = "annotation.l2", cols=cols(),
-            sort = TRUE,pt.size = 0, combine = FALSE)
-    ggplotly(ggplot2::last_plot()) 
-  }) 
-  
-  #Level4: MME (CD10)
-  output$plotv4 <- renderPlotly({
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    ob_selected_1 <- subset(x = ob_selected, subset = split3 == plot_marker()[6])
-    
-    VlnPlot(ob_selected_1, marker_list()[4], split.by = "disease", group.by = "annotation.l2", cols=cols(),
-            sort = TRUE,pt.size = 0, combine = FALSE)
-    ggplotly(ggplot2::last_plot()) 
-    
-  }) 
   
   ## Dot plot ####
   
-  d1 <- eventReactive(input$dplot,ignoreInit = T,{
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split1 == plot_marker()[1])
+  d1 <- reactive({
+    ob1_1 <- subset(x = ob_selected1(), subset = split1 == plot_marker()[1])
     
     DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
       RotatedAxis()+ aes_list()
     
   })
   
-  d2 <- eventReactive(input$dplot,{
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split2 == plot_marker()[3])
+  d2 <- reactive({
+    ob1_1 <- subset(x = ob_selected1(), subset = split2 == plot_marker()[3])
     
     DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
       RotatedAxis()+ aes_list()
     
   })
   
-  d3 <- eventReactive(input$dplot,{
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split3 == plot_marker()[5])
+  d3 <- reactive({
+    ob1_1 <- subset(x = ob_selected1(), subset = split3 == plot_marker()[5])
     
     DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
       RotatedAxis()+ aes_list()
     
   })
-  d4 <- eventReactive(input$dplot,{
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    
-    ob1_1 <- subset(x = ob_selected,subset = split4 == plot_marker()[7])
+  d4 <- reactive({
+    ob1_1 <- subset(x = ob_selected1(),subset = split4 == plot_marker()[7])
     
     
     DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
@@ -928,10 +893,8 @@ server <- function(input, output, session){
     
   })
   
-  d5 <- eventReactive(input$dplot,{
-    ob_selected <- ob_reactive_split1()[[input$sample1]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split4 == plot_marker()[8])
+  d5 <- reactive({
+    ob1_1 <- subset(x = ob_selected1(), subset = split4 == plot_marker()[8])
     
     
     DotPlot(ob1_1, features = genes(), group.by = "annotation.l2") + 
@@ -957,10 +920,8 @@ server <- function(input, output, session){
   
   ## Dot plot2 for marker selection ####
   
-  d1_cellMark <- eventReactive(input$dplot2,ignoreInit = T,{
-    ob_selected <- ob_reactive_split2()[[input$sample2]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split1 == plot_marker()[1])
+  d1_cellMark <- reactive({
+    ob1_1 <- subset(x = ob_selected2(), subset = split1 == plot_marker()[1])
     
     #cell_types1 <- unique(sort(ob1_1@meta.data[["annotation.l2"]]))
     #marker_gene_table <- marker_gene_table()
@@ -976,10 +937,8 @@ server <- function(input, output, session){
     
   })
   
-  d2_cellMark <- eventReactive(input$dplot2,{
-    ob_selected <- ob_reactive_split2()[[input$sample2]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split2 == plot_marker()[3])
+  d2_cellMark <-reactive({
+    ob1_1 <- subset(x = ob_selected2(), subset = split2 == plot_marker()[3])
     
     marker_gene_table <- marker_gene_table()
     marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
@@ -990,10 +949,8 @@ server <- function(input, output, session){
     
   })
   
-  d3_cellMark <- eventReactive(input$dplot2,{
-    ob_selected <- ob_reactive_split2()[[input$sample2]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split3 == plot_marker()[5])
+  d3_cellMark <- reactive({
+    ob1_1 <- subset(x = ob_selected2(), subset = split3 == plot_marker()[5])
     
     marker_gene_table <- marker_gene_table()
     marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
@@ -1004,10 +961,8 @@ server <- function(input, output, session){
     
   })
   
-  d4_cellMark <- eventReactive(input$dplot2,{
-    ob_selected <- ob_reactive_split2()[[input$sample2]]
-    
-    ob1_1 <- subset(x = ob_selected,subset = split4 == plot_marker()[7])
+  d4_cellMark <- reactive({
+    ob1_1 <- subset(x = ob_selected2(),subset = split4 == plot_marker()[7])
     
     
     marker_gene_table <- marker_gene_table()
@@ -1019,10 +974,8 @@ server <- function(input, output, session){
     
   })
   
-  d5_cellMark <- eventReactive(input$dplot2,{
-    ob_selected <- ob_reactive_split2()[[input$sample2]]
-    
-    ob1_1 <- subset(x = ob_selected, subset = split4 == plot_marker()[8])
+  d5_cellMark <- reactive({
+    ob1_1 <- subset(x = ob_selected2(), subset = split4 == plot_marker()[8])
     
     
     marker_gene_table <- marker_gene_table()
