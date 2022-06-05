@@ -2,7 +2,6 @@ library(shiny)
 library(shinybusy)
 library(shinythemes)
 library(Seurat)
-#library(SeuratDisk) #for saving file
 library(dplyr)
 library(reshape2)
 library(ggplot2)
@@ -19,7 +18,7 @@ ui <-dashboardPage(
   title= "Digital Sorter",
   
   
-  #1. header
+  #1. header------------
   dashboardHeader(
     
     
@@ -31,17 +30,20 @@ ui <-dashboardPage(
   ), #header end
   
   
-  #2. side bar
+  #2. side bar-----------
   dashboardSidebar(
     width = 300,
     useShinyjs(),
+    
     sidebarMenu(
       id = 'sidebar',
-      ## 1st tab show the preprocessing dashboard  Main dashboard -----------
+      ## 1st tab show the pre-processing dashboard  
       menuItem( "Define My Own Master Markers", tabName = 'processing', icon = icon('tachometer-alt')),
-      ## 2st tab show the Main dashboard-----------
+      
+      ## 2st tab show the Tree plot and violin plot
       menuItem( "Tree Plot & Violin Plot", tabName = 'dashboard', icon = icon('tree')),
-      ## 3nd tab shows results ----------
+      
+      ## 3nd tab shows visualization results (dot plots of gene of interest) 
       menuItem( "Visualization (gene of interest)", tabName = "results", icon = icon('list'), startExpanded = F,
                 
                 
@@ -58,12 +60,13 @@ ui <-dashboardPage(
                 lapply(1:5, function(i){
                   menuSubItem(paste0("Level ",i), tabName = paste0("result",i))
                 })
-                #uiOutput("ui_menuSubItem"), #format would be different
+              
                 
                 
                 
       ),
       
+      ## 4th tab shows visualization results (dot plots of results of marker selection) 
       menuItem( "Visualization (marker selection)", tabName = "results2", icon = icon('brain'), startExpanded = F,
                 
                
@@ -79,6 +82,7 @@ ui <-dashboardPage(
                 
                 fluidRow(
                   column(width=4,offset=1,
+                         ## let user download the marker selection table
                          downloadButton('download_marker_csv', 'Download Marker Selection Results')
                   ),
                 ),
@@ -89,7 +93,7 @@ ui <-dashboardPage(
                 lapply(1:5, function(i){
                   menuSubItem(paste0("Level ",i), tabName = paste0("2result",i))
                 })
-                #uiOutput("ui_menuSubItem"), #format would be different
+        
                 
                 
                 
@@ -97,18 +101,17 @@ ui <-dashboardPage(
      
       
       
-      ## 3rd tab Data source, definition , i.e., help ---------------
+      ## 5th tab Data source, definition , i.e., help 
       menuItem( "FAQs", tabName = 'help', icon = icon('question-circle') )
     )#sidebarMenu end
+    
   ), #side bar end
   
-  #3. body
+  # 3. Dashboard body --------------
   dashboardBody( 
     
-    
-    ## 3.1 Dashboard body --------------
     tabItems(
-      ## 3.1.0 Pre-processing dashboard ----------------------------------------------------------
+      ## 3.1 Pre-processing dashboard ----------------------------------------------------------
       tabItem( tabName = 'processing',
                fluidRow(
                  column(width=4,
@@ -147,6 +150,7 @@ ui <-dashboardPage(
                             conditionalPanel(
                               condition = "input.cancer == 't.b.c.'",
                               h4("Tree plot t.b.c.")
+                              
                             )
                         ),#box end
                  ),#column end
@@ -158,7 +162,7 @@ ui <-dashboardPage(
                
       ), #tab1 end
       
-      ## 3.1.1 Main dashboard ----------------------------------------------------------
+      ## 3.2 Tree plot and violin plot ----------------------------------------------------------
       tabItem( tabName = 'dashboard',
                
                fluidRow(
@@ -167,6 +171,8 @@ ui <-dashboardPage(
                         h5("The results shown in this app were the analysis done within the cell groups shown here."),
                         #Tree plot
                         h3("Should be the updating tree plot")
+                     ##automatic tree plot
+                     ######################
                   )
                  ), #fluid row end
                
@@ -199,9 +205,10 @@ ui <-dashboardPage(
                         
                  )
                )#fluid row end
-      ), #tab1 end
+      ), #tab end
       
-      ## 3.1.2 Result1 ----------------------------------------------------------
+      ## 3.3 Result (gene of interest)----------------------------------------------------------
+       ### 3.3.1 Level 1 (gene of interest)----------------------------------------------------------
  
       tabItem( tabName = 'result1',
       
@@ -221,9 +228,9 @@ ui <-dashboardPage(
                  )
                  
                )#fluid row end
-            ), #tab2 end
+            ), #tab end
       
-      ## 3.1.3 Result2 ----------------------------------------------------------
+      ### 3.3.2 Level 2 (gene of interest)----------------------------------------------------------
       
       tabItem( tabName = 'result2',
               
@@ -240,9 +247,9 @@ ui <-dashboardPage(
                  )
                  
                )#fluid row end
-      ), #tab3 end
+      ), #tab end
       
-      ## 3.1.4 Result3 ----------------------------------------------------------
+      ### 3.3.3 Level 3 (gene of interest)----------------------------------------------------------
       
       tabItem( tabName = 'result3',
               
@@ -262,9 +269,9 @@ ui <-dashboardPage(
                  )
                         
                  )#fluid row end
-      ), #tab4 end
+      ), #tab end
       
-      ## 3.1.5 Result4 ----------------------------------------------------------
+      ### 3.3.4 Level 4 (gene of interest)----------------------------------------------------------
       
       tabItem( tabName = 'result4',
                
@@ -283,8 +290,9 @@ ui <-dashboardPage(
                 
                  )      
                  )#fluid row end
-      ), #tab5 end
-      ## 3.1.6 Result5 ----------------------------------------------------------
+      ), #tab end
+      
+      ### 3.3.5 Level 5 (gene of interest)----------------------------------------------------------
       tabItem( tabName = 'result5',
                
               
@@ -302,9 +310,10 @@ ui <-dashboardPage(
                         
                  )      
                )#fluid row end
-      ), #tab5 end
+      ), #tab end
       
-      ## 3.2.1 Result1 ----------------------------------------------------------
+      ## 3.4 Result2 (marker selection)----------------------------------------------------------
+      ### 3.4.1 Level 1 (marker selection)----------------------------------------------------------
       tabItem( tabName = '2result1',
                
                fluidRow(#dot plot
@@ -321,9 +330,9 @@ ui <-dashboardPage(
                  )
                  
                )#fluid row end
-      ), #tab2 end
+      ), #tab end
       
-      ## 3.2.2 Result2 ----------------------------------------------------------
+      ### 3.4.2 Level 2 (marker selection)----------------------------------------------------------
       
       tabItem( tabName = '2result2',
               
@@ -340,9 +349,9 @@ ui <-dashboardPage(
                  )
                  
                )#fluid row end
-      ), #tab3 end
+      ), #tab end
       
-      ## 3.2.3 Result3 ----------------------------------------------------------
+      ### 3.4.3 Level 3 (marker selection)----------------------------------------------------------
       
       tabItem( tabName = '2result3',
                
@@ -362,9 +371,9 @@ ui <-dashboardPage(
                  )
                  
                )#fluid row end
-      ), #tab4 end
+      ), #tab end
       
-      ## 3.2.4 Result4 ----------------------------------------------------------
+      ### 3.4.4 Level 4 (marker selection)----------------------------------------------------------
       
       tabItem( tabName = '2result4',
                
@@ -383,8 +392,8 @@ ui <-dashboardPage(
                         
                  )      
                )#fluid row end
-      ), #tab5 end
-      ## 3.2.5 Result5 ----------------------------------------------------------
+      ), #tab end
+      ### 3.4.5 Level 5 (marker selection)----------------------------------------------------------
       tabItem( tabName = '2result5',
                
             
@@ -403,9 +412,9 @@ ui <-dashboardPage(
                         
                  )      
                )#fluid row end
-      ), #tab5 end
+      ), #tab end
       
-      ## 3.1.6 FAQs ----------------------------------------------------------
+      ## 3.5 FAQs ----------------------------------------------------------
       
       tabItem( tabName = 'help',
                
@@ -427,7 +436,7 @@ ui <-dashboardPage(
                
                 
                )
-      ) #tab6 end
+      ) #tab end
     )#tabItems end
   )#dashboard body end
 ) #page end
