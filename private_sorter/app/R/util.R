@@ -2,18 +2,25 @@
 ## Get list of genes in cell surface through gene ontology term GO:0009986.
 ##--------------------------------------------------------------------------##
 
-get_cell_markers = function(dataset="hsapiens_gene_ensembl", GO = 'GO:0009986'){
+#get_cell_markers = function(dataset="hsapiens_gene_ensembl", GO = 'GO:0009986'){
   
-  ensembl = biomaRt::useMart("ensembl",dataset="hsapiens_gene_ensembl", 
-                       host = "http://www.ensembl.org") #uses human ensembl annotations
+#  ensembl = biomaRt::useMart("ensembl",dataset="hsapiens_gene_ensembl", 
+#                       host = "http://www.ensembl.org") #uses human ensembl annotations
   #gets gene symbol, transcript_id and go_id for all genes annotated with GO:0009986
-  gene.data <- biomaRt::getBM(attributes=c('hgnc_symbol', 'ensembl_gene_id', 'go_id'),
-                     filters = 'go_parent_term', values = 'GO:0009986', mart = ensembl)
+#  gene.data <- biomaRt::getBM(attributes=c('hgnc_symbol', 'ensembl_gene_id', 'go_id'),
+#                     filters = 'go_parent_term', values = 'GO:0009986', mart = ensembl)
   
-  gene.data.unique <- gene.data[!duplicated(gene.data$hgnc_symbol),]
-  cell.surface.marker = gene.data.unique$hgnc_symbol
-  cell.surface.marker <- cell.surface.marker[!grepl("HLA",cell.surface.marker)] 
-}
+#  gene.data.unique <- gene.data[!duplicated(gene.data$hgnc_symbol),]
+#  cell.surface.marker = gene.data.unique$hgnc_symbol
+#  cell.surface.marker <- cell.surface.marker[!grepl("HLA",cell.surface.marker)] 
+#}
+get_cell_markers = function(species = "Homo sapiens", category = NULL, subcategory = NULL,  set_name = NULL){
+  
+  genesets = msigdbr::msigdbr(species = species, category = category, subcategory = subcategory)
+  geneset = genesets$human_gene_symbol[grepl(set_name, genesets$gs_name, ignore.case = TRUE)]
+  cell.surface.marker <- geneset[!grepl("HLA",geneset)] 
+  cell.surface.marker <- cell.surface.marker[!duplicated(cell.surface.marker)] 
+  return(cell.surface.marker) }
 
 
 ## Read RDS files ####

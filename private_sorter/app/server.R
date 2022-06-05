@@ -741,10 +741,15 @@ server <- function(input, output, session){
   })
   
   #could pre-run this function for all the datasets/splits to save user's time
+  ## marker selection function----------------
   marker_gene_table <- eventReactive(input$dplot2, { 
-    shinybusy::show_modal_spinner(text = "Get marker genes...") # show the modal window
-    seurat <- getMarkers(
-      ob_selected2(),
+    shinybusy::show_modal_progress_line(text = "Get marker genes...") # show the modal window
+    
+    #level 1 
+    ob1 <- SplitObject(ob_selected2(), split.by = "split1") 
+    ob_split1 = ob1[[plot_marker()[1]]]
+    seurat1 <- getMarkers(
+      ob_split1,
       assay = 'RNA',
       organism = 'hg',
       groups = c('annotation.l2'),
@@ -756,15 +761,102 @@ server <- function(input, output, session){
       test = 'wilcox', 
       verbose = TRUE
     )
-    marker_gene_table <- seurat@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]] #3708
+    marker_gene_table <- seurat1@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]] #3708
     
-    subset_marker_gene <- marker_gene_table %>% 
-      filter(marker_gene_table$gene %in% genelist())
-    subset_marker_gene <- subset_marker_gene %>%
-      filter(subset_marker_gene$p_val_adj<2)%>% 
+    subset_marker_gene1 <- marker_gene_table %>% 
+      filter(marker_gene_table$gene %in% genelist())%>%
       arrange(annotation.l2,desc(abs(avg_log2FC)),p_val)
+    update_modal_progress(
+      0.25,
+      text = "Level 1 completed",
+      session = shiny::getDefaultReactiveDomain()
+    )
+    #level2
+    ob2 = ob1[[plot_marker()[2]]]
+    ob2 <- SplitObject(ob2, split.by = "split2") 
+    ob_split2 = ob2[[plot_marker()[3]]]
     
-    shinybusy::remove_modal_spinner()
+    seurat2 <- getMarkers(
+      ob_split2,
+      assay = 'RNA',
+      organism = 'hg',
+      groups = c('annotation.l2'),
+      name = 'cerebro_seurat',
+      only_pos = F,
+      min_pct = 0.5,
+      thresh_logFC = 1,
+      thresh_p_val = 0.05,
+      test = 'wilcox', 
+      verbose = TRUE
+    )
+    marker_gene_table <- seurat2@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]] #3708
+    
+    subset_marker_gene2 <- marker_gene_table %>% 
+      filter(marker_gene_table$gene %in% genelist())%>%
+      arrange(annotation.l2,desc(abs(avg_log2FC)),p_val)
+    update_modal_progress(
+      0.50,
+      text = "Level 2 completed",
+      session = shiny::getDefaultReactiveDomain()
+    )
+    #level3
+    ob3 = ob2[[plot_marker()[4]]]
+    ob3 <- SplitObject(ob3, split.by = "split3") 
+    ob_split3 = ob3[[plot_marker()[5]]]
+    
+    seurat3 <- getMarkers(
+      ob_split3,
+      assay = 'RNA',
+      organism = 'hg',
+      groups = c('annotation.l2'),
+      name = 'cerebro_seurat',
+      only_pos = F,
+      min_pct = 0.5,
+      thresh_logFC = 1,
+      thresh_p_val = 0.05,
+      test = 'wilcox', 
+      verbose = TRUE
+    )
+    marker_gene_table <- seurat3@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]] #3708
+    
+    subset_marker_gene3 <- marker_gene_table %>% 
+      filter(marker_gene_table$gene %in% genelist())%>%
+      arrange(annotation.l2,desc(abs(avg_log2FC)),p_val)
+    update_modal_progress(
+      0.75,
+      text = "Level 3 completed",
+      session = shiny::getDefaultReactiveDomain()
+    )
+    #level4
+    ob_split4 = ob3[[plot_marker()[6]]]
+    
+    seurat4 <- getMarkers(
+      ob_split4,
+      assay = 'RNA',
+      organism = 'hg',
+      groups = c('annotation.l2'),
+      name = 'cerebro_seurat',
+      only_pos = F,
+      min_pct = 0.5,
+      thresh_logFC = 1,
+      thresh_p_val = 0.05,
+      test = 'wilcox', 
+      verbose = TRUE
+    )
+    marker_gene_table <- seurat4@misc[["marker_genes"]][["cerebro_seurat"]][["annotation.l2"]] #3708
+    
+    subset_marker_gene4 <- marker_gene_table %>% 
+      filter(marker_gene_table$gene %in% genelist())%>%
+      arrange(annotation.l2,desc(abs(avg_log2FC)),p_val)
+    update_modal_progress(
+      1,
+      text = "Level 4 completed",
+      session = shiny::getDefaultReactiveDomain()
+    )
+    #combine
+    subset_marker_gene <- rbind(subset_marker_gene1,subset_marker_gene2,subset_marker_gene3,subset_marker_gene4)
+    
+    shinybusy::remove_modal_progress()
     return(subset_marker_gene)
   })
   
