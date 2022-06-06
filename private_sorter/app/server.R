@@ -744,6 +744,11 @@ server <- function(input, output, session){
   ## marker selection function----------------
   marker_gene_table <- eventReactive(input$dplot2, { 
     shinybusy::show_modal_progress_line(text = "Get marker genes...") # show the modal window
+    update_modal_progress(
+      0.05,
+      text = "Get marker genes....",
+      session = shiny::getDefaultReactiveDomain()
+    )
     
     #level 1 
     ob1 <- SplitObject(ob_selected2(), split.by = "split1") 

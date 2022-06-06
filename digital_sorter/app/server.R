@@ -283,6 +283,11 @@ server <- function(input, output, session){
   marker_gene_table <- eventReactive(input$dplot2, { 
     shinybusy::show_modal_progress_line(text = "Get marker genes...") # show the modal window
     
+    update_modal_progress(
+      0.05,
+      text = "Get marker genes....",
+      session = shiny::getDefaultReactiveDomain()
+    )
     #level 1 
     ob1 <- SplitObject(ob_selected2(), split.by = "split1") 
     ob_split1 = ob1[[plot_marker()[1]]]
@@ -304,6 +309,7 @@ server <- function(input, output, session){
     subset_marker_gene1 <- marker_gene_table %>% 
       filter(marker_gene_table$gene %in% genelist())%>%
       arrange(annotation.l2,desc(abs(avg_log2FC)),p_val)
+    
     update_modal_progress(
       0.25,
       text = "Level 1 completed",
