@@ -106,7 +106,7 @@ server <- function(input, output, session){
     else{myCohort <- c("t.b.c.")} 
    
     selectizeInput(inputId = "cohort", label= "Select dataset of interest:", choices = myCohort, 
-                   selected = NULL)
+                   selected = "song_2019")
   })
 
   output$cohort1 <- renderUI({
@@ -116,7 +116,7 @@ server <- function(input, output, session){
     else{myDataset <- c("t.b.c.")} 
     
     selectizeInput(inputId = "cohort1", label= "Select dataset of interest:", choices = myDataset, 
-                   selected = NULL)
+                   selected = myDataset[1])
   })
   
   output$cohort2 <- renderUI({
@@ -126,7 +126,7 @@ server <- function(input, output, session){
     else{myDataset <- c("t.b.c.")} 
     
     selectizeInput(inputId = "cohort2", label= "Select dataset of interest:", choices = myDataset2, 
-                   selected = NULL)
+                   selected = myDataset2[1])
   })
 
   ## Event reactive objects after cohort selected #### 
@@ -193,7 +193,7 @@ server <- function(input, output, session){
     mySample <- list_samples_disease()[[input$cohort1]]
     
     selectizeInput(inputId = "sample1","Select sample types:",
-                   choices <- mySample, selected = NULL,
+                   choices <- mySample, selected = mySample[1],
                    multiple = F)
   })
   
@@ -201,7 +201,7 @@ server <- function(input, output, session){
     mySample2 <- list_samples_disease()[[input$cohort2]]
     
     selectizeInput(inputId = "sample2","Select sample types:",
-                   choices <- mySample2, selected = NULL,
+                   choices <- mySample2, selected = mySample2[1],
                    multiple = F)
   })
   
@@ -209,7 +209,7 @@ server <- function(input, output, session){
   output$gene <- renderUI({
     selectizeInput(inputId = "gene", label= "Select cell surface marker genes for the dot plots:",
                    choices = genelist(),
-                   selected = NULL,
+                   selected = "ABCA3",
                    multiple = TRUE,
                    options = list(
                      placeholder = 'Type to search for gene',
@@ -283,11 +283,6 @@ server <- function(input, output, session){
   marker_gene_table <- eventReactive(input$dplot2, { 
     shinybusy::show_modal_progress_line(text = "Get marker genes...") # show the modal window
     
-    update_modal_progress(
-      0.05,
-      text = "Get marker genes....",
-      session = shiny::getDefaultReactiveDomain()
-    )
     #level 1 
     ob1 <- SplitObject(ob_selected2(), split.by = "split1") 
     ob_split1 = ob1[[plot_marker()[1]]]
@@ -309,7 +304,6 @@ server <- function(input, output, session){
     subset_marker_gene1 <- marker_gene_table %>% 
       filter(marker_gene_table$gene %in% genelist())%>%
       arrange(annotation.l2,desc(abs(avg_log2FC)),p_val)
-    
     update_modal_progress(
       0.25,
       text = "Level 1 completed",
@@ -433,6 +427,18 @@ server <- function(input, output, session){
     content = function(file) {
       write.csv(marker_gene_table(), file)
     })
+  ## output marker gene table ####
+  marker_gene_table_output <- reactive({
+    marker_gene_table <- marker_gene_table()
+    marker_gene_table_output <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
+    return(marker_gene_table_output)
+  })
+  
+  lapply(1:5, function(i) {
+    outputId <- paste0("marker_gene", i)
+    output[[outputId]] <- renderDataTable(marker_gene_table_output(), options = list(pageLength = 10))
+  })
+  
   
   ##Change the selected tab on the client ####
   observeEvent(input$go, {
@@ -458,6 +464,28 @@ server <- function(input, output, session){
                     selected = "dashboard"
     )
   })
+  
+  observeEvent(input$go_to_r1, {
+    updateTabItems( session = getDefaultReactiveDomain(), "sidebar",
+                    selected = "result1"
+    )
+  })
+  observeEvent(input$go_to_r1, {
+    shinyjs::alert("Expand the sidebar menu 'Visualization (gene of interest)' on the left!")
+  })
+
+  
+  observeEvent(input$go_to_r2, {
+    updateTabItems( session = getDefaultReactiveDomain(), "sidebar",
+                    selected = "2result1"
+    )
+  })
+  observeEvent(input$go_to_r2, {
+    shinyjs::alert("Expand the sidebar menu 'Visualization (marker selection)' on the left!")
+  })
+  
+  
+  
   
   ## Violin Plot #### 
   ### home ####
@@ -548,9 +576,37 @@ server <- function(input, output, session){
  
   
   ## table next to the dot plot ####
+ 
+  d1_table <- reactive({
+    table_d <- dlist()[[1]][["data"]][, c(3,4,1,2,5)]
+    table_d <- table_d%>% arrange(desc(table_d$avg.exp))
+    return(table_d)
+  })
+  d2_table <- reactive({
+    table_d <- dlist()[[2]][["data"]][, c(3,4,1,2,5)]
+    table_d <- table_d%>% arrange(desc(table_d$avg.exp))
+    return(table_d)
+  })
+  d3_table <- reactive({
+    table_d <- dlist()[[3]][["data"]][, c(3,4,1,2,5)]
+    table_d <- table_d%>% arrange(desc(table_d$avg.exp))
+    return(table_d)
+  })
+  d4_table <- reactive({
+    table_d <- dlist()[[4]][["data"]][, c(3,4,1,2,5)]
+    table_d <- table_d%>% arrange(desc(table_d$avg.exp))
+    return(table_d)
+  })
+  d5_table <- reactive({
+    table_d <- dlist()[[5]][["data"]][, c(3,4,1,2,5)]
+    table_d <- table_d%>% arrange(desc(table_d$avg.exp))
+    return(table_d)
+  })
+  
+  dlist_table <- reactive(list(d1_table(),d2_table(),d3_table(),d4_table(),d5_table()))
   lapply(1:5, function(i) {
     outputId <- paste0("table", i)
-    output[[outputId]] <- renderDataTable(dlist()[[i]][["data"]][, c(3,4,1,2,5)], 
+    output[[outputId]] <- renderDataTable(dlist_table()[[i]] , 
                                           options = list(pageLength = 5))
   })
   
@@ -566,7 +622,7 @@ server <- function(input, output, session){
       
       marker_gene_table <- marker_gene_table()
       marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-      gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+      gene_dge <- unique(marker_gene_table_sub$gene)[1:input$n_genes]
       
       DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
         RotatedAxis()+ aes_list() 
@@ -578,7 +634,7 @@ server <- function(input, output, session){
     
       marker_gene_table <- marker_gene_table()
       marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-      gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+      gene_dge <- unique(marker_gene_table_sub$gene)[1:input$n_genes]
       
       DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
         RotatedAxis()+ aes_list()
@@ -590,7 +646,7 @@ server <- function(input, output, session){
    
       marker_gene_table <- marker_gene_table()
       marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-      gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+      gene_dge <- unique(marker_gene_table_sub$gene)[1:input$n_genes]
       
       DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
         RotatedAxis()+ aes_list()
@@ -603,7 +659,7 @@ server <- function(input, output, session){
     
       marker_gene_table <- marker_gene_table()
       marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-      gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+      gene_dge <- unique(marker_gene_table_sub$gene)[1:input$n_genes]
       
       DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
         RotatedAxis()+aes_list()
@@ -616,7 +672,7 @@ server <- function(input, output, session){
    
       marker_gene_table <- marker_gene_table()
       marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-      gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+      gene_dge <- unique(marker_gene_table_sub$gene)[1:input$n_genes]
       
       DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
         RotatedAxis()+ aes_list()
@@ -633,9 +689,39 @@ server <- function(input, output, session){
   
   
   ## table next to the dot plot ####
+  d1_cellMark_table <- reactive({
+    table <- dlist_cellMark()[[1]][["data"]][, c(3,4,1,2,5)]
+    table <- table %>% arrange(desc(table$avg.exp))
+    return(table)
+  })
+  d2_cellMark_table <- reactive({
+    table <- dlist_cellMark()[[2]][["data"]][, c(3,4,1,2,5)]
+    table <- table %>% arrange(desc(table$avg.exp))
+    return(table)
+  })
+  d3_cellMark_table <- reactive({
+    table <- dlist_cellMark()[[3]][["data"]][, c(3,4,1,2,5)]
+    table <- table %>% arrange(desc(table$avg.exp))
+    return(table)
+  })
+  d4_cellMark_table <- reactive({
+    table <- dlist_cellMark()[[4]][["data"]][, c(3,4,1,2,5)]
+    table <- table %>% arrange(desc(table$avg.exp))
+    return(table)
+  })
+  d5_cellMark_table <- reactive({
+    table <- dlist_cellMark()[[5]][["data"]][, c(3,4,1,2,5)]
+    table <- table %>% arrange(desc(table$avg.exp))
+    return(table)
+  })
+  
+  dlist_cellMark_table <- reactive(list(d1_cellMark_table(),d2_cellMark_table(),
+                                        d3_cellMark_table(),d4_cellMark_table(),
+                                        d5_cellMark_table()))
+  
   lapply(1:5, function(i) {
     outputId <- paste0("table_cellMark", i)
-    output[[outputId]] <- renderDataTable(dlist_cellMark()[[i]][["data"]][, c(3,4,1,2,5)], 
+    output[[outputId]] <- renderDataTable(dlist_cellMark_table()[[i]], 
                                           options = list(pageLength = 5))
   })
 }

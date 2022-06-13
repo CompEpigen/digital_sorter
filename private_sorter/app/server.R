@@ -89,12 +89,14 @@ server <- function(input, output, session){
   output$menu <- renderUI({
     sidebarMenu(
       id = 'sidebar',
-      ## 1st tab show the preprocessing dashboard  Main dashboard -----------
+      ## 1st tab show the pre-processing dashboard  
       menuItem( "Define My Own Master Markers", tabName = 'processing', icon = icon('tachometer-alt')),
-      ## 2st tab show the Main dashboard-----------
+      
+      ## 2st tab show the Tree plot and violin plot
       menuItem( "Tree Plot & Violin Plot", tabName = 'dashboard', icon = icon('tree')),
-      ## 3nd tab shows results ----------
-      menuItem( "Visualization (gene of interest)", tabName = "results", icon = icon('list'), startExpanded = F,
+      
+      ## 3nd tab shows visualization results (dot plots of gene of interest) 
+      menuItem( "Visualization (gene of interest)", expandedName = "results", icon = icon('list'), startExpanded = F,
                 
                 
                 h4("Input section for each level"),
@@ -106,17 +108,17 @@ server <- function(input, output, session){
                 uiOutput("gene"),
                 
                 
-                h5("Go to each level and check out the results!"),
                 lapply(1:5, function(i){
                   menuSubItem(paste0("Level ",i), tabName = paste0("result",i))
                 })
-                #uiOutput("ui_menuSubItem"), #format would be different
+                
                 
                 
                 
       ),
       
-      menuItem( "Visualization (marker selection)", tabName = "results2", icon = icon('brain'), startExpanded = F,
+      ## 4th tab shows visualization results (dot plots of results of marker selection) 
+      menuItem( "Visualization (marker selection)", expandedName = "2results", icon = icon('brain'), startExpanded = F,
                 
                 
                 h4("Input section for each level"),
@@ -128,23 +130,27 @@ server <- function(input, output, session){
                 h6("Warning! Marker selection function takes quite some time!"),
                 actionBttn("dplot2", "Do marker selection", style = "jelly", color = "warning",size = "sm"),
                 
-                
                 fluidRow(
                   column(width=4,offset=1,
+                         ## let user download the marker selection table
                          downloadButton('download_marker_csv', 'Download Marker Selection Results')
-                  ),
-                ),
+                  )
+                ),#fluidflow
                 uiOutput("celltype"),
+                sliderInput("n_genes", "Number of genes on the dotplot",
+                            min = 5, max = 20,
+                            value = 10),
                 
-                
-                h5("Go to each level and check out the results!"),
                 lapply(1:5, function(i){
                   menuSubItem(paste0("Level ",i), tabName = paste0("2result",i))
                 })
-                #uiOutput("ui_menuSubItem"), #format would be different
-                 
+                
+                
       ),
-      ## 3rd tab Data source, definition , i.e., help ---------------
+      
+      
+      
+      ## 5th tab Data source, definition , i.e., help 
       menuItem( "FAQs", tabName = 'help', icon = icon('question-circle') )
     )#sidebarMenu end
   })
@@ -154,7 +160,7 @@ server <- function(input, output, session){
       
       ## 3.1 Dashboard body --------------
       tabItems(
-        ## 3.1.0 Pre-processing dashboard ----------------------------------------------------------
+        ## 3.1 Pre-processing dashboard ----------------------------------------------------------
         tabItem( tabName = 'processing',
                  fluidRow(
                    column(width=4,
@@ -174,9 +180,10 @@ server <- function(input, output, session){
                               h6(span("Function not yet finished", style = "color:orange")),
                               h5("This is the panel for user to define their own master markers."),
                               h5("If the cancer type is not",span(" Lung", style = "color:blue") ,", user should upload the reference expression data to define the levels.")
-                          ),# box end
+                          )# box end
                           
                    ),#column end
+                   
                    column(width=8,
                           box(title = "The structure of the embedded data", status="success", solidHeader = TRUE, width = NULL,
                               h5("The results shown in this app will be based on the cell groups/levels shown here."),
@@ -193,26 +200,33 @@ server <- function(input, output, session){
                               conditionalPanel(
                                 condition = "input.cancer == 't.b.c.'",
                                 h4("Tree plot t.b.c.")
+                                
                               )
-                          ),#box end
-                   ),#column end
-                 ), #fluidRow end
-                 
-                 
-                 
+                          )#box end
+                   )#column end
+                 )#fluidRow end
                  
                  
         ), #tab1 end
         
-        ## 3.1.1 Main dashboard ----------------------------------------------------------
+        ## 3.2 Tree plot and violin plot ----------------------------------------------------------
         tabItem( tabName = 'dashboard',
                  
                  fluidRow(
                    
-                   box(title = "Updating Tree Plot", status="warning", solidHeader = TRUE, width=8,
+                   box(title = "Updating Tree Plot", status="warning", solidHeader = TRUE, width=12,
                        h5("The results shown in this app were the analysis done within the cell groups shown here."),
                        #Tree plot
-                       h3("Should be the updating tree plot")
+                       conditionalPanel(
+                         condition = "input.go == 1",
+                         img(src = "tree.PNG", width=550, height=480)  
+                       ),
+                       conditionalPanel(
+                         condition = "input.update_marker == 1",
+                         h3("Should be the updating tree plot")
+                         ##automatic tree plot
+                         ######################
+                       )
                    )
                  ), #fluid row end
                  
@@ -230,8 +244,6 @@ server <- function(input, output, session){
                                    h5("If you want to change the cancer type, go to panel ", span("Define My Own Master Markers.", style = "color:orange") ),
                                    h4("Otherwise, press",span(" Plot! ", style = "color:green")),
                                    actionBttn("plotv", "Plot!", style = "jelly", color = "success",size = "sm")
-                                   
-                                   
                           ),
                           tabPanel("Marker 1", 
                                    withSpinner(plotOutput("plotv_h1"))),
@@ -244,10 +256,27 @@ server <- function(input, output, session){
                           
                           
                    )
+                 ), #fluid row end
+                 
+                 fluidRow(
+                   box(title = "What's next?", status="primary", solidHeader = TRUE, width=12,
+                       h5("The violin plots here showed which level each cell type belongs to. "),
+                       h5("For example, cell types which express marker 1 belong to Level 1. Cell types which don't express marker 1 would be used to draw violin plots for marker 2. 
+                    Among those cell types, the ones which express marker 2 belong to Level 2."),
+                       h5("To check the expression of ", strong("specific genes")," in cell types of different levels, please ", strong("expand Visualization (gene of interest) ") ,"panel on the sidebar menu."),
+                       h5("Select the ",strong("dataset and genes of interest")," from the sidebar menu."),
+                       actionBttn("go_to_r1", "Go to Visualization (gene of interest)", style = "jelly", color = "primary",size = "sm"),
+                       
+                       h5("To check the expression of ", strong("cell surface markers")," (defined by the app) in cell types of different levels, please ", strong("expand Visualization (marker selection) ") ,"panel on the sidebar menu."),
+                       h5("Select the ",strong("dataset and cell type of interest")," from the sidebar menu."),
+                       actionBttn("go_to_r2", "Go to Visualization (marker selection)", style = "jelly", color = "primary",size = "sm")
+                   )#box end
                  )#fluid row end
-        ), #tab1 end
+        ), #tab end
         
-        ## 3.1.2 Result1 ----------------------------------------------------------
+        ## 3.3 Result (gene of interest)----------------------------------------------------------
+        
+        ### 3.3.1 Level 1 (gene of interest)----------------------------------------------------------
         
         tabItem( tabName = 'result1',
                  
@@ -255,6 +284,9 @@ server <- function(input, output, session){
                  fluidRow(#dot plot
                    
                    h3("Level 1 Dot plot with genes of interest"),
+                   h4(strong("Expand the siderbar menu on the left!")),
+                   img(src = "tab1.PNG", width=240, height=33),
+                   h4(code("Error messgage? Because you have not select the genes of interest!")),
                    h4(textOutput("dotplot_title1")),
                    column(width=6, style = "height:200px;",
                           withSpinner(plotOutput("plotd1") )
@@ -267,14 +299,17 @@ server <- function(input, output, session){
                    )
                    
                  )#fluid row end
-        ), #tab2 end
+        ), #tab end
         
-        ## 3.1.3 Result2 ----------------------------------------------------------
+        ### 3.3.2 Level 2 (gene of interest)----------------------------------------------------------
         
         tabItem( tabName = 'result2',
                  
                  fluidRow(#dot plot
                    h3("Level 2 Dot plot with genes of interest"),
+                   h4(strong("Expand the siderbar menu on the left!")),
+                   img(src = "tab1.PNG", width=240, height=33),
+                   h4(code("Error messgage? Because you have not select the genes of interest!")),
                    h4(textOutput("dotplot_title2")),
                    column(width=6, style = "height:200px;",
                           withSpinner(plotOutput("plotd2") )
@@ -286,15 +321,18 @@ server <- function(input, output, session){
                    )
                    
                  )#fluid row end
-        ), #tab3 end
+        ), #tab end
         
-        ## 3.1.4 Result3 ----------------------------------------------------------
+        ### 3.3.3 Level 3 (gene of interest)----------------------------------------------------------
         
         tabItem( tabName = 'result3',
                  
                  
                  fluidRow(#dot plot
                    h3("Level 3 Dot plot with genes of interest"),
+                   h4(strong("Expand the siderbar menu on the left!")),
+                   img(src = "tab1.PNG", width=240, height=33),
+                   h4(code("Error messgage? Because you have not select the genes of interest!")),
                    h4(textOutput("dotplot_title3")),
                    
                    column(width=6, style = "height:200px;",
@@ -308,15 +346,18 @@ server <- function(input, output, session){
                    )
                    
                  )#fluid row end
-        ), #tab4 end
+        ), #tab end
         
-        ## 3.1.5 Result4 ----------------------------------------------------------
+        ### 3.3.4 Level 4 (gene of interest)----------------------------------------------------------
         
         tabItem( tabName = 'result4',
                  
                  
                  fluidRow(#dot plot
                    h3("Level 4 Dot plot with genes of interest"),
+                   h4(strong("Expand the siderbar menu on the left!")),
+                   img(src = "tab1.PNG", width=240, height=33),
+                   h4(code("Error messgage? Because you have not select the genes of interest!")),
                    h4(textOutput("dotplot_title4")),
                    
                    column(width=6, style = "height:200px;",
@@ -329,13 +370,17 @@ server <- function(input, output, session){
                           
                    )      
                  )#fluid row end
-        ), #tab5 end
-        ## 3.1.6 Result5 ----------------------------------------------------------
+        ), #tab end
+        
+        ### 3.3.5 Level 5 (gene of interest)----------------------------------------------------------
         tabItem( tabName = 'result5',
                  
                  
                  fluidRow(#dot plot
                    h3("Level 5 Dot plot with genes of interest"),
+                   h4(strong("Expand the siderbar menu on the left!")),
+                   img(src = "tab1.PNG", width=240, height=33),
+                   h4(code("Error messgage? Because you have not select the genes of interest!")),
                    h4(textOutput("dotplot_title5")),
                    
                    column(width=6, style = "height:200px;",
@@ -348,13 +393,26 @@ server <- function(input, output, session){
                           
                    )      
                  )#fluid row end
-        ), #tab5 end
+        ), #tab end
         
-        ## 3.2.1 Result1 ----------------------------------------------------------
+        ## 3.4 Result2 (marker selection)----------------------------------------------------------
+        
+        ### 3.4.1 Level 1 (marker selection)----------------------------------------------------------
         tabItem( tabName = '2result1',
+                 fluidRow(
+                   h4(strong("Expand the siderbar menu on the left, select the dataset and press 'Do marker selection'!")),
+                   img(src = "tab2.PNG", width=240, height=33),
+                   
+                   box(title = "Marker selection results (Table)", status="primary", solidHeader = TRUE, width=12,
+                       dataTableOutput("marker_gene1")
+                   )
+                 ),
                  
                  fluidRow(#dot plot
+                   
                    h3("Level 1 Dot plot with specific cell surface markers"),
+                   h4(code("Error messgage? Because you have not select the cell type of interest!")),
+                   
                    h4(textOutput("dotplot2_title1")),
                    column(width=6, style = "height:200px;",
                           withSpinner(plotOutput("plotd_cellMark1") )
@@ -367,14 +425,22 @@ server <- function(input, output, session){
                    )
                    
                  )#fluid row end
-        ), #tab2 end
+        ), #tab end
         
-        ## 3.2.2 Result2 ----------------------------------------------------------
+        ### 3.4.2 Level 2 (marker selection)----------------------------------------------------------
         
         tabItem( tabName = '2result2',
-                 
+                 fluidRow(
+                   h4(strong("Expand the siderbar menu on the left, select the dataset and press 'Do marker selection'!")),
+                   img(src = "tab2.PNG", width=240, height=33),
+                   
+                   box(title = "Marker selection results (Table)", status="primary", solidHeader = TRUE, width=12,
+                       dataTableOutput("marker_gene2")
+                   )
+                 ),
                  fluidRow(#dot plot
                    h3("Level 2 Dot plot with specific cell surface markers"),
+                   h4(code("Error messgage? Because you have not select the cell type of interest!")),
                    h4(textOutput("dotplot2_title2")),
                    column(width=6, style = "height:200px;",
                           withSpinner(plotOutput("plotd_cellMark2") )
@@ -386,15 +452,23 @@ server <- function(input, output, session){
                    )
                    
                  )#fluid row end
-        ), #tab3 end
+        ), #tab end
         
-        ## 3.2.3 Result3 ----------------------------------------------------------
+        ### 3.4.3 Level 3 (marker selection)----------------------------------------------------------
         
         tabItem( tabName = '2result3',
-                 
+                 fluidRow(
+                   h4(strong("Expand the siderbar menu on the left, select the dataset and press 'Do marker selection'!")),
+                   img(src = "tab2.PNG", width=240, height=33),
+                   
+                   box(title = "Marker selection results (Table)", status="primary", solidHeader = TRUE, width=12,
+                       dataTableOutput("marker_gene3")
+                   )
+                 ),
                  fluidRow(#dot plot
                    
                    h3("Level 3 Dot plot with specific cell surface markers"),
+                   h4(code("Error messgage? Because you have not select the cell type of interest!")),
                    h4(textOutput("dotplot2_title3")),
                    
                    column(width=6, style = "height:200px;",
@@ -408,15 +482,23 @@ server <- function(input, output, session){
                    )
                    
                  )#fluid row end
-        ), #tab4 end
+        ), #tab end
         
-        ## 3.2.4 Result4 ----------------------------------------------------------
+        ### 3.4.4 Level 4 (marker selection)----------------------------------------------------------
         
         tabItem( tabName = '2result4',
-                 
+                 fluidRow(
+                   h4(strong("Expand the siderbar menu on the left, select the dataset and press 'Do marker selection'!")),
+                   img(src = "tab2.PNG", width=240, height=33),
+                   
+                   box(title = "Marker selection results (Table)", status="primary", solidHeader = TRUE, width=12,
+                       dataTableOutput("marker_gene4")
+                   )
+                 ),
                  fluidRow(#dot plot
                    
                    h3("Level 4 Dot plot with specific cell surface markers"),
+                   h4(code("Error messgage? Because you have not select the cell type of interest!")),
                    h4(textOutput("dotplot2_title4")),
                    
                    column(width=6, style = "height:200px;",
@@ -429,14 +511,22 @@ server <- function(input, output, session){
                           
                    )      
                  )#fluid row end
-        ), #tab5 end
-        ## 3.2.5 Result5 ----------------------------------------------------------
+        ), #tab end
+        ### 3.4.5 Level 5 (marker selection)----------------------------------------------------------
         tabItem( tabName = '2result5',
-                 
+                 fluidRow(
+                   h4(strong("Expand the siderbar menu on the left, select the dataset and press 'Do marker selection'!")),
+                   img(src = "tab2.PNG", width=240, height=33),
+                   
+                   box(title = "Marker selection results (Table)", status="primary", solidHeader = TRUE, width=12,
+                       dataTableOutput("marker_gene5")
+                   )
+                 ),
                  
                  fluidRow(#dot plot
                    
                    h3("Level 5 Dot plot with specific cell surface markers"),
+                   h4(code("Error messgage? Because you have not select the cell type of interest!")),
                    h4(textOutput("dotplot2_title5")),
                    
                    column(width=6, style = "height:200px;",
@@ -449,15 +539,17 @@ server <- function(input, output, session){
                           
                    )      
                  )#fluid row end
-        ), #tab5 end
+        ), #tab end
         
-        ## 3.1.6 FAQs ----------------------------------------------------------
+        ## 3.5 FAQs ----------------------------------------------------------
         
         tabItem( tabName = 'help',
                  
                  fluidRow(
                    column( width=11.5,offset = 0.5,
                            h3("Tutorial and FAQs"),
+                           h4("For the tutorial and FAQs, please visit",a("our GitHub", href="https://github.com/CompEpigen/digital_sorter", target="_blank" ),"." ),
+                           
                            h4("Summary of the integrated dataset"),
                            p("The integrated dataset imbedded in this shiny app consists of 7 datasets which were extracted from the publications from 2019 to 2021", style = "font-family: 'times'; font-si16pt"),
                            strong("There are:"),
@@ -473,7 +565,7 @@ server <- function(input, output, session){
                    
                    
                  )
-        ) #tab6 end
+        ) #tab end
       )#tabItems end
     }else {
       loginpage
@@ -727,7 +819,8 @@ server <- function(input, output, session){
       plot_marker <- c(plot_marker,markers)
     }
     
-    return(plot_marker)})
+    return(plot_marker)}
+  )
   
   
   
@@ -744,11 +837,6 @@ server <- function(input, output, session){
   ## marker selection function----------------
   marker_gene_table <- eventReactive(input$dplot2, { 
     shinybusy::show_modal_progress_line(text = "Get marker genes...") # show the modal window
-    update_modal_progress(
-      0.05,
-      text = "Get marker genes....",
-      session = shiny::getDefaultReactiveDomain()
-    )
     
     #level 1 
     ob1 <- SplitObject(ob_selected2(), split.by = "split1") 
@@ -894,6 +982,18 @@ server <- function(input, output, session){
     content = function(file) {
       write.csv(marker_gene_table(), file)
     })
+  ## output marker gene table ####
+  marker_gene_table_output <- reactive({
+    marker_gene_table <- marker_gene_table()
+    marker_gene_table_output <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
+    return(marker_gene_table_output)
+  })
+  
+  lapply(1:5, function(i) {
+    outputId <- paste0("marker_gene", i)
+    output[[outputId]] <- renderDataTable(marker_gene_table_output(), options = list(pageLength = 10))
+  })
+  
   
   ##Change the selected tab on the client ####
   observeEvent(input$go, {
@@ -919,6 +1019,28 @@ server <- function(input, output, session){
                     selected = "dashboard"
     )
   })
+  
+  observeEvent(input$go_to_r1, {
+    updateTabItems( session = getDefaultReactiveDomain(), "sidebar",
+                    selected = "result1"
+    )
+  })
+  observeEvent(input$go_to_r1, {
+    shinyjs::alert("Expand the sidebar menu 'Visualization (gene of interest)' on the left!")
+  })
+  
+  
+  observeEvent(input$go_to_r2, {
+    updateTabItems( session = getDefaultReactiveDomain(), "sidebar",
+                    selected = "2result1"
+    )
+  })
+  observeEvent(input$go_to_r2, {
+    shinyjs::alert("Expand the sidebar menu 'Visualization (marker selection)' on the left!")
+  })
+  
+  
+  
   
   ## Violin Plot #### 
   ### home ####
@@ -1009,9 +1131,37 @@ server <- function(input, output, session){
   
   
   ## table next to the dot plot ####
+  
+  d1_table <- reactive({
+    table_d <- dlist()[[1]][["data"]][, c(3,4,1,2,5)]
+    table_d <- table_d%>% arrange(desc(table_d$avg.exp))
+    return(table_d)
+  })
+  d2_table <- reactive({
+    table_d <- dlist()[[2]][["data"]][, c(3,4,1,2,5)]
+    table_d <- table_d%>% arrange(desc(table_d$avg.exp))
+    return(table_d)
+  })
+  d3_table <- reactive({
+    table_d <- dlist()[[3]][["data"]][, c(3,4,1,2,5)]
+    table_d <- table_d%>% arrange(desc(table_d$avg.exp))
+    return(table_d)
+  })
+  d4_table <- reactive({
+    table_d <- dlist()[[4]][["data"]][, c(3,4,1,2,5)]
+    table_d <- table_d%>% arrange(desc(table_d$avg.exp))
+    return(table_d)
+  })
+  d5_table <- reactive({
+    table_d <- dlist()[[5]][["data"]][, c(3,4,1,2,5)]
+    table_d <- table_d%>% arrange(desc(table_d$avg.exp))
+    return(table_d)
+  })
+  
+  dlist_table <- reactive(list(d1_table(),d2_table(),d3_table(),d4_table(),d5_table()))
   lapply(1:5, function(i) {
     outputId <- paste0("table", i)
-    output[[outputId]] <- renderDataTable(dlist()[[i]][["data"]][, c(3,4,1,2,5)], 
+    output[[outputId]] <- renderDataTable(dlist_table()[[i]] , 
                                           options = list(pageLength = 5))
   })
   
@@ -1027,7 +1177,7 @@ server <- function(input, output, session){
     
     marker_gene_table <- marker_gene_table()
     marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-    gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+    gene_dge <- unique(marker_gene_table_sub$gene)[1:input$n_genes]
     
     DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
       RotatedAxis()+ aes_list() 
@@ -1039,7 +1189,7 @@ server <- function(input, output, session){
     
     marker_gene_table <- marker_gene_table()
     marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-    gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+    gene_dge <- unique(marker_gene_table_sub$gene)[1:input$n_genes]
     
     DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
       RotatedAxis()+ aes_list()
@@ -1051,7 +1201,7 @@ server <- function(input, output, session){
     
     marker_gene_table <- marker_gene_table()
     marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-    gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+    gene_dge <- unique(marker_gene_table_sub$gene)[1:input$n_genes]
     
     DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
       RotatedAxis()+ aes_list()
@@ -1064,7 +1214,7 @@ server <- function(input, output, session){
     
     marker_gene_table <- marker_gene_table()
     marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-    gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+    gene_dge <- unique(marker_gene_table_sub$gene)[1:input$n_genes]
     
     DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
       RotatedAxis()+aes_list()
@@ -1077,7 +1227,7 @@ server <- function(input, output, session){
     
     marker_gene_table <- marker_gene_table()
     marker_gene_table_sub <- marker_gene_table[marker_gene_table$annotation.l2 %in% cell_chosen(),]
-    gene_dge <- unique(marker_gene_table_sub$gene)[1:10]
+    gene_dge <- unique(marker_gene_table_sub$gene)[1:input$n_genes]
     
     DotPlot(ob1_1, features = gene_dge, group.by = "annotation.l2") + 
       RotatedAxis()+ aes_list()
@@ -1094,9 +1244,39 @@ server <- function(input, output, session){
   
   
   ## table next to the dot plot ####
+  d1_cellMark_table <- reactive({
+    table <- dlist_cellMark()[[1]][["data"]][, c(3,4,1,2,5)]
+    table <- table %>% arrange(desc(table$avg.exp))
+    return(table)
+  })
+  d2_cellMark_table <- reactive({
+    table <- dlist_cellMark()[[2]][["data"]][, c(3,4,1,2,5)]
+    table <- table %>% arrange(desc(table$avg.exp))
+    return(table)
+  })
+  d3_cellMark_table <- reactive({
+    table <- dlist_cellMark()[[3]][["data"]][, c(3,4,1,2,5)]
+    table <- table %>% arrange(desc(table$avg.exp))
+    return(table)
+  })
+  d4_cellMark_table <- reactive({
+    table <- dlist_cellMark()[[4]][["data"]][, c(3,4,1,2,5)]
+    table <- table %>% arrange(desc(table$avg.exp))
+    return(table)
+  })
+  d5_cellMark_table <- reactive({
+    table <- dlist_cellMark()[[5]][["data"]][, c(3,4,1,2,5)]
+    table <- table %>% arrange(desc(table$avg.exp))
+    return(table)
+  })
+  
+  dlist_cellMark_table <- reactive(list(d1_cellMark_table(),d2_cellMark_table(),
+                                        d3_cellMark_table(),d4_cellMark_table(),
+                                        d5_cellMark_table()))
+  
   lapply(1:5, function(i) {
     outputId <- paste0("table_cellMark", i)
-    output[[outputId]] <- renderDataTable(dlist_cellMark()[[i]][["data"]][, c(3,4,1,2,5)], 
+    output[[outputId]] <- renderDataTable(dlist_cellMark_table()[[i]], 
                                           options = list(pageLength = 5))
   })
 }
