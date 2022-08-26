@@ -113,6 +113,14 @@ ui <-dashboardPage(
                fluidRow(
                  column(width=4,
                         box(title = "Datasets stratified with default master markers", status= "success", solidHeader = TRUE, width = NULL,
+                            #genes list
+                            selectizeInput(inputId ="genelists", 
+                                           label= "Select type of gene list:", 
+                                           choices = c("Protein coding genes","Cell surface markers"), 
+                                           selected = "Protein coding genes"),
+                            
+                            
+                            
                             #cancer
                             selectizeInput(inputId ="cancer", label= "Select cancer types:", choices = c("Lung","t.b.c."), selected = "Lung"),
                             #show master markers after selecting cancer type

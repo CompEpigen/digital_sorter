@@ -38,10 +38,12 @@ server <- function(input, output, session){
   ## read datasets ####
   
   markerlist <- markerlist
-  #genelist <- reactive({return(Union.cell.surface.marker)})
   
-  genelist <- reactive({return(prot.coding.genes)})
-  
+  genelist <- reactive({
+    if(input$genelists == "Protein coding genes"){ 
+      return(prot.coding.genes)
+    }else if(input$genelists == "Cell surface markers"){return(Union.cell.surface.marker)} 
+  })
   
   list_samples_disease <- reactive({
     list_samples_disease <- list()
