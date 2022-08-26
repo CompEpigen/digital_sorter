@@ -593,8 +593,9 @@ server <- function(input, output, session){
   ## read datasets ####
   
   markerlist <- markerlist
-  genelist <- reactive({return(Union.cell.surface.marker)})
+  #genelist <- reactive({return(Union.cell.surface.marker)})
   
+  genelist <- reactive({return(prot.coding.genes)})
   
   list_samples_disease <- reactive({
     list_samples_disease <- list()
