@@ -273,7 +273,7 @@ server <- function(input, output, session){
                        h5("Select the ",strong("dataset and genes of interest")," from the sidebar menu."),
                        actionBttn("go_to_r1", "Go to Visualization (gene of interest)", style = "jelly", color = "primary",size = "sm"),
                        
-                       h5("To check the expression of ", strong("cell surface markers")," (defined by the app) in cell types of different levels, please ", strong("expand Visualization (marker selection) ") ,"panel on the sidebar menu."),
+                       h5("To check the expression of ", strong("markers")," (defined by the app) in cell types of different levels, please ", strong("expand Visualization (marker selection) ") ,"panel on the sidebar menu."),
                        h5("Select the ",strong("dataset and cell type of interest")," from the sidebar menu."),
                        actionBttn("go_to_r2", "Go to Visualization (marker selection)", style = "jelly", color = "primary",size = "sm")
                    )#box end
@@ -292,7 +292,7 @@ server <- function(input, output, session){
                    h3("Level 1 Dot plot with genes of interest"),
                    h4(strong("Expand the siderbar menu on the left!")),
                    img(src = "tab1.PNG", width=240, height=33),
-                   h4(code("Error messgage? Because you have not select the genes of interest!")),
+                   h4(code("Error messgage? Because you have not selected the genes of interest!")),
                    h4(textOutput("dotplot_title1")),
                    column(width=6, style = "height:200px;",
                           withSpinner(plotOutput("plotd1") )
@@ -315,7 +315,7 @@ server <- function(input, output, session){
                    h3("Level 2 Dot plot with genes of interest"),
                    h4(strong("Expand the siderbar menu on the left!")),
                    img(src = "tab1.PNG", width=240, height=33),
-                   h4(code("Error messgage? Because you have not select the genes of interest!")),
+                   h4(code("Error messgage? Because you have not selected the genes of interest!")),
                    h4(textOutput("dotplot_title2")),
                    column(width=6, style = "height:200px;",
                           withSpinner(plotOutput("plotd2") )
@@ -338,7 +338,7 @@ server <- function(input, output, session){
                    h3("Level 3 Dot plot with genes of interest"),
                    h4(strong("Expand the siderbar menu on the left!")),
                    img(src = "tab1.PNG", width=240, height=33),
-                   h4(code("Error messgage? Because you have not select the genes of interest!")),
+                   h4(code("Error messgage? Because you have not selected the genes of interest!")),
                    h4(textOutput("dotplot_title3")),
                    
                    column(width=6, style = "height:200px;",
@@ -363,7 +363,7 @@ server <- function(input, output, session){
                    h3("Level 4 Dot plot with genes of interest"),
                    h4(strong("Expand the siderbar menu on the left!")),
                    img(src = "tab1.PNG", width=240, height=33),
-                   h4(code("Error messgage? Because you have not select the genes of interest!")),
+                   h4(code("Error messgage? Because you have not selected the genes of interest!")),
                    h4(textOutput("dotplot_title4")),
                    
                    column(width=6, style = "height:200px;",
@@ -386,7 +386,7 @@ server <- function(input, output, session){
                    h3("Level 5 Dot plot with genes of interest"),
                    h4(strong("Expand the siderbar menu on the left!")),
                    img(src = "tab1.PNG", width=240, height=33),
-                   h4(code("Error messgage? Because you have not select the genes of interest!")),
+                   h4(code("Error messgage? Because you have not selected the genes of interest!")),
                    h4(textOutput("dotplot_title5")),
                    
                    column(width=6, style = "height:200px;",
@@ -416,8 +416,8 @@ server <- function(input, output, session){
                  
                  fluidRow(#dot plot
                    
-                   h3("Level 1 Dot plot with specific cell surface markers"),
-                   h4(code("Error messgage? Because you have not select the cell type of interest!")),
+                   h3("Level 1 Dot plot with specific markers"),
+                   h4(code("Error messgage? Because you have not selected the cell type of interest!")),
                    
                    h4(textOutput("dotplot2_title1")),
                    column(width=6, style = "height:200px;",
@@ -445,8 +445,8 @@ server <- function(input, output, session){
                    )
                  ),
                  fluidRow(#dot plot
-                   h3("Level 2 Dot plot with specific cell surface markers"),
-                   h4(code("Error messgage? Because you have not select the cell type of interest!")),
+                   h3("Level 2 Dot plot with specific markers"),
+                   h4(code("Error messgage? Because you have not selected the cell type of interest!")),
                    h4(textOutput("dotplot2_title2")),
                    column(width=6, style = "height:200px;",
                           withSpinner(plotOutput("plotd_cellMark2") )
@@ -473,8 +473,8 @@ server <- function(input, output, session){
                  ),
                  fluidRow(#dot plot
                    
-                   h3("Level 3 Dot plot with specific cell surface markers"),
-                   h4(code("Error messgage? Because you have not select the cell type of interest!")),
+                   h3("Level 3 Dot plot with specific markers"),
+                   h4(code("Error messgage? Because you have not selected the cell type of interest!")),
                    h4(textOutput("dotplot2_title3")),
                    
                    column(width=6, style = "height:200px;",
@@ -503,8 +503,8 @@ server <- function(input, output, session){
                  ),
                  fluidRow(#dot plot
                    
-                   h3("Level 4 Dot plot with specific cell surface markers"),
-                   h4(code("Error messgage? Because you have not select the cell type of interest!")),
+                   h3("Level 4 Dot plot with specific markers"),
+                   h4(code("Error messgage? Because you have not selected the cell type of interest!")),
                    h4(textOutput("dotplot2_title4")),
                    
                    column(width=6, style = "height:200px;",
@@ -531,8 +531,8 @@ server <- function(input, output, session){
                  
                  fluidRow(#dot plot
                    
-                   h3("Level 5 Dot plot with specific cell surface markers"),
-                   h4(code("Error messgage? Because you have not select the cell type of interest!")),
+                   h3("Level 5 Dot plot with specific markers"),
+                   h4(code("Error messgage? Because you have not selected the cell type of interest!")),
                    h4(textOutput("dotplot2_title5")),
                    
                    column(width=6, style = "height:200px;",
@@ -772,7 +772,7 @@ server <- function(input, output, session){
   
   ## Select Section-genes ####  
   output$gene <- renderUI({
-    selectizeInput(inputId = "gene", label= "Select cell surface marker genes for the dot plots:",
+    selectizeInput(inputId = "gene", label= "Select marker genes for the dot plots:",
                    choices = genelist(),
                    selected = NULL,
                    multiple = TRUE,
@@ -786,7 +786,7 @@ server <- function(input, output, session){
   
   ## Select self defined master markers ####  
   output$own_markers <- renderUI({
-    selectizeInput(inputId = "own_markers", label= "Select cell surface marker genes for stratification:",
+    selectizeInput(inputId = "own_markers", label= "Select marker genes for stratification:",
                    choices = genelist(),
                    selected = NULL,
                    multiple = TRUE,

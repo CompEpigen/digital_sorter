@@ -242,7 +242,7 @@ ui <-dashboardPage(
                  h3("Level 1 Dot plot with genes of interest"),
                  h4(strong("Expand the siderbar menu on the left!")),
                  img(src = "tab1.PNG", width=240, height=33),
-                 h4(code("Error messgage? Because you have not select the genes of interest!")),
+                 h4(code("Error messgage? Because you have not selected the genes of interest!")),
                  h4(textOutput("dotplot_title1")),
                  column(width=6, style = "height:200px;",
                         withSpinner(plotOutput("plotd1") )
@@ -265,7 +265,7 @@ ui <-dashboardPage(
                  h3("Level 2 Dot plot with genes of interest"),
                  h4(strong("Expand the siderbar menu on the left!")),
                  img(src = "tab1.PNG", width=240, height=33),
-                 h4(code("Error messgage? Because you have not select the genes of interest!")),
+                 h4(code("Error messgage? Because you have not selected the genes of interest!")),
                  h4(textOutput("dotplot_title2")),
                  column(width=6, style = "height:200px;",
                         withSpinner(plotOutput("plotd2") )
@@ -288,7 +288,7 @@ ui <-dashboardPage(
                  h3("Level 3 Dot plot with genes of interest"),
                  h4(strong("Expand the siderbar menu on the left!")),
                  img(src = "tab1.PNG", width=240, height=33),
-                 h4(code("Error messgage? Because you have not select the genes of interest!")),
+                 h4(code("Error messgage? Because you have not selected the genes of interest!")),
                  h4(textOutput("dotplot_title3")),
                  
                  column(width=6, style = "height:200px;",
@@ -313,7 +313,7 @@ ui <-dashboardPage(
                  h3("Level 4 Dot plot with genes of interest"),
                  h4(strong("Expand the siderbar menu on the left!")),
                  img(src = "tab1.PNG", width=240, height=33),
-                 h4(code("Error messgage? Because you have not select the genes of interest!")),
+                 h4(code("Error messgage? Because you have not selected the genes of interest!")),
                  h4(textOutput("dotplot_title4")),
                  
                  column(width=6, style = "height:200px;",
@@ -336,7 +336,7 @@ ui <-dashboardPage(
                h3("Level 5 Dot plot with genes of interest"),
                h4(strong("Expand the siderbar menu on the left!")),
                img(src = "tab1.PNG", width=240, height=33),
-               h4(code("Error messgage? Because you have not select the genes of interest!")),
+               h4(code("Error messgage? Because you have not selected the genes of interest!")),
                  h4(textOutput("dotplot_title5")),
                  
                  column(width=6, style = "height:200px;",
@@ -367,7 +367,7 @@ ui <-dashboardPage(
                fluidRow(#dot plot
                  
                  h3("Level 1 Dot plot with specific markers"),
-                 h4(code("Error messgage? Because you have not select the cell type of interest!")),
+                 h4(code("Error messgage? Because you have not selected the cell type of interest!")),
                  
                  h4(textOutput("dotplot2_title1")),
                  column(width=6, style = "height:200px;",
@@ -396,7 +396,7 @@ ui <-dashboardPage(
                ),
                fluidRow(#dot plot
                 h3("Level 2 Dot plot with specific markers"),
-                h4(code("Error messgage? Because you have not select the cell type of interest!")),
+                h4(code("Error messgage? Because you have not selected the cell type of interest!")),
                 h4(textOutput("dotplot2_title2")),
                  column(width=6, style = "height:200px;",
                         withSpinner(plotOutput("plotd_cellMark2") )
@@ -424,7 +424,7 @@ ui <-dashboardPage(
                fluidRow(#dot plot
                  
                  h3("Level 3 Dot plot with specific markers"),
-                 h4(code("Error messgage? Because you have not select the cell type of interest!")),
+                 h4(code("Error messgage? Because you have not selected the cell type of interest!")),
                  h4(textOutput("dotplot2_title3")),
                  
                  column(width=6, style = "height:200px;",
@@ -454,7 +454,7 @@ ui <-dashboardPage(
                fluidRow(#dot plot
                  
                  h3("Level 4 Dot plot with specific markers"),
-                 h4(code("Error messgage? Because you have not select the cell type of interest!")),
+                 h4(code("Error messgage? Because you have not selected the cell type of interest!")),
                  h4(textOutput("dotplot2_title4")),
                  
                  column(width=6, style = "height:200px;",
@@ -482,7 +482,7 @@ ui <-dashboardPage(
                fluidRow(#dot plot
                 
                  h3("Level 5 Dot plot with specific markers"),
-                 h4(code("Error messgage? Because you have not select the cell type of interest!")),
+                 h4(code("Error messgage? Because you have not selected the cell type of interest!")),
                  h4(textOutput("dotplot2_title5")),
                  
                  column(width=6, style = "height:200px;",
