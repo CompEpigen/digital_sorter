@@ -211,7 +211,7 @@ server <- function(input, output, session){
   
   ## Select Section-genes ####  
   output$gene <- renderUI({
-    selectizeInput(inputId = "gene", label= "Select cell surface marker genes for the dot plots:",
+    selectizeInput(inputId = "gene", label= "Select marker genes for the dot plots:",
                    choices = genelist(),
                    selected = "ABCA3",
                    multiple = TRUE,
@@ -225,7 +225,7 @@ server <- function(input, output, session){
   
   ## Select self defined master markers ####  
   output$own_markers <- renderUI({
-    selectizeInput(inputId = "own_markers", label= "Select cell surface marker genes for stratification:",
+    selectizeInput(inputId = "own_markers", label= "Select marker genes for stratification:",
                    choices = genelist(),
                    selected = NULL,
                    multiple = TRUE,
