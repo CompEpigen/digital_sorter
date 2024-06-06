@@ -15,7 +15,7 @@ library(shinyWidgets)
 
 #library(profvis)
 
-setwd("/omics/groups/OE0219/internal/Jessie_2021/P01.digital_sorter")
+setwd("Path to the folder of digital sorter")
 
 
 #profvis({
