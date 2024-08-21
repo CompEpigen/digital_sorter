@@ -1,4 +1,11 @@
 # digital_sorter
+An R shiny application to identify cell surface markers by mimicking the FACS sorting process.
+
+![image](https://github.com/user-attachments/assets/fcd09b23-b6a3-44ea-b0c5-6eb0acc3b925)
+![image](https://github.com/user-attachments/assets/57f5e78c-f19c-48f0-8e2c-9deb209d8bfb)
+
+
+# Developer guide
 1. The _datasets.rds_ put in folder data/ should be a SplitObject of seurat.
    - Could use a separated R script **merge_seuratobject_addsplits_inspect.R** to create the split object (split by datasets) 
       and add **"split1", "split2", "split3", "split4"** based on the expression of master markers.
